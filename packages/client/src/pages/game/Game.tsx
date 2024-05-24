@@ -1,5 +1,11 @@
+import { Button } from 'antd'
 import { FC } from 'react'
 
 export const Game: FC = () => {
-  return <div>Game</div>
+  return (
+    <>
+      <Button>Log</Button>
+      <div>Game</div>
+    </>
+  )
 }
