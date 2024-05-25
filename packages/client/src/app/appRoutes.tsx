@@ -6,7 +6,7 @@ import { Layout } from 'features/Layout'
 
 import { NotFound } from 'pages/errors'
 import { Forum } from 'pages/forum'
-import { Game } from 'pages/game'
+import { Game, GameStart } from 'pages/game'
 import { Leaderboard } from 'pages/leaderboard'
 import { Profile } from 'pages/profile'
 import { SignIn } from 'pages/signIn'
@@ -19,6 +19,7 @@ export const appRouter = () =>
       path: '/',
       children: [
         { index: true, element: <Game /> },
+        { path: '/start', element: <GameStart /> },
         {
           path: '/profile',
           element: <Profile />,
