@@ -3,9 +3,17 @@ import { RouterProvider } from 'react-router-dom'
 import { appRouter } from './appRoutes'
 
 const theme: ThemeConfig = {
+  token: {
+    fontFamily: 'Kumbh Sans Regular',
+  },
   components: {
     Button: {
-      defaultBg: 'orange',
+      defaultBg: '#f48014',
+      defaultColor: '#fff',
+      fontWeight: 'bold',
+    },
+    Form: {
+      itemMarginBottom: 15,
     },
   },
 }

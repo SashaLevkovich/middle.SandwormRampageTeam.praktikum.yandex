@@ -15,6 +15,14 @@ import { SignUp } from 'pages/signUp'
 export const appRouter = () =>
   createBrowserRouter([
     {
+      path: '/login',
+      element: <SignIn />,
+    },
+    {
+      path: '/signUp',
+      element: <SignUp />,
+    },
+    {
       element: <Layout bottomSlot={<Navbar />} />,
       path: '/',
       children: [
@@ -22,14 +30,6 @@ export const appRouter = () =>
         {
           path: '/profile',
           element: <Profile />,
-        },
-        {
-          path: '/login',
-          element: <SignIn />,
-        },
-        {
-          path: '/signUp',
-          element: <SignUp />,
         },
         {
           path: '/leaderboard',
