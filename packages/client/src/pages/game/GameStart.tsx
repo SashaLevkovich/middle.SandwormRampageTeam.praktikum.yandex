@@ -14,7 +14,7 @@ export const GameStart: FC = () => {
         <img className={classes.lines} src={linesImg} alt="pattern" />
         <img className={classes.moons} src={moonsImg} alt="moons" />
       </div>
-      <a className={classes.start}>Start</a>
+      <a className={classes.startPageWrapperTitle}>Start</a>
     </div>
   )
 }
