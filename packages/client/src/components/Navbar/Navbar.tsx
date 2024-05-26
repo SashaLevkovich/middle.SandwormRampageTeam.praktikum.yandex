@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import { Link } from 'react-router-dom'
+import classes from './Navbar.module.scss'
 
 /**
  *
@@ -9,23 +10,37 @@ import { Link } from 'react-router-dom'
 
 export const Navbar: FC<{ isAuth?: boolean }> = ({ isAuth = true }) => {
   return (
-    <nav>
-      <ul>
+    <nav className={classes.navbarWrapper}>
+      <ul className={classes.navbarList}>
         <li>
-          <Link to="/profile">Profile</Link>
+          <Link className={classes.tab} to="/profile">
+            Profile
+          </Link>
         </li>
         <li>
-          <Link to="/">Game</Link>
+          <Link className={classes.tab} to="/">
+            Game
+          </Link>
         </li>
         <li>
-          <Link to="/forum">Forum</Link>
+          <Link className={classes.tab} to="/forum">
+            Forum
+          </Link>
         </li>
         <li>
-          <Link to="/leaderboard">Leaderboard</Link>
+          <Link className={classes.tab} to="/leaderboard">
+            Leaderboard
+          </Link>
         </li>
       </ul>
 
-      {isAuth ? <button>Exit</button> : <Link to="/login">Login</Link>}
+      {isAuth ? (
+        <Link className={classes.exit} to="/">
+          Exit
+        </Link>
+      ) : (
+        <Link to="/login">Login</Link>
+      )}
     </nav>
   )
 }

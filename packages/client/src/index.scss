@@ -1,6 +1,7 @@
 @import url('./shared/assets/fonts/fonts.scss');
 
 :root {
+  --color-background-header: #d1c8b7;
   --color-start-page-button: #d4be97;
   --color-start-page-background: #272b2a;
 
@@ -11,6 +12,7 @@ body {
   margin: 0;
   width: 100%;
   height: 100%;
+  font-family: Kumbh Sans Regular;
 }
 
 body * {
