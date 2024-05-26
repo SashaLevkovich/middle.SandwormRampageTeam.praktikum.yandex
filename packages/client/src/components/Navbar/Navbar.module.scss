@@ -1,10 +1,13 @@
+@import '../../constants/colors.scss';
+@import '../../constants/sizes.scss';
+
 .navbarWrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 37px 63px;
-  height: var(--header-height);
-  background-color: var(--color-background-header);
+  height: $header-height;
+  background-color: $color-background-header;
 }
 
 .navbarList {
