@@ -1,5 +1,7 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { Link } from 'react-router-dom'
+import classes from './Navbar.module.scss'
+import { NAVIGATION_LINKS } from './constants'
 
 /**
  *
@@ -8,24 +10,36 @@ import { Link } from 'react-router-dom'
  */
 
 export const Navbar: FC<{ isAuth?: boolean }> = ({ isAuth = true }) => {
+  const [currentTab, setCurrentTab] = useState('game')
+
+  function onClick(tab: string) {
+    setCurrentTab(tab)
+  }
+
   return (
-    <nav>
-      <ul>
-        <li>
-          <Link to="/profile">Profile</Link>
-        </li>
-        <li>
-          <Link to="/">Game</Link>
-        </li>
-        <li>
-          <Link to="/forum">Forum</Link>
-        </li>
-        <li>
-          <Link to="/leaderboard">Leaderboard</Link>
-        </li>
+    <nav className={classes.navbarWrapper}>
+      <ul className={classes.navbarList}>
+        {NAVIGATION_LINKS.map(item => (
+          <li key={item.key}>
+            <Link
+              onClick={() => onClick(item.key)}
+              className={`${classes.tab} ${
+                currentTab === item.key ? classes.tabActive : ''
+              }`}
+              to={item.link}>
+              {item.text}
+            </Link>
+          </li>
+        ))}
       </ul>
 
-      {isAuth ? <button>Exit</button> : <Link to="/login">Login</Link>}
+      {isAuth ? (
+        <Link className={classes.exit} to="/">
+          Exit
+        </Link>
+      ) : (
+        <Link to="/login">Login</Link>
+      )}
     </nav>
   )
 }
