@@ -1,0 +1,13 @@
+@import '../../shared/styles/colors.scss';
+@import '../../shared/styles/sizes.scss';
+
+.gameContainer {
+  position: relative;
+  overflow: hidden;
+  background-color: $color-start-page-background;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: $page-height;
+  padding-bottom: 30px;
+}

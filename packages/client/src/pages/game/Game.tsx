@@ -1,12 +1,11 @@
-import { Button } from 'antd'
 import { GameEngine } from 'features/GameEngine'
 import { FC } from 'react'
+import styles from './Game.module.scss'
 
 export const Game: FC = () => {
   return (
-    <>
-      <Button>Log</Button>
+    <div className={styles.gameContainer}>
       <GameEngine />
-    </>
+    </div>
   )
 }
