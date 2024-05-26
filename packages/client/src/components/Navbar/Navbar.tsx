@@ -1,6 +1,7 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { Link } from 'react-router-dom'
 import classes from './Navbar.module.scss'
+import { items } from './constants'
 
 /**
  *
@@ -9,29 +10,27 @@ import classes from './Navbar.module.scss'
  */
 
 export const Navbar: FC<{ isAuth?: boolean }> = ({ isAuth = true }) => {
+  const [currentTab, setCurrentTab] = useState('game')
+
+  function onClick(tab: string) {
+    setCurrentTab(tab)
+  }
+
   return (
     <nav className={classes.navbarWrapper}>
       <ul className={classes.navbarList}>
-        <li>
-          <Link className={classes.tab} to="/profile">
-            Profile
-          </Link>
-        </li>
-        <li>
-          <Link className={classes.tab} to="/">
-            Game
-          </Link>
-        </li>
-        <li>
-          <Link className={classes.tab} to="/forum">
-            Forum
-          </Link>
-        </li>
-        <li>
-          <Link className={classes.tab} to="/leaderboard">
-            Leaderboard
-          </Link>
-        </li>
+        {items.map(item => (
+          <li key={item.key}>
+            <Link
+              onClick={() => onClick(item.key)}
+              className={`${classes.tab} ${
+                currentTab === item.key ? classes.tabActive : ''
+              }`}
+              to={item.link}>
+              {item.text}
+            </Link>
+          </li>
+        ))}
       </ul>
 
       {isAuth ? (

@@ -30,6 +30,10 @@
   border-bottom: 0px solid #272b2a;
 }
 
+.tabActive {
+  border-bottom: 2px solid #272b2a;
+}
+
 .tab:hover {
   border-bottom: 2px solid #272b2a;
   transition: border-bottom ease 0.1s;
