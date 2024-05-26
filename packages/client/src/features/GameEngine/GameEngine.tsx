@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import styles from './gameEngine.module.scss'
 
 type Position = {
   x: number
@@ -18,7 +19,7 @@ export const GameEngine = () => {
   const [isImagesLoaded, setIsImagesLoaded] = useState<boolean>(false)
   const [isPaused, setIsPaused] = useState<boolean>(false)
 
-  const cellSize = 40
+  const cellSize = 20
   const canvasSize = 800
 
   const headImage = useRef<HTMLImageElement | null>(null)
@@ -62,7 +63,7 @@ export const GameEngine = () => {
         updateGame()
         drawGame(context)
       }
-    }, 300)
+    }, 100)
 
     document.addEventListener('keydown', handleKeyPress)
 
@@ -104,10 +105,7 @@ export const GameEngine = () => {
 
     // Проверка на съедание еды
     if (head.x === food.x && head.y === food.y) {
-      setFood({
-        x: Math.floor(Math.random() * (canvasSize / cellSize)),
-        y: Math.floor(Math.random() * (canvasSize / cellSize)),
-      })
+      setFood(generateFoodPosition(newSnake))
     } else {
       newSnake.pop()
     }
@@ -215,21 +213,41 @@ export const GameEngine = () => {
     }
   }
 
+  const generateFoodPosition = (snake: Position[]): Position => {
+    let newFoodPosition: Position
+    let collision: boolean
+
+    do {
+      collision = false
+      newFoodPosition = {
+        x: Math.floor(Math.random() * (canvasSize / cellSize)),
+        y: Math.floor(Math.random() * (canvasSize / cellSize)),
+      }
+
+      for (const segment of snake) {
+        if (
+          newFoodPosition.x === segment.x &&
+          newFoodPosition.y === segment.y
+        ) {
+          collision = true
+          break
+        }
+      }
+    } while (collision)
+
+    return newFoodPosition
+  }
+
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: '100px',
-      }}>
+    <div className={styles.gameContainer}>
       <canvas
         ref={canvasRef}
         width={canvasSize}
         height={canvasSize}
-        style={{ border: '1px solid black', background: '#292826' }}
+        className={styles.canvas}
       />
       {isGameOver && <div>Game Over</div>}
+      {isPaused && <div>Paused</div>}
     </div>
   )
 }
