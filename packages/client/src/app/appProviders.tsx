@@ -1,6 +1,7 @@
 import { ConfigProvider, ThemeConfig } from 'antd'
 import { RouterProvider } from 'react-router-dom'
 import { appRouter } from './appRoutes'
+import ErrorBoundary from 'shared/utils/error-boundary/ErrorBoundary'
 
 const theme: ThemeConfig = {
   components: {
@@ -12,9 +13,11 @@ const theme: ThemeConfig = {
 
 function AppProviders() {
   return (
-    <ConfigProvider theme={theme}>
-      <RouterProvider router={appRouter()} />
-    </ConfigProvider>
+    <ErrorBoundary>
+      <ConfigProvider theme={theme}>
+        <RouterProvider router={appRouter()} />
+      </ConfigProvider>
+    </ErrorBoundary>
   )
 }
 
