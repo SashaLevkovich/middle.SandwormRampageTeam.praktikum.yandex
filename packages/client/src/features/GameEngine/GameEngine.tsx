@@ -19,8 +19,9 @@ export const GameEngine = () => {
   const [isImagesLoaded, setIsImagesLoaded] = useState<boolean>(false)
   const [isPaused, setIsPaused] = useState<boolean>(false)
 
-  const cellSize = 20
+  const cellSize = 40
   const canvasSize = 800
+  const marginImage = 8
 
   const headImage = useRef<HTMLImageElement | null>(null)
   const bodyImage = useRef<HTMLImageElement | null>(null)
@@ -138,7 +139,7 @@ export const GameEngine = () => {
           context.rotate(angle)
           context.drawImage(
             headImage.current,
-            -cellSize / 2,
+            -cellSize / 2 - marginImage,
             -cellSize / 2,
             cellSize,
             cellSize
@@ -148,7 +149,7 @@ export const GameEngine = () => {
           context.rotate(angle)
           context.drawImage(
             tailImage.current,
-            -cellSize / 2,
+            -cellSize / 2 + marginImage * 2,
             -cellSize / 2,
             cellSize,
             cellSize
@@ -156,6 +157,8 @@ export const GameEngine = () => {
         } else {
           const angle = getAngle(nextSegment, prevSegment)
           context.rotate(angle)
+          context.fillStyle = '#b0703a'
+          context.fillRect(-cellSize / 2, -cellSize / 4, cellSize, cellSize / 3)
           context.drawImage(
             bodyImage.current,
             -cellSize / 2,
