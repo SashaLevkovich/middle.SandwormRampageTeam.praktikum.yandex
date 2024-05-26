@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 import { Link } from 'react-router-dom'
 import classes from './Navbar.module.scss'
-import { items } from './constants'
+import { NAVIGATION_LINKS } from './constants'
 
 /**
  *
@@ -19,7 +19,7 @@ export const Navbar: FC<{ isAuth?: boolean }> = ({ isAuth = true }) => {
   return (
     <nav className={classes.navbarWrapper}>
       <ul className={classes.navbarList}>
-        {items.map(item => (
+        {NAVIGATION_LINKS.map(item => (
           <li key={item.key}>
             <Link
               onClick={() => onClick(item.key)}

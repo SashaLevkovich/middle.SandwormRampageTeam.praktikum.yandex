@@ -1,4 +1,4 @@
-export const items = [
+export const NAVIGATION_LINKS = [
   {
     link: '/profile',
     key: 'profile',
