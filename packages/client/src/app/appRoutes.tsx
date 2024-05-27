@@ -19,6 +19,14 @@ export const appRouter = () =>
       element: <NotFound />,
     },
     {
+      path: '/login',
+      element: <SignIn />,
+    },
+    {
+      path: '/signUp',
+      element: <SignUp />,
+    },
+    {
       element: <Layout bottomSlot={<Navbar />} />,
       path: '/',
       children: [
@@ -26,14 +34,6 @@ export const appRouter = () =>
         {
           path: '/profile',
           element: <Profile />,
-        },
-        {
-          path: '/login',
-          element: <SignIn />,
-        },
-        {
-          path: '/signUp',
-          element: <SignUp />,
         },
         {
           path: '/leaderboard',
