@@ -16,6 +16,18 @@ import { Game } from 'pages/game'
 export const appRouter = () =>
   createBrowserRouter([
     {
+      path: '/*',
+      element: <NotFound />,
+    },
+    {
+      path: '/login',
+      element: <SignIn />,
+    },
+    {
+      path: '/signUp',
+      element: <SignUp />,
+    },
+    {
       element: <Layout bottomSlot={<Navbar />} />,
       path: '/',
       children: [
@@ -43,10 +55,6 @@ export const appRouter = () =>
         {
           path: '/forum',
           element: <Forum />,
-        },
-        {
-          path: '/*',
-          element: <NotFound />,
         },
       ],
     },
