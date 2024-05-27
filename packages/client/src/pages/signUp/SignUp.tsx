@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { Button, Flex, Form, Input, Typography } from 'antd'
 
 import classes from './SignUp.module.scss'
+import { ButtonCustom } from 'components/Button'
 
 type FieldType = {
   login: string
@@ -78,11 +79,9 @@ export const SignUp: FC = () => {
           </Form.Item>
 
           <Form.Item>
-            <Button
-              type="default"
-              shape="round"
-              size="large"
+            <ButtonCustom
               htmlType="submit"
+              size="large"
               style={{
                 margin: '85px 0 0',
                 padding: '12px 0',
@@ -90,7 +89,7 @@ export const SignUp: FC = () => {
               }}
               block>
               Sign up
-            </Button>
+            </ButtonCustom>
           </Form.Item>
         </Form>
 
@@ -98,9 +97,12 @@ export const SignUp: FC = () => {
           <Typography>
             <Typography.Text>Have account?</Typography.Text>
           </Typography>
-          <Button type="link" className={classes.backBtn}>
+          <ButtonCustom
+            style={{ paddingLeft: '9px' }}
+            type="link"
+            className={classes.backBtn}>
             Back
-          </Button>
+          </ButtonCustom>
         </Flex>
       </div>
     </div>

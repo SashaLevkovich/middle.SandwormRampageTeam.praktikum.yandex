@@ -2,12 +2,10 @@ import { FC } from 'react'
 import classes from './GameStart.module.scss'
 import linesImg from '../../shared/assets/images/Lines.svg'
 import moonsImg from '../../shared/assets/images/Moons.svg'
-import { GameOver } from 'components/GameOver'
 
 export const GameStart: FC = () => {
   return (
     <>
-      <GameOver />
       <div className={classes.startPageWrapper}>
         <div className={classes.absoluteWrapper}>
           <div className={classes.blackCircle} />

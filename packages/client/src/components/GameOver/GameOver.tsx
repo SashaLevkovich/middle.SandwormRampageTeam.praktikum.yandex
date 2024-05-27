@@ -1,19 +1,23 @@
 import { FC } from 'react'
 import classes from './GameOver.module.scss'
-import { Button } from 'antd'
+import { ButtonCustom } from 'components/Button'
 
-export const GameOver: FC = () => {
+type GameOverProps = {
+  score?: string
+}
+
+export const GameOver: FC<GameOverProps> = ({ score }) => {
   return (
     <div className={classes.gameOverPageWrapper}>
       <h1 className={classes.gameOverPageWrapperTitle}>Game Over</h1>
-      <h3 className={classes.gameOverPageWrapperScore}>Score: 228</h3>
+      <h3 className={classes.gameOverPageWrapperScore}>Score: {score}</h3>
       <div className={classes.gameOverPageWrapperButtons}>
-        <Button shape="round" size="large">
+        <ButtonCustom customType="white" size="large">
           Retry
-        </Button>
-        <Button shape="round" size="large">
+        </ButtonCustom>
+        <ButtonCustom customType="sand" size="large">
           Back to menu
-        </Button>
+        </ButtonCustom>
       </div>
     </div>
   )
