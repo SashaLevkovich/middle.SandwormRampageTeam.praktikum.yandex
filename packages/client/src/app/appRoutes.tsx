@@ -15,6 +15,10 @@ import { SignUp } from 'pages/signUp'
 export const appRouter = () =>
   createBrowserRouter([
     {
+      path: '/*',
+      element: <NotFound />,
+    },
+    {
       path: '/login',
       element: <SignIn />,
     },
@@ -38,10 +42,6 @@ export const appRouter = () =>
         {
           path: '/forum',
           element: <Forum />,
-        },
-        {
-          path: '/*',
-          element: <NotFound />,
         },
       ],
     },
