@@ -28,8 +28,7 @@ export const SignUp: FC = () => {
           initialValues={{ remember: true }}
           onFinish={finishHandler}
           onFinishFailed={failedFinishHandler}
-          autoComplete="off"
-          className={classes.signUp__form}>
+          autoComplete="off">
           <Typography>
             <Typography.Title
               className={classes.title}
