@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import styles from './gameEngine.module.scss'
+import styles from './GameEngine.module.scss'
 
 type Position = {
   x: number
