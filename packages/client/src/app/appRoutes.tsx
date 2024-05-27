@@ -11,7 +11,6 @@ import { Leaderboard } from 'pages/leaderboard'
 import { Profile } from 'pages/profile'
 import { SignIn } from 'pages/signIn'
 import { SignUp } from 'pages/signUp'
-import { GameOver } from 'pages/game/GameOver'
 
 export const appRouter = () =>
   createBrowserRouter([
@@ -32,10 +31,6 @@ export const appRouter = () =>
       path: '/',
       children: [
         { index: true, element: <GameStart /> },
-        {
-          path: '/game-over',
-          element: <GameOver />,
-        },
         {
           path: '/profile',
           element: <Profile />,
