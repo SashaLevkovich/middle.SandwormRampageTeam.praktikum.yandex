@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Button, Flex, Form, Input, Typography } from 'antd'
+import { Flex, Form, Input, Typography } from 'antd'
 
 import classes from './SignUp.module.scss'
 import { ButtonCustom } from 'components/Button'
