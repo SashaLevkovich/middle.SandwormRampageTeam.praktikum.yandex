@@ -1,0 +1,37 @@
+@import '../../shared/styles/colors';
+@import '../../shared/styles/shadows';
+
+.background {
+  width: 480px;
+  height: 174px;
+  background: #fff;
+  border-radius: 30px;
+  padding: 2rem;
+  box-shadow: $block-shadow;
+}
+
+.name {
+  font-size: 64px;
+}
+
+.avatar {
+  width: 200px;
+  height: 200px;
+  background-color: $color-text-primary;
+  border-radius: 50%;
+
+  label {
+    font-family: Koulen, sans-serif;
+    font-size: 100px;
+    color: $color-text-primary;
+    text-shadow: $text-shadow;
+
+    line-height: 100px;
+    padding-left: 0.5rem;
+  }
+}
+
+.flexbox {
+  display: flex;
+  gap: 2rem;
+}
