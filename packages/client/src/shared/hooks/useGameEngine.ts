@@ -1,5 +1,4 @@
-import { useState, useEffect, useRef, MutableRefObject } from 'react'
-import { generateFoodPosition, getAngle } from 'shared/utils/getters'
+import { useState, useEffect, MutableRefObject } from 'react'
 
 type Position = {
   x: number
@@ -13,6 +12,7 @@ const useGameEngine = (
   canvasSize: number,
   marginImage: number,
   imagesRef: MutableRefObject<{ [key: string]: HTMLImageElement | null }>,
+  canvasRef: MutableRefObject<HTMLCanvasElement | null>,
   isImagesLoaded: boolean
 ) => {
   const [snake, setSnake] = useState<Position[]>(initialSnake)
@@ -22,8 +22,6 @@ const useGameEngine = (
   const [isPaused, setIsPaused] = useState(false)
 
   useEffect(() => {
-    const canvasRef = useRef<HTMLCanvasElement>(null)
-
     const updateGame = () => {
       const newSnake = [...snake]
       const head = {
@@ -56,7 +54,7 @@ const useGameEngine = (
 
       // Проверка на съедание еды
       if (head.x === food.x && head.y === food.y) {
-        setFood(generateFoodPosition({ snake: newSnake, cellSize, canvasSize }))
+        setFood(generateFoodPosition(newSnake))
       } else {
         newSnake.pop()
       }
@@ -146,6 +144,48 @@ const useGameEngine = (
 
     return () => clearInterval(interval)
   }, [snake, food, direction, isGameOver, isImagesLoaded, isPaused])
+
+  const generateFoodPosition = (snake: Position[]): Position => {
+    let newFoodPosition: Position
+    let collision: boolean
+
+    do {
+      collision = false
+      newFoodPosition = {
+        x: Math.floor(Math.random() * (canvasSize / cellSize)),
+        y: Math.floor(Math.random() * (canvasSize / cellSize)),
+      }
+
+      for (const segment of snake) {
+        if (
+          newFoodPosition.x === segment.x &&
+          newFoodPosition.y === segment.y
+        ) {
+          collision = true
+          break
+        }
+      }
+    } while (collision)
+
+    return newFoodPosition
+  }
+
+  const getAngle = (segment1: Position, segment2: Position) => {
+    const dx = segment1.x - segment2.x
+    const dy = segment1.y - segment2.y
+    if (Math.abs(dx) > 2) {
+      return dx > 0 ? Math.PI : 0
+    }
+    if (Math.abs(dy) > 2) {
+      return dy > 0 ? -Math.PI / 2 : Math.PI / 2
+    }
+
+    if (segment1.x < segment2.x) return Math.PI
+    if (segment1.x > segment2.x) return 0
+    if (segment1.y < segment2.y) return -Math.PI / 2
+    if (segment1.y > segment2.y) return Math.PI / 2
+    return 0
+  }
 
   return {
     snake,

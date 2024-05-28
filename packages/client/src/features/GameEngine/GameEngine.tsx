@@ -41,6 +41,7 @@ export const GameEngine = () => {
       canvasSize,
       marginImage,
       imagesRef,
+      canvasRef,
       isImagesLoaded
     )
 
