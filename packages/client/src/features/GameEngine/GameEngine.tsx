@@ -16,9 +16,9 @@ export const GameEngine = () => {
   ])
   const [food, setFood] = useState<Position>({ x: 15, y: 15 })
   const [direction, setDirection] = useState<Position>({ x: 1, y: 0 })
-  const [isGameOver, setIsGameOver] = useState<boolean>(false)
-  const [isImagesLoaded, setIsImagesLoaded] = useState<boolean>(false)
-  const [isPaused, setIsPaused] = useState<boolean>(false)
+  const [isGameOver, setIsGameOver] = useState(false)
+  const [isImagesLoaded, setIsImagesLoaded] = useState(false)
+  const [isPaused, setIsPaused] = useState(false)
 
   const cellSize = 40
   const canvasSize = 800
