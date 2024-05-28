@@ -12,6 +12,13 @@ const theme: ThemeConfig = {
       defaultBg: '#f48014',
       defaultColor: '#fff',
       fontWeight: 'bold',
+      defaultHoverBg: '#d46b09',
+      defaultHoverColor: '#fff',
+      defaultActiveBg: '#d46b09',
+      defaultActiveBorderColor: 'transparent',
+      defaultActiveColor: '#fff',
+      contentFontSizeLG: 24,
+      defaultHoverBorderColor: 'transparent',
     },
     Form: {
       itemMarginBottom: 15,
