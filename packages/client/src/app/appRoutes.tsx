@@ -23,6 +23,14 @@ export const appRouter = () =>
       element: <UnexpectedCondition />,
     },
     {
+      path: '/login',
+      element: <SignIn />,
+    },
+    {
+      path: '/signUp',
+      element: <SignUp />,
+    },
+    {
       element: <Layout bottomSlot={<Navbar />} />,
       path: '/',
       children: [

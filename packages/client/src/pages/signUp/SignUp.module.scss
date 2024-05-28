@@ -1,0 +1,33 @@
+@import '../../shared/styles/colors.scss';
+@import '../../shared/styles/shadows.scss';
+
+.root {
+  min-height: 100%;
+  padding: 48px 72px;
+  box-sizing: border-box;
+  background: $color-background-header url('background.svg');
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
+.formContainer {
+  width: 500px;
+  background: #fff;
+  padding: 60px;
+  border-radius: 30px;
+  box-shadow: $block-shadow;
+}
+
+.title {
+  text-align: center;
+}
+
+.input {
+  padding: 22px 25px;
+  border-radius: 30px;
+  line-height: 1;
+}
+
+.backBtn {
+  color: $color-orange-link;
+}
