@@ -1,3 +1,4 @@
+import { Flex } from 'antd'
 import { useEffect, useRef, useState } from 'react'
 import styles from './GameEngine.module.scss'
 
@@ -242,7 +243,7 @@ export const GameEngine = () => {
   }
 
   return (
-    <div className={styles.gameContainer}>
+    <Flex align="center" justify="center">
       <canvas
         ref={canvasRef}
         width={canvasSize}
@@ -251,6 +252,6 @@ export const GameEngine = () => {
       />
       {isGameOver && <div>Game Over</div>}
       {isPaused && <div>Paused</div>}
-    </div>
+    </Flex>
   )
 }
