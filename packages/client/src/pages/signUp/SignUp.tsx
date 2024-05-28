@@ -32,7 +32,7 @@ export const SignUp: FC = () => {
           <Typography>
             <Typography.Title
               className={classes.title}
-              style={{ margin: '0 0 85px' }}>
+              style={{ margin: '0 0 85px', fontSize: 36, fontWeight: 400 }}>
               Registration
             </Typography.Title>
           </Typography>

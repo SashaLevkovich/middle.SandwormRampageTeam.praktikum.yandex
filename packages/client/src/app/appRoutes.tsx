@@ -4,7 +4,7 @@ import { Navbar } from 'components/Navbar'
 
 import { Layout } from 'features/Layout'
 
-import { NotFound } from 'pages/errors'
+import { NotFound, UnexpectedCondition } from 'pages/errors'
 import { Forum } from 'pages/forum'
 import { GameStart } from 'pages/gameStart'
 import { Leaderboard } from 'pages/leaderboard'
@@ -18,6 +18,10 @@ export const appRouter = () =>
     {
       path: '/*',
       element: <NotFound />,
+    },
+    {
+      path: '/serverError',
+      element: <UnexpectedCondition />,
     },
     {
       path: '/login',
