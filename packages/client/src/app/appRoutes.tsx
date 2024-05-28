@@ -36,7 +36,7 @@ export const appRouter = () =>
       element: <Layout bottomSlot={<Navbar />} />,
       path: '/',
       children: [
-        { index: true, element: <Game /> },
+        { index: true, element: <GameStart /> },
         {
           path: '/landing',
           element: <Landing />,

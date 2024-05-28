@@ -7,14 +7,16 @@
 
   &Section {
     height: 100vh;
-    padding: 0 150px;
+    padding: 50px 150px;
 
-    &Title {
+    &Title,
+    &Link {
       font-size: 172px;
       color: $color-text-primary;
       font-family: Koulen, serif;
       font-weight: 400;
       margin: 0;
+      line-height: 122px;
     }
 
     &Text {
@@ -23,6 +25,17 @@
       font-size: 29px;
       color: $color-text-primary;
       max-width: 715px;
+    }
+
+    &Link {
+      color: $color-landing-page;
+      border-bottom: 0px solid $color-landing-page;
+      transition: border-bottom ease-out 0.1s;
+    }
+
+    &Link:hover {
+      color: #000 !important;
+      border-bottom: 10px solid #000;
     }
 
     &1 {
@@ -54,9 +67,14 @@
     }
 
     &5 {
+      padding-bottom: 133px;
       background: $color-background-header
         url('background-without-text-upside-down.svg') no-repeat;
       background-size: cover;
+
+      & > p {
+        color: $color-landing-page;
+      }
     }
   }
 }

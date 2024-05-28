@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from './GameEngine.module.scss'
+import { GameOver } from 'components/GameOver'
 
 type Position = {
   x: number
@@ -249,7 +250,7 @@ export const GameEngine = () => {
         height={canvasSize}
         className={styles.canvas}
       />
-      {isGameOver && <div>Game Over</div>}
+      {isGameOver && <GameOver />}
       {isPaused && <div>Paused</div>}
     </div>
   )

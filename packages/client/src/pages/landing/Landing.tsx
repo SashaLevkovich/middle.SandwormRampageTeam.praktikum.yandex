@@ -10,6 +10,7 @@ export const Landing: FC = () => {
         className={`${classes.landingPageSection} ${classes.landingPageSection1}`}
         justify="end"
         align="end"
+        gap={23}
         vertical>
         <h1 className={classes.landingPageSectionTitle}>Worm</h1>
         <p className={classes.landingPageSectionText}>Created by team 3</p>
@@ -19,6 +20,7 @@ export const Landing: FC = () => {
         className={`${classes.landingPageSection} ${classes.landingPageSection2}`}
         justify="start"
         align="start"
+        gap={23}
         vertical>
         <h1 className={classes.landingPageSectionTitle}>About game</h1>
         <p className={classes.landingPageSectionText}>
@@ -32,6 +34,7 @@ export const Landing: FC = () => {
         className={`${classes.landingPageSection} ${classes.landingPageSection3}`}
         justify="start"
         align="end"
+        gap={23}
         vertical>
         <h1 className={classes.landingPageSectionTitle}>LeaderBoards</h1>
         <p className={classes.landingPageSectionText}>
@@ -44,21 +47,23 @@ export const Landing: FC = () => {
         className={`${classes.landingPageSection} ${classes.landingPageSection4}`}
         justify="start"
         align="start"
+        gap={23}
         vertical>
         <h1 className={classes.landingPageSectionTitle}>Forum</h1>
         <p className={classes.landingPageSectionText}>
-          You can also start a thread in our forum page. Don’t be a loner, talk
-          to others and maybe get some insights about how to become the best at
-          our game.
+          You can also start a thread in our forum page. Don’t be a stranger,
+          talk to others and maybe get some insights about how to become the
+          best at our game.
         </p>
       </Flex>
 
       <Flex
         className={`${classes.landingPageSection} ${classes.landingPageSection5}`}
-        justify="start"
-        align="end"
+        justify="end"
+        align="start"
+        gap={23}
         vertical>
-        <Link className={classes.landingPageSectionTitle} to="/">
+        <Link className={classes.landingPageSectionLink} to="/">
           Go to Game
         </Link>
       </Flex>
