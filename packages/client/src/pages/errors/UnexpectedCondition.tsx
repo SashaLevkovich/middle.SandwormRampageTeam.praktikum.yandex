@@ -1,5 +1,6 @@
 import { FC } from 'react'
+import { GeneralErrorLayout } from 'pages/errors/GeneralErrorLayout'
 
 export const UnexpectedCondition: FC = () => {
-  return <div>500 Unexpected Condition</div>
+  return <GeneralErrorLayout name="500" description="server error" />
 }
