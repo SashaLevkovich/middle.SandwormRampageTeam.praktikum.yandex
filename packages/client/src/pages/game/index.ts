@@ -1,1 +1,1 @@
-export { GameStart } from './GameStart'
+export { Game } from './Game'

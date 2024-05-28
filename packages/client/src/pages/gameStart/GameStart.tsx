@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { Link } from 'react-router-dom'
 import classes from './GameStart.module.scss'
 import linesImg from '../../shared/assets/images/Lines.svg'
 import moonsImg from '../../shared/assets/images/Moons.svg'
@@ -14,7 +15,9 @@ export const GameStart: FC = () => {
         <img className={classes.lines} src={linesImg} alt="pattern" />
         <img className={classes.moons} src={moonsImg} alt="moons" />
       </div>
-      <a className={classes.startPageWrapperTitle}>Start</a>
+      <Link className={classes.startPageWrapperTitle} to="game">
+        Start
+      </Link>
     </div>
   )
 }
