@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import classes from './GameOver.module.scss'
-import { ButtonCustom } from 'components/Button'
+import { ButtonCustom } from 'components/ButtonCustom'
 
 type GameOverProps = {
   score?: string

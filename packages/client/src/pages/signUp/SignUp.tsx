@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { Flex, Form, Input, Typography } from 'antd'
 
 import classes from './SignUp.module.scss'
-import { ButtonCustom } from 'components/Button'
+import { ButtonCustom } from 'components/ButtonCustom'
 
 type FieldType = {
   login: string
