@@ -1,7 +1,7 @@
 import { ConfigProvider, ThemeConfig } from 'antd'
 import { RouterProvider } from 'react-router-dom'
-import { appRouter } from './appRoutes'
 import ErrorBoundary from 'shared/utils/error-boundary/ErrorBoundary'
+import { appRouter } from './appRoutes'
 
 const theme: ThemeConfig = {
   token: {

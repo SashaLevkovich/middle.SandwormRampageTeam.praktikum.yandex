@@ -1,0 +1,51 @@
+@import 'shared/styles/sizes.scss';
+@import 'shared/styles/colors.scss';
+@import 'shared/styles/shadowsAndGradients.scss';
+
+.wrapper {
+  position: relative;
+  height: $page-height;
+  background: $forum-background;
+  z-index: 2;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-image: url('forum-background.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 1;
+  }
+
+  .container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 55px 65px 0;
+    z-index: 3;
+  }
+
+  .buttonBlock {
+    max-width: 400px;
+    width: 100%;
+  }
+
+  .title {
+    font-family: 'Koulen', sans-serif;
+    text-transform: uppercase;
+    font-size: 100px;
+    line-height: 55px;
+    margin: 0 0 10px 0;
+  }
+
+  .topicTitle {
+    display: inline-block;
+    width: 100%;
+    text-align: right;
+    font-size: 22px;
+  }
+}
