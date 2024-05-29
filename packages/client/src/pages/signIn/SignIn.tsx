@@ -1,31 +1,18 @@
 import { FC } from 'react'
 import { Button, Flex, Form, Input, Typography } from 'antd'
 
+import {
+  SignInFieldType,
+  SignInFieldValidationRules,
+} from 'shared/constants/validationRules'
+
 import classes from 'pages/signUp/SignUp.module.scss'
 
-type FieldType = {
-  login: string
-  password: string
-}
-
 export const SignIn: FC = () => {
-  const finishHandler = () => {
-    console.log('finishHandler')
-  }
-
-  const failedFinishHandler = () => {
-    console.log('failedFinishHandler')
-  }
-
   return (
     <div className={classes.root}>
       <div className={classes.formContainer}>
-        <Form
-          name="basic"
-          initialValues={{ remember: true }}
-          onFinish={finishHandler}
-          onFinishFailed={failedFinishHandler}
-          autoComplete="off">
+        <Form name="signIn" autoComplete="off">
           <Typography>
             <Typography.Title
               className={classes.title}
@@ -34,7 +21,10 @@ export const SignIn: FC = () => {
             </Typography.Title>
           </Typography>
 
-          <Form.Item<FieldType> name="login">
+          <Form.Item<SignInFieldType>
+            name="login"
+            validateTrigger={['onBlur', 'onFocus']}
+            rules={SignInFieldValidationRules['login']}>
             <Input
               className={classes.input}
               size="large"
@@ -42,7 +32,10 @@ export const SignIn: FC = () => {
             />
           </Form.Item>
 
-          <Form.Item<FieldType> name="password">
+          <Form.Item<SignInFieldType>
+            name="password"
+            validateTrigger={['onBlur', 'onFocus']}
+            rules={SignInFieldValidationRules['password']}>
             <Input.Password
               className={classes.input}
               size="large"

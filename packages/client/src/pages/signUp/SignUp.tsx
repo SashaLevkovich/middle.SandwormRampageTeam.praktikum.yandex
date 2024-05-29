@@ -1,44 +1,31 @@
 import { FC } from 'react'
 import { Flex, Form, Input, Typography } from 'antd'
 
+import {
+  SignUpFieldType,
+  SignUpFieldValidationRules,
+} from 'shared/constants/validationRules'
+
 import classes from './SignUp.module.scss'
 import { ButtonCustom } from 'components/ButtonCustom'
 
-type FieldType = {
-  login: string
-  email: string
-  fullName: string
-  password: string
-  passwordConfirm: string
-}
-
 export const SignUp: FC = () => {
-  const finishHandler = () => {
-    console.log('finishHandler')
-  }
-
-  const failedFinishHandler = () => {
-    console.log('failedFinishHandler')
-  }
-
   return (
     <div className={classes.root}>
       <div className={classes.formContainer}>
-        <Form
-          name="basic"
-          initialValues={{ remember: true }}
-          onFinish={finishHandler}
-          onFinishFailed={failedFinishHandler}
-          autoComplete="off">
+        <Form name="signUp" autoComplete="off">
           <Typography>
             <Typography.Title
               className={classes.title}
-              style={{ margin: '0 0 85px', fontSize: 36, fontWeight: 400 }}>
+              style={{ margin: '0 0 25px', fontSize: 36, fontWeight: 400 }}>
               Registration
             </Typography.Title>
           </Typography>
 
-          <Form.Item<FieldType> name="login">
+          <Form.Item<SignUpFieldType>
+            name="login"
+            validateTrigger={['onBlur', 'onFocus']}
+            rules={SignUpFieldValidationRules['login']}>
             <Input
               className={classes.input}
               size="large"
@@ -46,7 +33,10 @@ export const SignUp: FC = () => {
             />
           </Form.Item>
 
-          <Form.Item<FieldType> name="email">
+          <Form.Item<SignUpFieldType>
+            name="email"
+            validateTrigger={['onBlur', 'onFocus']}
+            rules={SignUpFieldValidationRules['email']}>
             <Input
               className={classes.input}
               size="large"
@@ -54,15 +44,33 @@ export const SignUp: FC = () => {
             />
           </Form.Item>
 
-          <Form.Item<FieldType> name="fullName">
+          <Form.Item<SignUpFieldType>
+            name="first_name"
+            validateTrigger={['onBlur', 'onFocus']}
+            rules={SignUpFieldValidationRules['first_name']}>
             <Input
               className={classes.input}
               size="large"
-              placeholder="Full name"
+              placeholder="First name *"
             />
           </Form.Item>
 
-          <Form.Item<FieldType> name="password">
+          <Form.Item<SignUpFieldType>
+            name="second_name"
+            validateTrigger={['onBlur', 'onFocus']}
+            rules={SignUpFieldValidationRules['second_name']}>
+            <Input
+              className={classes.input}
+              size="large"
+              placeholder="Second name *"
+            />
+          </Form.Item>
+
+          <Form.Item<SignUpFieldType>
+            name="password"
+            validateTrigger={['onBlur', 'onFocus']}
+            hasFeedback
+            rules={SignUpFieldValidationRules['password']}>
             <Input.Password
               className={classes.input}
               size="large"
@@ -70,7 +78,11 @@ export const SignUp: FC = () => {
             />
           </Form.Item>
 
-          <Form.Item<FieldType> name="password">
+          <Form.Item<SignUpFieldType>
+            name="confirm"
+            dependencies={['password']}
+            hasFeedback
+            rules={SignUpFieldValidationRules['confirm']}>
             <Input.Password
               className={classes.input}
               size="large"
@@ -83,7 +95,7 @@ export const SignUp: FC = () => {
               htmlType="submit"
               size="large"
               style={{
-                margin: '85px 0 0',
+                margin: '45px 0 0',
                 padding: '12px 0',
                 boxSizing: 'content-box',
               }}
