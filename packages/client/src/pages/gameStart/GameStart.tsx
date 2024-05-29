@@ -3,6 +3,8 @@ import { FC } from 'react'
 import linesImg from 'shared/assets/images/Lines.svg'
 import moonsImg from 'shared/assets/images/Moons.svg'
 
+import { Link } from 'react-router-dom'
+
 import classes from './GameStart.module.scss'
 
 export const GameStart: FC = () => {
@@ -16,7 +18,9 @@ export const GameStart: FC = () => {
         <img className={classes.lines} src={linesImg} alt="pattern" />
         <img className={classes.moons} src={moonsImg} alt="moons" />
       </div>
-      <a className={classes.startPageWrapperTitle}>Start</a>
+      <Link className={classes.startPageWrapperTitle} to="game">
+        Start
+      </Link>
     </div>
   )
 }

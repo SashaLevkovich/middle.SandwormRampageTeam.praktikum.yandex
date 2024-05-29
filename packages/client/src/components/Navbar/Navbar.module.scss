@@ -2,12 +2,14 @@
 @import 'shared/styles/sizes.scss';
 
 .navbarWrapper {
-  position: relative;
+  position: fixed;
+  bottom: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 37px 63px;
   height: $header-height;
+  width: 100%;
   background-color: $color-background-header;
   z-index: 5;
 }
