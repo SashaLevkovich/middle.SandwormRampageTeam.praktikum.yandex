@@ -42,9 +42,10 @@
       line-height: 122px;
     }
 
-    &Text {
+    &Text,
+    &LinkSmall {
       margin: 0;
-      font-weight: 275;
+      font-family: Kulim Park ExtraLight;
       font-size: 29px;
       color: $color-text-primary;
       max-width: 715px;
@@ -58,6 +59,10 @@
       &:hover {
         color: #000 !important;
         border-bottom: 10px solid #000;
+      }
+
+      &Small {
+        color: $color-link-primary;
       }
     }
 
@@ -80,6 +85,10 @@
       background-position: 50% 86%;
       background-attachment: fixed;
       background-size: contain;
+
+      & > p {
+        text-align: end;
+      }
     }
 
     &4 {

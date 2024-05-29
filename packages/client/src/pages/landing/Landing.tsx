@@ -15,7 +15,7 @@ export const Landing: FC = () => {
         document.body.scrollHeight ===
           window.innerHeight + Math.round(window.scrollY)
       )
-      setIsTopOfAPage(window.scrollY <= window.innerHeight)
+      setIsTopOfAPage(window.scrollY <= window.innerHeight / 2)
     }
     document.addEventListener('scroll', scrollHandler)
     return () => {
@@ -36,6 +36,13 @@ export const Landing: FC = () => {
           vertical>
           <h1 className={classes.landingPageSectionTitle}>{section.title}</h1>
           <p className={classes.landingPageSectionText}>{section.text}</p>
+          {section.linkTo && (
+            <Link
+              className={classes.landingPageSectionLinkSmall}
+              to={section.linkTo}>
+              {section.linkText}
+            </Link>
+          )}
         </Flex>
       ))}
 
