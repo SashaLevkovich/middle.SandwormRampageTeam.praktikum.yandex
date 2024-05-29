@@ -19,6 +19,7 @@ const theme: ThemeConfig = {
       fontWeight: 'normal',
       paddingInline: 25,
       fontSize: 24,
+      defaultHoverBg: '#fff',
       defaultHoverBorderColor: '#F48014',
       defaultHoverColor: '#F48014',
     },
