@@ -6,7 +6,7 @@
   height: 174px;
   background: #fff;
   border-radius: 30px;
-  padding: 2rem;
+  padding: 32px;
   box-shadow: $block-shadow;
 }
 
@@ -27,11 +27,11 @@
     text-shadow: $text-shadow;
 
     line-height: 100px;
-    padding-left: 0.5rem;
+    padding-left: 8px;
   }
 }
 
 .flexbox {
   display: flex;
-  gap: 2rem;
+  gap: 32px;
 }
