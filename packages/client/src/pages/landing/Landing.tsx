@@ -1,10 +1,15 @@
 import { FC, useEffect, useState } from 'react'
-import classes from './Landing.module.scss'
-import { Flex } from 'antd'
+
 import { Link } from 'react-router-dom'
+
+import { Flex } from 'antd'
+
 import { LANDING_PAGE_SECTIONS } from 'pages/landing/constants'
-import chevronDown from '../../shared/assets/icons/chevronDown.svg'
-import chevronUp from '../../shared/assets/icons/chevronUp.svg'
+
+import chevronDown from 'shared/assets/icons/chevronDown.svg'
+import chevronUp from 'shared/assets/icons/chevronUp.svg'
+
+import classes from './Landing.module.scss'
 
 export const Landing: FC = () => {
   const [isBottomOfAPage, setIsBottomOfAPage] = useState(false)
