@@ -4,6 +4,7 @@ import useGameEngine from 'shared/hooks/useGameEngine'
 import useKeyboardControls from 'shared/hooks/useKeyboardControls'
 import useLoadImages from 'shared/hooks/useLoadImages'
 import styles from './GameEngine.module.scss'
+import { GameOver } from 'components/GameOver'
 
 type Position = {
   x: number
@@ -55,7 +56,7 @@ export const GameEngine = () => {
         height={canvasSize}
         className={styles.canvas}
       />
-      {isGameOver && <div>Game Over</div>}
+      {isGameOver && <GameOver />}
       {isPaused && <div>Paused</div>}
     </Flex>
   )

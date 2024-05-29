@@ -1,0 +1,112 @@
+@import '../../shared/styles/sizes.scss';
+@import '../../shared/styles/colors.scss';
+
+.landingPage {
+  height: 100%;
+  background: $color-background-header;
+
+  &ScrollerUp,
+  &ScrollerDown {
+    position: fixed;
+    opacity: 0;
+    left: 0;
+    bottom: 103px;
+    height: fit-content;
+    z-index: 100;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color, opacity ease-out 0.2s;
+
+    &:hover {
+      opacity: 1;
+      background-color: rgba(0, 0, 0, 0.5);
+      transition: background-color, opacity ease-in 0.2s;
+    }
+  }
+
+  &ScrollerUp {
+    top: 0;
+  }
+
+  &Section {
+    height: 100vh;
+    padding: 50px 150px;
+
+    &Title,
+    &Link {
+      font-size: 172px;
+      color: $color-text-primary;
+      font-family: Koulen, serif;
+      font-weight: 400;
+      margin: 0;
+      line-height: 122px;
+    }
+
+    &Text,
+    &LinkSmall {
+      margin: 0;
+      font-family: Kulim Park ExtraLight;
+      font-size: 29px;
+      color: $color-text-primary;
+      max-width: 715px;
+    }
+
+    &Link {
+      color: $color-landing-page;
+      border-bottom: 0px solid $color-landing-page;
+      transition: border-bottom ease-out 0.1s;
+
+      &:hover {
+        color: #000 !important;
+        border-bottom: 10px solid #000;
+      }
+
+      &Small {
+        color: $color-link-primary;
+      }
+    }
+
+    &1 {
+      background: url('/background-without-text.svg') no-repeat;
+      background-position: 50% 50%;
+      background-size: cover;
+      padding-bottom: 150px;
+    }
+
+    &2 {
+      background: $color-landing-page url('about-game.svg') no-repeat;
+      background-position: 50% 85%;
+      background-attachment: fixed;
+      background-size: contain;
+    }
+
+    &3 {
+      background: $color-landing-page url('leaderboard.svg') no-repeat;
+      background-position: 50% 86%;
+      background-attachment: fixed;
+      background-size: contain;
+
+      & > p {
+        text-align: end;
+      }
+    }
+
+    &4 {
+      background: $color-landing-page url('forum.svg') no-repeat;
+      background-position: 50% 86%;
+      background-attachment: fixed;
+      background-size: contain;
+    }
+
+    &5 {
+      padding-bottom: 133px;
+      background: $color-background-header
+        url('background-without-text-upside-down.svg') no-repeat;
+      background-size: cover;
+
+      & > p {
+        color: $color-landing-page;
+      }
+    }
+  }
+}
