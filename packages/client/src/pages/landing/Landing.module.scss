@@ -5,6 +5,29 @@
   height: 100%;
   background: $color-background-header;
 
+  &ScrollerUp,
+  &ScrollerDown {
+    position: fixed;
+    opacity: 0;
+    left: 0;
+    bottom: 103px;
+    height: fit-content;
+    z-index: 100;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color, opacity ease-out 0.2s;
+
+    &:hover {
+      opacity: 1;
+      background-color: rgba(0, 0, 0, 0.5);
+      transition: background-color, opacity ease-in 0.2s;
+    }
+  }
+
+  &ScrollerUp {
+    top: 0;
+  }
+
   &Section {
     height: 100vh;
     padding: 50px 150px;
@@ -31,11 +54,11 @@
       color: $color-landing-page;
       border-bottom: 0px solid $color-landing-page;
       transition: border-bottom ease-out 0.1s;
-    }
 
-    &Link:hover {
-      color: #000 !important;
-      border-bottom: 10px solid #000;
+      &:hover {
+        color: #000 !important;
+        border-bottom: 10px solid #000;
+      }
     }
 
     &1 {
