@@ -63,7 +63,7 @@ export const SignUpFieldValidationRules: ValidatorSchema<
     },
   ],
   first_name: [
-    { required: true, message: 'Please input your E-mail!' },
+    { required: true, message: 'Please input your first name!' },
     {
       type: 'string',
       min: 3,
@@ -76,7 +76,7 @@ export const SignUpFieldValidationRules: ValidatorSchema<
     },
   ],
   second_name: [
-    { required: true, message: 'Please input your E-mail!' },
+    { required: true, message: 'Please input your second name!' },
     {
       type: 'string',
       min: 3,
