@@ -1,9 +1,10 @@
-@import '../../shared/styles/colors.scss';
+@import 'shared/styles/colors.scss';
 
 .root {
   min-height: 100%;
   padding: 100px 100px;
-  background: $color-start-page-background url('/errors-background.svg') no-repeat;
+  background: $color-start-page-background url('/errors-background.svg')
+    no-repeat;
   background-size: cover;
 }
 
@@ -16,7 +17,7 @@
 
 .text {
   color: $color-text-primary;
-  font-family: "Kumbh Sans Regular", sans-serif;
+  font-family: 'Kumbh Sans Regular', sans-serif;
   font-size: 34px;
 
   margin-bottom: 76px;
@@ -24,7 +25,7 @@
 
 .link {
   color: $color-text-primary;
-  font-family: "Kumbh Sans Regular", sans-serif;
+  font-family: 'Kumbh Sans Regular', sans-serif;
   font-size: 24px;
   margin-left: 90px;
 }
