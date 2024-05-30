@@ -5,14 +5,30 @@ import {
   SignInFieldType,
   SignInFieldValidationRules,
 } from 'shared/constants/validationRules'
+import AuthService, { SignInParams } from 'app/api/entities/auth'
 
 import classes from 'pages/signUp/SignUp.module.scss'
 
+const authService = new AuthService()
+
 export const SignIn: FC = () => {
+  const onFinish = (values: SignInParams) => {
+    authService
+      .signIn(values)
+      .then(() => {
+        authService.getUser().then(resp => {
+          console.log(resp)
+        })
+      })
+      .catch(e => {
+        console.log(e)
+      })
+  }
+
   return (
     <div className={classes.root}>
       <div className={classes.formContainer}>
-        <Form name="signIn" autoComplete="off">
+        <Form name="signIn" autoComplete="off" onFinish={onFinish}>
           <Typography>
             <Typography.Title
               className={classes.title}
