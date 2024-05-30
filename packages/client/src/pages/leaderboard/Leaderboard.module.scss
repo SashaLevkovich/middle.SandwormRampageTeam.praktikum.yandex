@@ -1,9 +1,10 @@
-@import '../../shared/styles/colors.scss';
-@import '../../shared/styles/shadows.scss';
+@import 'shared/styles/colors.scss';
+@import 'shared/styles/shadowsAndGradients.scss';
 
 .background {
   min-height: 90%;
-  background: $color-orange-background url('/leaderboard-background.svg') no-repeat;
+  background: $color-orange-background url('/leaderboard-background.svg')
+    no-repeat;
   background-size: cover;
 }
 

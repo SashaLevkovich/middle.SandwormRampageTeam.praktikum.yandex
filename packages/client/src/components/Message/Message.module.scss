@@ -1,0 +1,32 @@
+@import 'shared/styles/colors.scss';
+
+.messageContainer {
+  width: 100%;
+
+  .message {
+    max-width: 595px;
+    width: 100%;
+    padding: 27px 37px;
+    border: 1px solid $color-gray-message;
+    border-radius: 30px;
+    box-shadow: -10px 10px 0 0 rgba($color-black, 0.25);
+    background: $color-text-primary;
+    margin: 0 10px 20px;
+
+    .author {
+      margin: 0;
+      font-weight: 700;
+      font-size: 24px;
+    }
+
+    .text {
+      font-weight: 200;
+      font-size: 24px;
+      color: $color-start-page-background;
+    }
+
+    .sendTime {
+      color: $color-red-button;
+    }
+  }
+}

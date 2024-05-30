@@ -2,10 +2,10 @@ import { FC, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { userIsAuth } from 'shared/utils/userLocalStorage'
+import linesImg from 'shared/assets/images/Lines.svg'
+import moonsImg from 'shared/assets/images/Moons.svg'
 
 import classes from './GameStart.module.scss'
-import linesImg from '../../shared/assets/images/Lines.svg'
-import moonsImg from '../../shared/assets/images/Moons.svg'
 
 export const GameStart: FC = () => {
   const navigate = useNavigate()

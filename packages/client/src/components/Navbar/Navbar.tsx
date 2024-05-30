@@ -1,7 +1,10 @@
 import { FC, useState } from 'react'
-import { Link } from 'react-router-dom'
-import classes from './Navbar.module.scss'
+
+import { Link, useLocation } from 'react-router-dom'
+
 import { NAVIGATION_LINKS } from './constants'
+
+import classes from './Navbar.module.scss'
 
 /**
  *
@@ -10,7 +13,9 @@ import { NAVIGATION_LINKS } from './constants'
  */
 
 export const Navbar: FC<{ isAuth?: boolean }> = ({ isAuth = true }) => {
-  const [currentTab, setCurrentTab] = useState('game')
+  const { pathname } = useLocation()
+
+  const [currentTab, setCurrentTab] = useState(pathname.slice(1) || 'game')
 
   function onClick(tab: string) {
     setCurrentTab(tab)
@@ -24,7 +29,7 @@ export const Navbar: FC<{ isAuth?: boolean }> = ({ isAuth = true }) => {
             <Link
               onClick={() => onClick(item.key)}
               className={`${classes.tab} ${
-                currentTab === item.key ? classes.tabActive : ''
+                currentTab && currentTab === item.key ? classes.tabActive : ''
               }`}
               to={item.link}>
               {item.text}
