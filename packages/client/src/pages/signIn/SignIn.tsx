@@ -1,10 +1,12 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Button, Flex, Form, Input, Typography } from 'antd'
 
 import {
   SignInFieldType,
   SignInFieldValidationRules,
 } from 'shared/constants/validationRules'
+import { setLocalStorageUser, userIsAuth } from 'shared/utils/userLocalStorage'
 import AuthService, { SignInParams } from 'app/api/entities/auth'
 
 import classes from 'pages/signUp/SignUp.module.scss'
@@ -12,23 +14,35 @@ import classes from 'pages/signUp/SignUp.module.scss'
 const authService = new AuthService()
 
 export const SignIn: FC = () => {
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (userIsAuth()) {
+      navigate('/')
+    }
+  }, [localStorage])
+
   const onFinish = (values: SignInParams) => {
     authService
       .signIn(values)
       .then(() => {
         authService.getUser().then(resp => {
-          console.log(resp)
+          setLocalStorageUser(resp.data)
         })
       })
       .catch(e => {
-        console.log(e)
+        if (e.response.status === 400) {
+          authService.getUser().then(resp => {
+            setLocalStorageUser(resp.data)
+          })
+        }
       })
   }
 
   return (
     <div className={classes.root}>
       <div className={classes.formContainer}>
-        <Form name="signIn" autoComplete="off" onFinish={onFinish}>
+        <Form name="signIn" onFinish={onFinish}>
           <Typography>
             <Typography.Title
               className={classes.title}

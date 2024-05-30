@@ -1,8 +1,6 @@
 import { api } from 'app/api/index'
 import { AxiosRequestConfig } from 'axios'
 
-import { User } from '../../../../@types/api'
-
 export interface SignInParams {
   login: string
   password: string
