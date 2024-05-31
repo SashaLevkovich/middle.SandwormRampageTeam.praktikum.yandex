@@ -1,21 +1,12 @@
-import { FC, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { FC } from 'react'
+import { Link } from 'react-router-dom'
 
-import { userIsAuth } from 'shared/utils/userLocalStorage'
 import linesImg from 'shared/assets/images/Lines.svg'
 import moonsImg from 'shared/assets/images/Moons.svg'
 
 import classes from './GameStart.module.scss'
 
 export const GameStart: FC = () => {
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    if (!userIsAuth()) {
-      navigate('/login')
-    }
-  }, [localStorage])
-
   return (
     <div className={classes.startPageWrapper}>
       <div className={classes.absoluteWrapper}>

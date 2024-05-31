@@ -1,20 +1,11 @@
-import { FC, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { FC } from 'react'
 
 import { LeaderCard } from 'components/LeaderCard'
-import { userIsAuth } from 'shared/utils/userLocalStorage'
 
 import classes from './Leaderboard.module.scss'
 
 export const Leaderboard: FC = () => {
-  const navigate = useNavigate()
   const leaders = []
-
-  useEffect(() => {
-    if (!userIsAuth()) {
-      navigate('/login')
-    }
-  }, [localStorage])
 
   for (let i = 0; i < 4; i++) {
     leaders.push(

@@ -1,5 +1,4 @@
-import { api } from 'app/api/index'
-import { AxiosRequestConfig } from 'axios'
+import { api } from 'app/api'
 
 export interface SignInParams {
   login: string
@@ -8,11 +7,11 @@ export interface SignInParams {
 
 class AuthService {
   signIn(data: SignInParams, requestConfig?: AxiosRequestConfig) {
-    return api.post('/auth/signin', data, requestConfig)
+    return api.post('/auth/signin', data, requestConfig?.config)
   }
 
   getUser(requestConfig?: AxiosRequestConfig) {
-    return api.get<User>('/auth/user', requestConfig)
+    return api.get<User>('/auth/user', requestConfig?.config)
   }
 }
 

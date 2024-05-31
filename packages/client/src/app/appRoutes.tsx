@@ -13,6 +13,7 @@ import { SignIn } from 'pages/signIn'
 import { SignUp } from 'pages/signUp'
 import { Game } from 'pages/game'
 import { Landing } from 'pages/landing'
+import { PrivateRoute } from 'components/PrivateRoute/PrivateRoute'
 
 export const appRouter = () =>
   createBrowserRouter([
@@ -43,27 +44,35 @@ export const appRouter = () =>
         },
         {
           path: '/profile',
-          element: <Profile />,
+          element: (
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          ),
         },
         {
           path: '/game',
-          element: <Game />,
-        },
-        {
-          path: '/login',
-          element: <SignIn />,
-        },
-        {
-          path: '/signUp',
-          element: <SignUp />,
+          element: (
+            <PrivateRoute>
+              <Game />
+            </PrivateRoute>
+          ),
         },
         {
           path: '/leaderboard',
-          element: <Leaderboard />,
+          element: (
+            <PrivateRoute>
+              <Leaderboard />
+            </PrivateRoute>
+          ),
         },
         {
           path: '/forum',
-          element: <Forum />,
+          element: (
+            <PrivateRoute>
+              <Forum />
+            </PrivateRoute>
+          ),
         },
       ],
     },

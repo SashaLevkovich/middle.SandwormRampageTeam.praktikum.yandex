@@ -1,5 +1,4 @@
-import { FC, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { FC } from 'react'
 import { Flex, Form, Input, Typography } from 'antd'
 
 import {
@@ -7,19 +6,10 @@ import {
   SignUpFieldValidationRules,
 } from 'shared/constants/validationRules'
 import { ButtonCustom } from 'components/ButtonCustom'
-import { userIsAuth } from 'shared/utils/userLocalStorage'
 
 import classes from './SignUp.module.scss'
 
 export const SignUp: FC = () => {
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    if (!userIsAuth()) {
-      navigate('/login')
-    }
-  }, [localStorage])
-
   return (
     <div className={classes.root}>
       <div className={classes.formContainer}>

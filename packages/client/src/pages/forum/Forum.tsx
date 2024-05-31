@@ -1,6 +1,5 @@
 import { FC, useCallback, useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { useNavigate } from 'react-router-dom'
 
 import { Flex, Typography } from 'antd'
 
@@ -8,25 +7,16 @@ import { ForumChat } from 'features/ForumChat'
 
 import { ForumButton } from 'components/ForumButton'
 
-import { userIsAuth } from 'shared/utils/userLocalStorage'
-
 import { MODAL_CONTAINER_ID } from './constants'
 import classes from './Forum.module.scss'
 import { TOPICS_MOCK } from './topics-mock'
 
 export const Forum: FC = () => {
-  const navigate = useNavigate()
   const [activeTopic, setActiveTopic] = useState('')
   const [isChatOpen, setIsChatOpen] = useState(false)
   const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(
     null
   )
-
-  useEffect(() => {
-    if (!userIsAuth()) {
-      navigate('/login')
-    }
-  }, [localStorage])
 
   useEffect(() => {
     const container = document.getElementById(MODAL_CONTAINER_ID)
