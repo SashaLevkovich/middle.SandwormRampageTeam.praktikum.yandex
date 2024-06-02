@@ -1,9 +1,8 @@
 import { FC } from 'react'
+import { Link } from 'react-router-dom'
 
 import linesImg from 'shared/assets/images/Lines.svg'
 import moonsImg from 'shared/assets/images/Moons.svg'
-
-import { Link } from 'react-router-dom'
 
 import classes from './GameStart.module.scss'
 

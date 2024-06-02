@@ -1,18 +1,58 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import { Button, Flex, Form, Input, Typography } from 'antd'
+import { AxiosError } from 'axios'
 
 import {
   SignInFieldType,
   SignInFieldValidationRules,
 } from 'shared/constants/validationRules'
+import { setLocalStorageUser } from 'shared/utils/userLocalStorage'
+import AuthService, { SignInParams } from 'app/api/entities/auth'
 
 import classes from 'pages/signUp/SignUp.module.scss'
+import { useNavigate } from 'react-router-dom'
+
+const authService = new AuthService()
 
 export const SignIn: FC = () => {
+  console.log(import.meta.env.VITE_API_URL)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    async function checkAuth() {
+      try {
+        const resp = await authService.getUser()
+        if (resp.data.id) {
+          setLocalStorageUser(resp.data)
+          navigate('/')
+        }
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    checkAuth()
+  }, [])
+
+  const onFinish = async (values: SignInParams) => {
+    try {
+      await authService.signIn(values)
+      const getUserResp = await authService.getUser()
+      setLocalStorageUser(getUserResp.data)
+    } catch (e) {
+      const error = e as AxiosError
+      if (error.response?.status === 400) {
+        authService.getUser().then(resp => {
+          setLocalStorageUser(resp.data)
+        })
+      }
+    }
+  }
+
   return (
     <div className={classes.root}>
       <div className={classes.formContainer}>
-        <Form name="signIn" autoComplete="off">
+        <Form name="signIn" onFinish={onFinish}>
           <Typography>
             <Typography.Title
               className={classes.title}

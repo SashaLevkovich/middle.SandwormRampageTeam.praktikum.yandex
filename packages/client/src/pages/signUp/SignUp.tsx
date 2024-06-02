@@ -5,9 +5,9 @@ import {
   SignUpFieldType,
   SignUpFieldValidationRules,
 } from 'shared/constants/validationRules'
+import { ButtonCustom } from 'components/ButtonCustom'
 
 import classes from './SignUp.module.scss'
-import { ButtonCustom } from 'components/ButtonCustom'
 
 export const SignUp: FC = () => {
   return (

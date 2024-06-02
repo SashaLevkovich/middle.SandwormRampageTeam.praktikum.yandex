@@ -1,9 +1,12 @@
 import { FC } from 'react'
-import classes from './Leaderboard.module.scss'
+
 import { LeaderCard } from 'components/LeaderCard'
+
+import classes from './Leaderboard.module.scss'
 
 export const Leaderboard: FC = () => {
   const leaders = []
+
   for (let i = 0; i < 4; i++) {
     leaders.push(
       <LeaderCard key={i} name="Paul Atreides" scores={2828127127} point={1} />
