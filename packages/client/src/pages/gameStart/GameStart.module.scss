@@ -1,0 +1,95 @@
+@import 'shared/styles/colors.scss';
+@import 'shared/styles/sizes.scss';
+
+.startPageWrapper {
+  position: relative;
+  overflow: hidden;
+  background-color: $color-start-page-background;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  height: $page-height;
+  padding-bottom: 30px;
+
+  &Title {
+    font-family: Koulen;
+    font-size: 225px;
+    height: 294px;
+    margin: 0;
+    color: $color-start-page-button;
+    align-self: center;
+    z-index: 2;
+    user-select: none;
+    text-decoration: none;
+    cursor: pointer;
+    border-bottom: 0 solid $color-start-page-button;
+    transition: border-bottom ease-out 0.1s;
+  }
+
+  &Title:hover {
+    border-bottom: 10px solid $color-start-page-button;
+    transition: border-bottom ease-in 0.1s;
+  }
+}
+
+.absoluteWrapper {
+  position: relative;
+  align-self: center;
+  height: calc(1117px - $header-height);
+  width: 1728px;
+}
+
+.blackCircle {
+  background-color: #1e1e1e;
+  height: 447px;
+  width: 447px;
+  border-radius: 100%;
+  z-index: 1;
+
+  position: absolute;
+  left: 36%;
+  bottom: calc(-325px - $header-height - 20px);
+}
+
+.orangeCircle {
+  position: absolute;
+  height: 1441px;
+  width: 1441px;
+  z-index: 1;
+  border-radius: 100%;
+  border: 117px solid $color-orange-primary;
+  bottom: -970px;
+  left: 8%;
+}
+
+.orangeCircleThin,
+.orangeCircleThinBig {
+  position: absolute;
+  height: 1740px;
+  width: 1740px;
+  z-index: 1;
+  border-radius: 100%;
+  border: 1px solid $color-orange-stroke;
+  bottom: -1117px;
+  left: -0.5%;
+}
+
+.orangeCircleThinBig {
+  height: 2105px;
+  width: 2105px;
+  bottom: -1270px;
+  left: -11%;
+}
+
+.lines {
+  position: absolute;
+  z-index: 0;
+  bottom: calc(-325px + 100px);
+}
+
+.moons {
+  position: absolute;
+  bottom: calc(-325px + 765px);
+  right: 105px;
+  z-index: 2;
+}

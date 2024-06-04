@@ -1,0 +1,27 @@
+@import 'shared/styles/colors.scss';
+@import 'shared/styles/shadowsAndGradients.scss';
+
+.background {
+  min-height: 90%;
+  background: $color-orange-background url('/leaderboard-background.svg')
+    no-repeat;
+  background-size: cover;
+}
+
+.title {
+  font-family: Koulen, serif;
+  font-size: 172px;
+  line-height: 190px;
+  text-align: center;
+
+  margin-bottom: 80px;
+}
+
+.flexbox {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  margin: 0 80px;
+}
