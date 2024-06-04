@@ -93,3 +93,13 @@
   right: 105px;
   z-index: 2;
 }
+
+.fullScreen {
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  font-size: 24px;
+  color: $color-text-primary;
+  cursor: pointer;
+  z-index: 9999;
+}
