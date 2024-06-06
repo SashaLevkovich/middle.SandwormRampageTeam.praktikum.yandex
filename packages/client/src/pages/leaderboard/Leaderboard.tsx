@@ -12,10 +12,11 @@ export const Leaderboard: FC = () => {
       <div className={classes.flexbox}>
         {leaders.map((el, idx) => (
           <LeaderCard
-            key={idx}
+            key={`leader index: ${idx}`}
             name="Paul Atreides"
             scores={2828127127}
-            point={idx}></LeaderCard>
+            point={idx}
+          />
         ))}
       </div>
     </div>
