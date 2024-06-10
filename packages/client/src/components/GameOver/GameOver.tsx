@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { useNavigate } from 'react-router-dom'
 import classes from './GameOver.module.scss'
 import { ButtonCustom } from 'components/ButtonCustom'
 
@@ -8,6 +9,12 @@ type GameOverProps = {
 }
 
 export const GameOver: FC<GameOverProps> = ({ score, resetGame }) => {
+  const navigate = useNavigate()
+
+  const handleBackToMenu = () => {
+    navigate('/')
+  }
+
   return (
     <div className={classes.gameOverPageWrapper}>
       <h1 className={classes.gameOverPageWrapperTitle}>Game Over</h1>
@@ -16,7 +23,7 @@ export const GameOver: FC<GameOverProps> = ({ score, resetGame }) => {
         <ButtonCustom customType="white" size="large" onClick={resetGame}>
           Retry
         </ButtonCustom>
-        <ButtonCustom customType="sand" size="large">
+        <ButtonCustom customType="sand" size="large" onClick={handleBackToMenu}>
           Back to menu
         </ButtonCustom>
       </div>
