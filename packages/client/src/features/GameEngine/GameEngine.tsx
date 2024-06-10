@@ -15,9 +15,9 @@ export const GameEngine = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   const imageSources = {
-    headImage: '../public/head.png',
-    bodyImage: '../public/body.png',
-    tailImage: '../public/tail.png',
+    headImage: '../assets/head.png',
+    bodyImage: '../assets/body.png',
+    tailImage: '../assets/tail.png',
   }
 
   const [imagesRef, isImagesLoaded] = useLoadImages(imageSources)
