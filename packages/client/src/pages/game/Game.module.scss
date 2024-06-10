@@ -11,3 +11,21 @@
   height: $page-height;
   padding-bottom: 30px;
 }
+
+.greySandImage {
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+}
+
+.yellowSandImage {
+  position: absolute;
+  bottom: 20%;
+  right: 20%;
+}
+
+.orangeSandImage {
+  position: absolute;
+  top: 20%;
+  right: 10px;
+}
