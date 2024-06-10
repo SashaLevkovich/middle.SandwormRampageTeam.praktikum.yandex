@@ -66,8 +66,15 @@ const useGameEngine = (
       context.clearRect(0, 0, canvasSize, canvasSize)
 
       // Рисуем еду
-      context.fillStyle = 'red'
-      context.fillRect(food.x * cellSize, food.y * cellSize, cellSize, cellSize)
+      if (imagesRef.current.foodImage) {
+        context.drawImage(
+          imagesRef.current.foodImage,
+          food.x * cellSize,
+          food.y * cellSize,
+          cellSize,
+          cellSize
+        )
+      }
 
       // Рисуем змейку
       if (

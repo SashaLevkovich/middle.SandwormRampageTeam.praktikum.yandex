@@ -18,6 +18,7 @@ export const GameEngine = () => {
     headImage: '../public/head.png',
     bodyImage: '../public/body.png',
     tailImage: '../public/tail.png',
+    foodImage: '../public/tank.png',
   }
 
   const [imagesRef, isImagesLoaded] = useLoadImages(imageSources)
