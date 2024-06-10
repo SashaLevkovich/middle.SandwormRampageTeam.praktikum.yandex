@@ -1,4 +1,10 @@
-import { useState, useEffect, MutableRefObject } from 'react'
+import {
+  useState,
+  useEffect,
+  MutableRefObject,
+  SetStateAction,
+  Dispatch,
+} from 'react'
 
 type Position = {
   x: number
@@ -13,7 +19,8 @@ const useGameEngine = (
   marginImage: number,
   imagesRef: MutableRefObject<{ [key: string]: HTMLImageElement | null }>,
   canvasRef: MutableRefObject<HTMLCanvasElement | null>,
-  isImagesLoaded: boolean
+  isImagesLoaded: boolean,
+  setScore: Dispatch<SetStateAction<number>>
 ) => {
   const [snake, setSnake] = useState<Position[]>(initialSnake)
   const [food, setFood] = useState<Position>(initialFood)
@@ -54,6 +61,7 @@ const useGameEngine = (
 
       // Проверка на съедание еды
       if (head.x === food.x && head.y === food.y) {
+        setScore(prev => prev + 1)
         setFood(generateFoodPosition(newSnake))
       } else {
         newSnake.pop()
@@ -194,6 +202,15 @@ const useGameEngine = (
     return 0
   }
 
+  const resetGame = () => {
+    setSnake(initialSnake)
+    setFood(initialFood)
+    setDirection({ x: 1, y: 0 })
+    setIsGameOver(false)
+    setIsPaused(false)
+    setScore(0)
+  }
+
   return {
     snake,
     food,
@@ -202,6 +219,7 @@ const useGameEngine = (
     isPaused,
     setDirection,
     setIsPaused,
+    resetGame,
   }
 }
 
