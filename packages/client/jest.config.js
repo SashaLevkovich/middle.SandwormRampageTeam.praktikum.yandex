@@ -8,4 +8,8 @@ export default {
   globals: {
     __SERVER_PORT__: process.env.SERVER_PORT,
   },
+  moduleDirectories: ['node_modules', 'src'],
+  moduleNameMapper: {
+    '\\.scss$': 'identity-obj-proxy',
+  },
 }
