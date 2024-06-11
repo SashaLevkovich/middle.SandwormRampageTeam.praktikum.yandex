@@ -55,6 +55,7 @@ export const GameEngine = () => {
         width={canvasSize}
         height={canvasSize}
         className={styles.canvas}
+        role="gameEngine"
       />
       {isGameOver && <GameOver />}
       {isPaused && <div>Paused</div>}
