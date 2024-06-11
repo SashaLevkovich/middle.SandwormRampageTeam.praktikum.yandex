@@ -22,7 +22,9 @@ const URLS = [
   'assets/index.css',
   'assets/leaderboard-background.svg',
   'assets/leaderboard.svg',
+  'assets/sand.svg',
   'assets/tail.png',
+  'assets/tank.png',
   'assets/vite.svg',
 ]
 
