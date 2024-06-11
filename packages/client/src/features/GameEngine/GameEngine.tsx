@@ -1,4 +1,5 @@
-import { useRef } from 'react'
+import { GameInfo } from 'components/GameInfo'
+import { useRef, useState } from 'react'
 import { Flex } from 'antd'
 import useGameEngine from 'shared/hooks/useGameEngine'
 import useKeyboardControls from 'shared/hooks/useKeyboardControls'
@@ -13,11 +14,13 @@ type Position = {
 
 export const GameEngine = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const [score, setScore] = useState(0)
 
   const imageSources = {
     headImage: '../public/head.png',
     bodyImage: '../public/body.png',
     tailImage: '../public/tail.png',
+    foodImage: '../public/tank.png',
   }
 
   const [imagesRef, isImagesLoaded] = useLoadImages(imageSources)
@@ -34,30 +37,41 @@ export const GameEngine = () => {
   const canvasSize = 800
   const marginImage = 8
 
-  const { direction, isGameOver, isPaused, setDirection, setIsPaused } =
-    useGameEngine(
-      initialSnake,
-      initialFood,
-      cellSize,
-      canvasSize,
-      marginImage,
-      imagesRef,
-      canvasRef,
-      isImagesLoaded
-    )
+  const {
+    direction,
+    isGameOver,
+    isPaused,
+    setDirection,
+    setIsPaused,
+    resetGame,
+  } = useGameEngine(
+    initialSnake,
+    initialFood,
+    cellSize,
+    canvasSize,
+    marginImage,
+    imagesRef,
+    canvasRef,
+    isImagesLoaded,
+    setScore
+  )
 
   useKeyboardControls(setDirection, setIsPaused, direction)
 
   return (
-    <Flex align="center" justify="center">
-      <canvas
-        ref={canvasRef}
-        width={canvasSize}
-        height={canvasSize}
-        className={styles.canvas}
-      />
-      {isGameOver && <GameOver />}
-      {isPaused && <div>Paused</div>}
-    </Flex>
+    <>
+      <div className={styles.gameInfoContainer}>
+        <GameInfo score={score} isPaused={isPaused} setIsPaused={setIsPaused} />
+      </div>
+      <Flex align="center" justify="center">
+        <canvas
+          ref={canvasRef}
+          width={canvasSize}
+          height={canvasSize}
+          className={styles.canvas}
+        />
+        {isGameOver && <GameOver score={score} resetGame={resetGame} />}
+      </Flex>
+    </>
   )
 }
