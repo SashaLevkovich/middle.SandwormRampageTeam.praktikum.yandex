@@ -17,10 +17,10 @@ export const GameEngine = () => {
   const [score, setScore] = useState(0)
 
   const imageSources = {
-    headImage: '../public/head.png',
-    bodyImage: '../public/body.png',
-    tailImage: '../public/tail.png',
-    foodImage: '../public/tank.png',
+    headImage: '../assets/head.png',
+    bodyImage: '../assets/body.png',
+    tailImage: '../assets/tail.png',
+    foodImage: '../assets/tank.png',
   }
 
   const [imagesRef, isImagesLoaded] = useLoadImages(imageSources)

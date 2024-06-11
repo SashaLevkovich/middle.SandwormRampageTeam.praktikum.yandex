@@ -67,21 +67,21 @@
     }
 
     &1 {
-      background: url('/background-without-text.svg') no-repeat;
+      background: url('/assets/background-without-text.svg') no-repeat;
       background-position: 50% 50%;
       background-size: cover;
       padding-bottom: 150px;
     }
 
     &2 {
-      background: $color-landing-page url('about-game.svg') no-repeat;
+      background: $color-landing-page url('/assets/about-game.svg') no-repeat;
       background-position: 50% 85%;
       background-attachment: fixed;
       background-size: contain;
     }
 
     &3 {
-      background: $color-landing-page url('leaderboard.svg') no-repeat;
+      background: $color-landing-page url('/assets/leaderboard.svg') no-repeat;
       background-position: 50% 86%;
       background-attachment: fixed;
       background-size: contain;
@@ -92,7 +92,7 @@
     }
 
     &4 {
-      background: $color-landing-page url('forum.svg') no-repeat;
+      background: $color-landing-page url('/assets/forum.svg') no-repeat;
       background-position: 50% 86%;
       background-attachment: fixed;
       background-size: contain;
@@ -101,7 +101,7 @@
     &5 {
       padding-bottom: 133px;
       background: $color-background-header
-        url('background-without-text-upside-down.svg') no-repeat;
+        url('/assets/background-without-text-upside-down.svg') no-repeat;
       background-size: cover;
 
       & > p {

@@ -23,4 +23,23 @@ export default defineConfig({
       shared: path.resolve(__dirname, './src/shared'),
     },
   },
+  build: {
+    rollupOptions: {
+      input: {
+        app: './index.html',
+        sw: './src/sw.js',
+      },
+      output: {
+        entryFileNames: ({ name }) => {
+          if (/sw/.test(name)) {
+            return `[name].js`
+          }
+
+          return `assets/[name].js`
+        },
+        chunkFileNames: `assets/[name].js`,
+        assetFileNames: `assets/[name].[ext]`,
+      },
+    },
+  },
 })
