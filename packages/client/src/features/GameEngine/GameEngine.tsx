@@ -10,10 +10,10 @@ import {
   INITIAL_SNAKE,
   MARGIN_IMAGE,
 } from 'shared/hooks/constants'
-import useKeyboardControls from 'shared/hooks/core/useKeyboardControls'
-import useLoadImages from 'shared/hooks/core/useLoadImages'
 
 import useGameEngine from 'shared/hooks/core/useGameEngine'
+import useKeyboardControls from 'shared/hooks/core/useKeyboardControls'
+import useLoadImages from 'shared/hooks/core/useLoadImages'
 import styles from './GameEngine.module.scss'
 
 export const GameEngine = () => {
@@ -48,12 +48,13 @@ export const GameEngine = () => {
       <div className={styles.gameInfoContainer}>
         <GameInfo score={score} isPaused={isPaused} setIsPaused={setIsPaused} />
       </div>
-      <Flex align="center" justify="center">
+      <Flex role="gameEngine" align="center" justify="center">
         <canvas
           ref={canvasRef}
           width={CANVAS_SIZE}
           height={CANVAS_SIZE}
           className={styles.canvas}
+          role="gameEngineCanvas"
         />
         {isGameOver && <GameOver score={score} resetGame={resetGame} />}
       </Flex>

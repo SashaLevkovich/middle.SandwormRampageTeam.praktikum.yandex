@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
+
 import { userApi } from './api'
 import rootReducer from './rootReducer'
 
 export const store = configureStore({
   reducer: rootReducer,
   devTools: process.env.NODE_ENV !== 'production',
+
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({}).concat(userApi.middleware),
 })
