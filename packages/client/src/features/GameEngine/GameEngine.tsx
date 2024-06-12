@@ -49,13 +49,13 @@ export const GameEngine = () => {
   useKeyboardControls(setDirection, setIsPaused, direction)
 
   return (
-    <Flex align="center" justify="center">
+    <Flex role="gameEngine" align="center" justify="center">
       <canvas
         ref={canvasRef}
         width={canvasSize}
         height={canvasSize}
         className={styles.canvas}
-        role="gameEngine"
+        role="gameEngineCanvas"
       />
       {isGameOver && <GameOver />}
       {isPaused && <div>Paused</div>}
