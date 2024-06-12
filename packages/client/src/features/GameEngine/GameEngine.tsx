@@ -1,11 +1,12 @@
-import { GameInfo } from 'components/GameInfo'
-import { useRef, useState } from 'react'
 import { Flex } from 'antd'
-import useGameEngine from 'shared/hooks/useGameEngine'
-import useKeyboardControls from 'shared/hooks/useKeyboardControls'
-import useLoadImages from 'shared/hooks/useLoadImages'
-import styles from './GameEngine.module.scss'
+import { GameInfo } from 'components/GameInfo'
 import { GameOver } from 'components/GameOver'
+import { useRef, useState } from 'react'
+import useKeyboardControls from 'shared/hooks/core/useKeyboardControls'
+import useLoadImages from 'shared/hooks/core/useLoadImages'
+
+import useGameEngine from 'shared/hooks/core/useGameEngine'
+import styles from './GameEngine.module.scss'
 
 type Position = {
   x: number

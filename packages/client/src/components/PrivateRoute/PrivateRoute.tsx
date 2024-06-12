@@ -1,13 +1,15 @@
 import { ReactElement, useEffect } from 'react'
 
-import { userIsAuth } from 'shared/utils/userLocalStorage'
 import { useNavigate } from 'react-router-dom'
+import { userIsAuth } from 'shared/utils/userLocalStorage'
 
 export const PrivateRoute = ({ children }: { children: ReactElement }) => {
   const navigate = useNavigate()
 
+  const user = userIsAuth()
+
   useEffect(() => {
-    if (!userIsAuth()) {
+    if (!user) {
       navigate('/login')
     }
   }, [])

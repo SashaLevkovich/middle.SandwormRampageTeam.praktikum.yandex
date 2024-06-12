@@ -4,16 +4,16 @@ import { Navbar } from 'components/Navbar'
 
 import { Layout } from 'features/Layout'
 
+import { PrivateRoute } from 'components/PrivateRoute/PrivateRoute'
 import { NotFound, UnexpectedCondition } from 'pages/errors'
 import { Forum } from 'pages/forum'
+import { Game } from 'pages/game'
 import { GameStart } from 'pages/gameStart'
+import { Landing } from 'pages/landing'
 import { Leaderboard } from 'pages/leaderboard'
 import { Profile } from 'pages/profile'
 import { SignIn } from 'pages/signIn'
 import { SignUp } from 'pages/signUp'
-import { Game } from 'pages/game'
-import { Landing } from 'pages/landing'
-import { PrivateRoute } from 'components/PrivateRoute/PrivateRoute'
 
 export const appRouter = () =>
   createBrowserRouter([

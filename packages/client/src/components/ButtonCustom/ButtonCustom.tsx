@@ -1,7 +1,7 @@
-import { FC, PropsWithChildren } from 'react'
-import classes from './ButtonCustom.module.scss'
 import { Button, ButtonProps } from 'antd'
 import { BUTTON_TYPES } from 'components/ButtonCustom/constants'
+import { FC, PropsWithChildren } from 'react'
+import classes from './ButtonCustom.module.scss'
 
 type ButtonCustomProps = {
   customType?: 'white' | 'default' | 'sand'

@@ -3,5 +3,7 @@ export const setLocalStorageUser = (data: User) => {
 }
 
 export const userIsAuth = () => {
-  return localStorage.getItem('user') !== null
+  const user = localStorage.getItem('user')
+
+  return user
 }

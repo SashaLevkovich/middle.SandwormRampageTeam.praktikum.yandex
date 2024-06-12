@@ -1,48 +1,46 @@
-import { FC, useEffect } from 'react'
 import { Button, Flex, Form, Input, Typography } from 'antd'
 import { AxiosError } from 'axios'
+import { FC, useEffect } from 'react'
 
+import { SignInLoginParams } from 'app/api/requests/auth'
 import {
   SignInFieldType,
   SignInFieldValidationRules,
 } from 'shared/constants/validationRules'
 import { setLocalStorageUser } from 'shared/utils/userLocalStorage'
-import AuthService, { SignInParams } from 'app/api/entities/auth'
 
+import { authRequests } from 'app/api'
+import { apiSlice } from 'app/redux/api'
+import { userSlice } from 'app/redux/slice/user'
 import classes from 'pages/signUp/SignUp.module.scss'
-import { useNavigate } from 'react-router-dom'
-
-const authService = new AuthService()
+import { useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
+import { isEmpty } from 'shared/helpers/isEmpty'
 
 export const SignIn: FC = () => {
-  console.log(import.meta.env.VITE_API_URL)
   const navigate = useNavigate()
 
-  useEffect(() => {
-    async function checkAuth() {
-      try {
-        const resp = await authService.getUser()
-        if (resp.data.id) {
-          setLocalStorageUser(resp.data)
-          navigate('/')
-        }
-      } catch (e) {
-        console.log(e)
-      }
-    }
+  const user = useSelector(userSlice.selectors.selectUser)
 
-    checkAuth()
+  useEffect(() => {
+    if (!isEmpty(user)) {
+      console.log(1)
+
+      setLocalStorageUser(user)
+      navigate('/')
+    }
   }, [])
 
-  const onFinish = async (values: SignInParams) => {
+  const onFinish = async (values: SignInLoginParams) => {
     try {
-      await authService.signIn(values)
-      const getUserResp = await authService.getUser()
+      await authRequests.signIn({ params: values })
+      const getUserResp = await apiSlice.endpoints.getUser.initiate()
+
       setLocalStorageUser(getUserResp.data)
     } catch (e) {
       const error = e as AxiosError
       if (error.response?.status === 400) {
-        authService.getUser().then(resp => {
+        authRequests.getUser().then(resp => {
           setLocalStorageUser(resp.data)
         })
       }
@@ -105,7 +103,7 @@ export const SignIn: FC = () => {
             <Typography.Text>No account?</Typography.Text>
           </Typography>
           <Button type="link" className={classes.backBtn}>
-            Create
+            <Link to="/signUp">Create</Link>
           </Button>
         </Flex>
       </div>
