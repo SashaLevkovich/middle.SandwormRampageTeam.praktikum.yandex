@@ -1,3 +1,4 @@
+import { userSlice } from 'app/redux/slice/user'
 import { store } from 'app/redux/store'
 
 import ReactDOM from 'react-dom/client'
@@ -19,7 +20,8 @@ const init = async () => {
       .unwrap()
 
     if (result) {
-      // store.dispatch(userSlice.actions.setUser(result))
+      store.dispatch(userSlice.actions.setUser(result))
+
       setLocalStorageUser(result)
     }
   } catch (e) {
