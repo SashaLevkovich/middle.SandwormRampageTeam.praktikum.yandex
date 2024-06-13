@@ -5,42 +5,27 @@ import useKeyboardControls from 'shared/hooks/useKeyboardControls'
 import useLoadImages from 'shared/hooks/useLoadImages'
 import styles from './GameEngine.module.scss'
 import { GameOver } from 'components/GameOver'
-
-type Position = {
-  x: number
-  y: number
-}
+import {
+  CANVAS_SIZE,
+  CELL_SIZE,
+  IMAGE_SOURCES,
+  INITIAL_FOOD,
+  INITIAL_SNAKE,
+  MARGIN_IMAGE,
+} from 'shared/hooks/constants'
 
 export const GameEngine = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
-  const imageSources = {
-    headImage: '../public/head.png',
-    bodyImage: '../public/body.png',
-    tailImage: '../public/tail.png',
-  }
-
-  const [imagesRef, isImagesLoaded] = useLoadImages(imageSources)
-
-  const initialSnake: Position[] = [
-    { x: 10, y: 10 },
-    { x: 9, y: 10 },
-    { x: 8, y: 10 },
-  ]
-
-  const initialFood: Position = { x: 15, y: 15 }
-
-  const cellSize = 40
-  const canvasSize = 800
-  const marginImage = 8
+  const [imagesRef, isImagesLoaded] = useLoadImages(IMAGE_SOURCES)
 
   const { direction, isGameOver, isPaused, setDirection, setIsPaused } =
     useGameEngine(
-      initialSnake,
-      initialFood,
-      cellSize,
-      canvasSize,
-      marginImage,
+      INITIAL_SNAKE,
+      INITIAL_FOOD,
+      CELL_SIZE,
+      CANVAS_SIZE,
+      MARGIN_IMAGE,
       imagesRef,
       canvasRef,
       isImagesLoaded
@@ -52,8 +37,8 @@ export const GameEngine = () => {
     <Flex role="gameEngine" align="center" justify="center">
       <canvas
         ref={canvasRef}
-        width={canvasSize}
-        height={canvasSize}
+        width={CANVAS_SIZE}
+        height={CANVAS_SIZE}
         className={styles.canvas}
         role="gameEngineCanvas"
       />
