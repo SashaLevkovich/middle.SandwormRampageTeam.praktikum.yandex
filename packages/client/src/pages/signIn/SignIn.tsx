@@ -1,44 +1,39 @@
-import { FC, useEffect } from 'react'
 import { Button, Flex, Form, Input, Typography } from 'antd'
 import { AxiosError } from 'axios'
+import { FC, useEffect } from 'react'
 
+import { SignInParams } from 'app/api/entities/auth'
 import {
   SignInFieldType,
   SignInFieldValidationRules,
 } from 'shared/constants/validationRules'
 import { setLocalStorageUser } from 'shared/utils/userLocalStorage'
-import AuthService, { SignInParams } from 'app/api/entities/auth'
 
 import classes from 'pages/signUp/SignUp.module.scss'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-
-const authService = new AuthService()
 
 export const SignIn: FC = () => {
   console.log(import.meta.env.VITE_API_URL)
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const user = useSelector(userSlice.selectors.selectUser)
+  const [signIn] = userApi.useSignInMutation()
 
   useEffect(() => {
-    async function checkAuth() {
-      try {
-        const resp = await authService.getUser()
-        if (resp.data.id) {
-          setLocalStorageUser(resp.data)
-          navigate('/')
-        }
-      } catch (e) {
-        console.log(e)
-      }
+    if (!isEmpty(user)) {
+      setLocalStorageUser(user)
+      navigate('/')
     }
-
-    checkAuth()
   }, [])
 
   const onFinish = async (values: SignInParams) => {
     try {
-      await authService.signIn(values)
-      const getUserResp = await authService.getUser()
-      setLocalStorageUser(getUserResp.data)
+      const response = await signIn(values).unwrap()
+
+      dispatch(userSlice.actions.setUser(response))
+      setLocalStorageUser(response)
     } catch (e) {
       const error = e as AxiosError
       if (error.response?.status === 400) {
