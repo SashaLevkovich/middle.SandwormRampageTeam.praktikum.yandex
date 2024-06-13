@@ -1,8 +1,5 @@
 import { MutableRefObject, useEffect, useRef, useState } from 'react'
-
-type ImageSources = {
-  [key: string]: string
-}
+import { ImageSources } from 'shared/hooks/types'
 
 type ImagesRef = MutableRefObject<{ [key: string]: HTMLImageElement | null }>
 

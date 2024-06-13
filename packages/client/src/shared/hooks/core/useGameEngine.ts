@@ -1,9 +1,9 @@
 import {
-  useState,
-  useEffect,
+  Dispatch,
   MutableRefObject,
   SetStateAction,
-  Dispatch,
+  useEffect,
+  useState,
 } from 'react'
 
 type Position = {
