@@ -1,12 +1,29 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { GameOver } from 'components/GameOver'
 import '@testing-library/jest-dom'
+import { BrowserRouter } from 'react-router-dom'
 
 describe('Testing GameOver component', () => {
   it('GameOver component renders scores correctly', () => {
-    render(<GameOver score={228} resetGame={jest.fn()} />)
+    render(
+      <BrowserRouter>
+        <GameOver score={228} resetGame={jest.fn()} />
+      </BrowserRouter>
+    )
     const scoreElement = screen.getByText('Score: 228')
 
     expect(scoreElement).toBeInTheDocument()
+  })
+
+  it('GameOver component reset button works', () => {
+    const resetGameMock = jest.fn()
+    render(
+      <BrowserRouter>
+        <GameOver score={228} resetGame={resetGameMock} />
+      </BrowserRouter>
+    )
+    const scoreElement = screen.getByText('Retry')
+    fireEvent.click(scoreElement)
+    expect(resetGameMock).toHaveBeenCalled()
   })
 })
