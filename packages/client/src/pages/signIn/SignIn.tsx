@@ -10,22 +10,23 @@ import {
 import { setLocalStorageUser } from 'shared/utils/userLocalStorage'
 
 import { authRequests } from 'app/api'
-import { apiSlice } from 'app/redux/api'
+
+import { userApi } from 'app/redux/api'
 import { userSlice } from 'app/redux/slice/user'
 import classes from 'pages/signUp/SignUp.module.scss'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { isEmpty } from 'shared/helpers/isEmpty'
 
 export const SignIn: FC = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const user = useSelector(userSlice.selectors.selectUser)
+  const [signIn] = userApi.useSignInMutation()
 
   useEffect(() => {
     if (!isEmpty(user)) {
-      console.log(1)
-
       setLocalStorageUser(user)
       navigate('/')
     }
@@ -33,10 +34,10 @@ export const SignIn: FC = () => {
 
   const onFinish = async (values: SignInLoginParams) => {
     try {
-      await authRequests.signIn({ params: values })
-      const getUserResp = await apiSlice.endpoints.getUser.initiate()
+      const response = await signIn(values).unwrap()
 
-      setLocalStorageUser(getUserResp.data)
+      dispatch(userSlice.actions.setUser(response))
+      setLocalStorageUser(response)
     } catch (e) {
       const error = e as AxiosError
       if (error.response?.status === 400) {

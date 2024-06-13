@@ -1,8 +1,8 @@
-import { apiSlice } from 'app/redux/api'
 import { userSlice } from 'app/redux/slice/user'
 import { store } from 'app/redux/store'
 import ReactDOM from 'react-dom/client'
 
+import { userApi } from 'app/redux/api'
 import { registerServiceWorker } from 'shared/utils/registerServiceWorker'
 import { setLocalStorageUser } from 'shared/utils/userLocalStorage'
 import AppProviders from './app/appProviders'
@@ -13,11 +13,13 @@ const root = ReactDOM.createRoot(rootElement)
 
 const init = async () => {
   try {
-    const getProfileApiResponse = await apiSlice.endpoints.getUser.initiate()
+    const result = await store
+      .dispatch(userApi.endpoints.getUser.initiate())
+      .unwrap()
 
-    if (getProfileApiResponse) {
-      store.dispatch(userSlice.actions.setUser(getProfileApiResponse.data))
-      setLocalStorageUser(getProfileApiResponse.data)
+    if (result) {
+      store.dispatch(userSlice.actions.setUser(result))
+      setLocalStorageUser(result)
     }
   } catch (e) {
     console.log(e)

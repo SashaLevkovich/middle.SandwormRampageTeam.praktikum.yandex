@@ -1,4 +1,4 @@
-import { api } from 'app/api'
+import { rootApi } from 'app/api'
 
 export interface SignInLoginParams {
   login: string
@@ -25,15 +25,15 @@ class AuthRequests {
   }
 
   signIn({ params, config }: SignInLoginRequestConfig) {
-    return api.post(`${AuthRequests.baseUrl}/signin`, params, config)
+    return rootApi.post(`${AuthRequests.baseUrl}/signin`, params, config)
   }
 
   signUp({ params, config }: SignUpRequestConfig) {
-    return api.post(`${AuthRequests.baseUrl}/signup`, params, config)
+    return rootApi.post(`${AuthRequests.baseUrl}/signup`, params, config)
   }
 
   getUser() {
-    return api.get<User>(`${AuthRequests.baseUrl}/user`)
+    return rootApi.get<User>(`${AuthRequests.baseUrl}/user`)
   }
 }
 

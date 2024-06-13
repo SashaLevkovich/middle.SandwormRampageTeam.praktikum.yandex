@@ -1,17 +1,37 @@
-import { authRequests } from 'app/api'
-import { AxiosError } from 'axios'
-import { createApi } from '../create-api'
+import { createApi } from '@reduxjs/toolkit/query/react'
+import { authRequests, rootApi } from 'app/api'
+import { SignInLoginParams } from 'app/api/requests/auth'
+import { AxiosError, AxiosResponse } from 'axios'
 
-const DEFAULT_ERROR = 'Something went wrong'
-export const apiSlice = createApi({
-  name: 'api',
+interface QueryParams {
+  url: string
+  config: AxiosResponse
+}
+
+const axiosBaseQuery =
+  ({ baseUrl } = { baseUrl: '' }) =>
+  async ({ url, config }: QueryParams) => {
+    try {
+      const result = await rootApi({
+        url: baseUrl + url,
+        ...config,
+      })
+      return Promise.resolve(result)
+    } catch (error) {
+      const axiosError = error as AxiosError
+      return Promise.reject(axiosError?.response?.data)
+    }
+  }
+
+export const userApi = createApi({
+  reducerPath: 'user',
+  baseQuery: axiosBaseQuery(),
   endpoints: builder => ({
-    getUser: builder.query(authRequests.getUser),
-    signUp: builder.mutation(authRequests.signUp),
-    signIn: builder.mutation(authRequests.signIn),
+    getUser: builder.query<User, void>({
+      queryFn: authRequests.getUser,
+    }),
+    signIn: builder.mutation<User, SignInLoginParams>({
+      queryFn: params => authRequests.signIn({ params }),
+    }),
   }),
-  onError: cause => {
-    const { response } = cause as AxiosError
-    console.log(response?.statusText ?? DEFAULT_ERROR, response)
-  },
 })
