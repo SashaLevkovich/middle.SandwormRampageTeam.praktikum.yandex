@@ -22,8 +22,8 @@ describe('Testing GameOver component', () => {
         <GameOver score={228} resetGame={resetGameMock} />
       </BrowserRouter>
     )
-    const scoreElement = screen.getByText('Retry')
-    fireEvent.click(scoreElement)
+    const resetButton = screen.getByText('Retry')
+    fireEvent.click(resetButton)
     expect(resetGameMock).toHaveBeenCalled()
   })
 })
