@@ -53,9 +53,9 @@ export const appRouter = () =>
         {
           path: '/game',
           element: (
-            // <PrivateRoute>
-            <Game />
-            // </PrivateRoute>
+            <PrivateRoute>
+              <Game />
+            </PrivateRoute>
           ),
         },
         {
