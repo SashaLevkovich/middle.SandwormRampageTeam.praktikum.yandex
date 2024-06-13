@@ -32,7 +32,8 @@ describe('Testing useGameEngine', () => {
         MARGIN_IMAGE,
         imagesRef,
         canvasRef as MutableRefObject<HTMLCanvasElement | null>,
-        true
+        true,
+        jest.fn()
       )
     )
     expect(result.current.snake).toBe(INITIAL_SNAKE)

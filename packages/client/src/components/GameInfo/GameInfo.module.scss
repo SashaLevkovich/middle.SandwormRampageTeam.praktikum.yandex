@@ -1,0 +1,74 @@
+@import 'shared/styles/colors.scss';
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  color: $color-start-page-button;
+}
+
+.score {
+  margin-right: 80px;
+  font-size: 40px;
+  font-weight: 200;
+  color: $color-background-header;
+}
+
+.title {
+  font-family: Koulen;
+  font-size: 60px;
+  letter-spacing: 20px;
+}
+
+.pause {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  background-color: $color-grey-btn-background;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+}
+
+.pause::before,
+.pause::after {
+  content: '';
+  display: block;
+  width: 6%;
+  height: 60%;
+  background-color: $color-orange-dust;
+  position: absolute;
+}
+
+.pause::before {
+  left: 38%;
+}
+
+.pause::after {
+  right: 38%;
+}
+
+.play {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  background-color: $color-grey-btn-background;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+}
+
+.play::before {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 15px 0 15px 30px;
+  border-color: transparent transparent transparent $color-orange-dust;
+  position: absolute;
+  left: 38%;
+}

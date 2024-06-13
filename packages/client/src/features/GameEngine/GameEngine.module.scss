@@ -1,4 +1,12 @@
+@import 'shared/styles/colors.scss';
+
 .canvas {
-  border: 1px solid #292826;
-  background: #292826
+  border: 1px solid $color-start-page-background;
+  background-image: url("/assets/sand.svg");
+  z-index: 100;
+  cursor: none;
+}
+
+.gameInfoContainer {
+  margin: 20px 80px;
 }
