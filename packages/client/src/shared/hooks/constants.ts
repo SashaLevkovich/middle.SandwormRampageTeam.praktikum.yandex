@@ -8,9 +8,10 @@ export const INITIAL_SNAKE: Position[] = [
 export const INITIAL_FOOD: Position = { x: 15, y: 15 }
 
 export const IMAGE_SOURCES = {
-  headImage: '../public/head.png',
-  bodyImage: '../public/body.png',
-  tailImage: '../public/tail.png',
+  headImage: '../public/assets/head.png',
+  bodyImage: '../public/assets/body.png',
+  tailImage: '../public/assets/tail.png',
+  foodImage: '../assets/tank.png',
 }
 
 export const CELL_SIZE = 40
