@@ -6,36 +6,20 @@ import useKeyboardControls from 'shared/hooks/useKeyboardControls'
 import useLoadImages from 'shared/hooks/useLoadImages'
 import styles from './GameEngine.module.scss'
 import { GameOver } from 'components/GameOver'
-
-type Position = {
-  x: number
-  y: number
-}
+import {
+  CANVAS_SIZE,
+  CELL_SIZE,
+  IMAGE_SOURCES,
+  INITIAL_FOOD,
+  INITIAL_SNAKE,
+  MARGIN_IMAGE,
+} from 'shared/hooks/constants'
 
 export const GameEngine = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [score, setScore] = useState(0)
 
-  const imageSources = {
-    headImage: '../assets/head.png',
-    bodyImage: '../assets/body.png',
-    tailImage: '../assets/tail.png',
-    foodImage: '../assets/tank.png',
-  }
-
-  const [imagesRef, isImagesLoaded] = useLoadImages(imageSources)
-
-  const initialSnake: Position[] = [
-    { x: 10, y: 10 },
-    { x: 9, y: 10 },
-    { x: 8, y: 10 },
-  ]
-
-  const initialFood: Position = { x: 15, y: 15 }
-
-  const cellSize = 40
-  const canvasSize = 800
-  const marginImage = 8
+  const [imagesRef, isImagesLoaded] = useLoadImages(IMAGE_SOURCES)
 
   const {
     direction,
@@ -45,11 +29,11 @@ export const GameEngine = () => {
     setIsPaused,
     resetGame,
   } = useGameEngine(
-    initialSnake,
-    initialFood,
-    cellSize,
-    canvasSize,
-    marginImage,
+    INITIAL_SNAKE,
+    INITIAL_FOOD,
+    CELL_SIZE,
+    CANVAS_SIZE,
+    MARGIN_IMAGE,
     imagesRef,
     canvasRef,
     isImagesLoaded,
@@ -63,12 +47,13 @@ export const GameEngine = () => {
       <div className={styles.gameInfoContainer}>
         <GameInfo score={score} isPaused={isPaused} setIsPaused={setIsPaused} />
       </div>
-      <Flex align="center" justify="center">
+      <Flex role="gameEngine" align="center" justify="center">
         <canvas
           ref={canvasRef}
-          width={canvasSize}
-          height={canvasSize}
+          width={CANVAS_SIZE}
+          height={CANVAS_SIZE}
           className={styles.canvas}
+          role="gameEngineCanvas"
         />
         {isGameOver && <GameOver score={score} resetGame={resetGame} />}
       </Flex>

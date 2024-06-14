@@ -6,6 +6,8 @@ interface ErrorBoundaryProps {
 
 interface ErrorBoundaryState {
   hasError: boolean
+  error?: Error
+  errorInfo?: ErrorInfo
 }
 
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
@@ -20,13 +22,13 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('Uncaught error:', error, errorInfo)
+    this.setState({ hasError: true, error, errorInfo })
   }
 
   render() {
     if (this.state.hasError) {
       // Здесь будет UI страницы ошибки
-      return <h1>Что-то пошло не так.</h1>
+      return <h1>Something went wrong</h1>
     }
 
     return this.props.children

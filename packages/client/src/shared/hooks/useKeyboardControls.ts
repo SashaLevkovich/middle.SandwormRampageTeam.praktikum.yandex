@@ -1,9 +1,5 @@
 import { Dispatch, SetStateAction, useEffect } from 'react'
-
-type Position = {
-  x: number
-  y: number
-}
+import { Position } from 'shared/hooks/types'
 
 const useKeyboardControls = (
   setDirection: Dispatch<SetStateAction<Position>>,
