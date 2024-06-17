@@ -4,6 +4,7 @@ export interface SignInLoginParams {
   login: string
   password?: string
 }
+
 export type SignInLoginRequestConfig = AxiosRequestConfig<SignInLoginParams>
 
 export interface SignUpParams {
