@@ -1,19 +1,49 @@
-import { FC } from 'react'
 import { Flex, Form, Input, Typography } from 'antd'
+import { FC } from 'react'
 
+import { ButtonCustom } from 'components/ButtonCustom'
 import {
   SignUpFieldType,
   SignUpFieldValidationRules,
 } from 'shared/constants/validationRules'
-import { ButtonCustom } from 'components/ButtonCustom'
 
+import { Link } from 'react-router-dom'
+import { useForm } from 'shared/hooks/useForm'
 import classes from './SignUp.module.scss'
 
+interface LoginFormValues {
+  login: string
+  email: string
+  firstName: string
+  secondName: string
+  password: string
+  repeatPassword: string
+  phone: string
+}
+
+const initialValues: LoginFormValues = {
+  login: '',
+  email: '',
+  firstName: '',
+  secondName: '',
+  password: '',
+  repeatPassword: '',
+  phone: '',
+}
+
 export const SignUp: FC = () => {
+  const { values, setFieldValue, handleSubmit } = useForm<LoginFormValues>({
+    initialValues,
+    validateOnChange: false,
+    onSubmit: async values => {
+      console.log(1, values)
+    },
+  })
+
   return (
     <div className={classes.root}>
       <div className={classes.formContainer}>
-        <Form name="signUp" autoComplete="off">
+        <Form name="signUp" autoComplete="off" onSubmitCapture={handleSubmit}>
           <Typography>
             <Typography.Title
               className={classes.title}
@@ -30,6 +60,11 @@ export const SignUp: FC = () => {
               className={classes.input}
               size="large"
               placeholder="Login *"
+              value={values.login}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                const login = event.target.value
+                setFieldValue('login', login)
+              }}
             />
           </Form.Item>
 
@@ -41,6 +76,11 @@ export const SignUp: FC = () => {
               className={classes.input}
               size="large"
               placeholder="Email *"
+              value={values.email}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                const email = event.target.value
+                setFieldValue('email', email)
+              }}
             />
           </Form.Item>
 
@@ -52,6 +92,11 @@ export const SignUp: FC = () => {
               className={classes.input}
               size="large"
               placeholder="First name *"
+              value={values.firstName}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                const firstName = event.target.value
+                setFieldValue('firstName', firstName)
+              }}
             />
           </Form.Item>
 
@@ -63,6 +108,27 @@ export const SignUp: FC = () => {
               className={classes.input}
               size="large"
               placeholder="Second name *"
+              value={values.secondName}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                const secondName = event.target.value
+                setFieldValue('secondName', secondName)
+              }}
+            />
+          </Form.Item>
+
+          <Form.Item<SignUpFieldType>
+            name="phone"
+            validateTrigger={['onBlur', 'onFocus']}
+            rules={SignUpFieldValidationRules['phone']}>
+            <Input
+              className={classes.input}
+              size="large"
+              placeholder="Phone *"
+              value={values.secondName}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                const phone = event.target.value
+                setFieldValue('phone', phone)
+              }}
             />
           </Form.Item>
 
@@ -75,6 +141,11 @@ export const SignUp: FC = () => {
               className={classes.input}
               size="large"
               placeholder="Password *"
+              value={values.password}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                const password = event.target.value
+                setFieldValue('password', password)
+              }}
             />
           </Form.Item>
 
@@ -87,6 +158,11 @@ export const SignUp: FC = () => {
               className={classes.input}
               size="large"
               placeholder="Repeat password *"
+              value={values.repeatPassword}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                const repeatPassword = event.target.value
+                setFieldValue('repeatPassword', repeatPassword)
+              }}
             />
           </Form.Item>
 
@@ -113,7 +189,7 @@ export const SignUp: FC = () => {
             style={{ paddingLeft: '9px' }}
             type="link"
             className={classes.backBtn}>
-            Back
+            <Link to="/login">Back</Link>
           </ButtonCustom>
         </Flex>
       </div>

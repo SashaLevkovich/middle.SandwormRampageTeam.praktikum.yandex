@@ -1,48 +1,48 @@
-import { FC, useEffect } from 'react'
 import { Button, Flex, Form, Input, Typography } from 'antd'
 import { AxiosError } from 'axios'
+import { FC, useEffect } from 'react'
 
+import { SignInLoginParams } from 'app/api/requests/auth'
 import {
   SignInFieldType,
   SignInFieldValidationRules,
 } from 'shared/constants/validationRules'
 import { setLocalStorageUser } from 'shared/utils/userLocalStorage'
-import AuthService, { SignInParams } from 'app/api/entities/auth'
 
+import { authRequests } from 'app/api'
+
+import { userApi } from 'app/redux/api'
+import { userSlice } from 'app/redux/slice/user'
 import classes from 'pages/signUp/SignUp.module.scss'
-import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
-const authService = new AuthService()
+import { Link, useNavigate } from 'react-router-dom'
+import { isEmpty } from 'shared/helpers/isEmpty'
 
 export const SignIn: FC = () => {
-  console.log(import.meta.env.VITE_API_URL)
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const user = userApi.useGetUserQuery(undefined, { skip: true })
+  const [signIn] = userApi.useSignInMutation()
 
   useEffect(() => {
-    async function checkAuth() {
-      try {
-        const resp = await authService.getUser()
-        if (resp.data.id) {
-          setLocalStorageUser(resp.data)
-          navigate('/')
-        }
-      } catch (e) {
-        console.log(e)
-      }
+    if (user.data && !isEmpty(user.data)) {
+      setLocalStorageUser(user.data)
+      navigate('/')
     }
-
-    checkAuth()
   }, [])
 
-  const onFinish = async (values: SignInParams) => {
+  const onFinish = async (values: SignInLoginParams) => {
     try {
-      await authService.signIn(values)
-      const getUserResp = await authService.getUser()
-      setLocalStorageUser(getUserResp.data)
+      const response = await signIn(values).unwrap()
+
+      dispatch(userSlice.actions.setUser(response))
+      setLocalStorageUser(response)
     } catch (e) {
       const error = e as AxiosError
       if (error.response?.status === 400) {
-        authService.getUser().then(resp => {
+        authRequests.getUser().then(resp => {
           setLocalStorageUser(resp.data)
         })
       }
@@ -105,7 +105,7 @@ export const SignIn: FC = () => {
             <Typography.Text>No account?</Typography.Text>
           </Typography>
           <Button type="link" className={classes.backBtn}>
-            Create
+            <Link to="/signUp">Create</Link>
           </Button>
         </Flex>
       </div>

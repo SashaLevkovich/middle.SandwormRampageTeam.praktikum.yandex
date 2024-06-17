@@ -14,6 +14,7 @@ export type SignUpFieldType = {
   second_name: string
   password: string
   confirm: string
+  phone: string
 }
 
 export const SignInFieldValidationRules: ValidatorSchema<
@@ -43,6 +44,19 @@ export const SignUpFieldValidationRules: ValidatorSchema<
   keyof SignUpFieldType
 > = {
   login: [
+    { required: true, message: 'Please input your login!' },
+    {
+      type: 'string',
+      min: 3,
+      max: 20,
+      message: 'Login must contain from 3 to 20 characters!',
+    },
+    {
+      pattern: /^(?=.*[a-z])[a-z0-9_-]*$/i,
+      message: 'Wrong login format',
+    },
+  ],
+  phone: [
     { required: true, message: 'Please input your login!' },
     {
       type: 'string',
