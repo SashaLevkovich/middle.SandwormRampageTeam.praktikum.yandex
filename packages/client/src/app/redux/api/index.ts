@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 import { authRequests, rootApi } from 'app/api'
-import { SignInLoginParams } from 'app/api/requests/auth'
+import { SignInLoginParams, SignUpParams } from 'app/api/requests/auth'
 import { AxiosError, AxiosResponse } from 'axios'
 
 interface QueryParams {
@@ -32,6 +32,12 @@ export const userApi = createApi({
     }),
     signIn: builder.mutation<User, SignInLoginParams>({
       queryFn: params => authRequests.signIn({ params }),
+    }),
+    signUp: builder.mutation<User, SignUpParams>({
+      queryFn: params => authRequests.signUp({ params }),
+    }),
+    logout: builder.mutation<void, void>({
+      queryFn: () => authRequests.logout(),
     }),
   }),
 })

@@ -35,6 +35,10 @@ class AuthRequests {
   getUser() {
     return rootApi.get<User>(`${AuthRequests.baseUrl}/user`)
   }
+
+  logout() {
+    return rootApi.post(`${AuthRequests.baseUrl}/logout`)
+  }
 }
 
 export default AuthRequests
