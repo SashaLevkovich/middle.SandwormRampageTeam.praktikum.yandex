@@ -1,10 +1,38 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App'
-import './index.css'
+import { userSlice } from 'app/redux/slice/user'
+import { store } from 'app/redux/store'
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-)
+import ReactDOM from 'react-dom/client'
+
+import { userApi } from 'app/redux/api'
+import { registerServiceWorker } from 'shared/utils/registerServiceWorker'
+
+import { setLocalStorageUser } from 'shared/utils/userLocalStorage'
+import AppProviders from './app/appProviders'
+import './index.scss'
+
+const rootElement = document.getElementById('root')!
+const root = ReactDOM.createRoot(rootElement)
+
+const init = async () => {
+  try {
+    const result = await store
+      .dispatch(userApi.endpoints.getUser.initiate())
+      .unwrap()
+
+    if (result) {
+      store.dispatch(userSlice.actions.setUser(result))
+
+      setLocalStorageUser(result)
+    }
+  } catch (e) {
+    console.log(e)
+  }
+
+  root.render(<AppProviders />)
+
+  if (process.env.NODE_ENV === 'production') {
+    registerServiceWorker()
+  }
+}
+
+init()
