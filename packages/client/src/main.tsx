@@ -11,7 +11,7 @@ import AppProviders from './app/appProviders'
 import './index.scss'
 
 const rootElement = document.getElementById('root')!
-const root = ReactDOM.createRoot(rootElement)
+ReactDOM.hydrateRoot(rootElement, <AppProviders />)
 
 const init = async () => {
   try {
@@ -27,8 +27,6 @@ const init = async () => {
   } catch (e) {
     console.log(e)
   }
-
-  root.render(<AppProviders />)
 
   if (process.env.NODE_ENV === 'production') {
     registerServiceWorker()
