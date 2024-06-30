@@ -10,7 +10,7 @@ import { setLocalStorageUser } from 'shared/utils/userLocalStorage'
 import AppProviders from './app/appProviders'
 import './index.scss'
 
-const rootElement = document.getElementById('root')!
+const rootElement = document.getElementById('root') as HTMLElement
 ReactDOM.hydrateRoot(rootElement, <AppProviders />)
 
 const init = async () => {
@@ -33,4 +33,4 @@ const init = async () => {
   }
 }
 
-init()
+// init()

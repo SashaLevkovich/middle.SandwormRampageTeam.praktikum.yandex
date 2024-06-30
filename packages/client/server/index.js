@@ -66,7 +66,7 @@ async function createServer() {
             else {
                 template = await promises_1.default.readFile(path_1.default.join(clientPath, 'dist/client/index.html'), 'utf-8');
                 // Получаем путь до сбилдженого модуля клиента, чтобы не тащить средства сборки клиента на сервер
-                const pathToServer = path_1.default.join(clientPath, 'dist/server/entry-server.mjs');
+                const pathToServer = path_1.default.join(clientPath, 'dist/server/entry-server.js');
                 // Импортируем этот модуль и вызываем с инишл стейтом
                 render = (await Promise.resolve().then(() => __importStar(require(pathToServer)))).render;
             }

@@ -6,12 +6,10 @@ import moonsImg from 'shared/assets/images/Moons.svg'
 
 import classes from './GameStart.module.scss'
 
-import icons from '@ant-design/icons'
+import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons'
 
 export const GameStart: FC = () => {
   const [isFullScreen, setFullScreen] = useState(false)
-  // @ts-ignore
-  const { FullscreenExitOutlined, FullscreenOutlined } = icons
 
   const onFullScreen = async () => {
     if (!document.fullscreenElement) {

@@ -25,11 +25,15 @@ export default defineConfig({
     },
   },
   build: {
+    ssr: true,
     outDir: path.join(__dirname, 'dist/client'),
     rollupOptions: {
       input: {
         app: './index.html',
         sw: './src/sw.js',
+      },
+      output: {
+        format: 'cjs',
       },
       // output: {
       //   entryFileNames: ({ name }) => {
@@ -43,9 +47,5 @@ export default defineConfig({
       //   assetFileNames: `assets/[name].[ext]`,
       // },
     },
-  },
-  ssr: {
-    // @ts-ignore
-    format: 'cjs',
   },
 })

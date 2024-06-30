@@ -7,8 +7,7 @@ import {
   useState,
 } from 'react'
 
-// import { CloseOutlined, RightOutlined } from '@ant-design/icons'
-import icons from '@ant-design/icons'
+import { CloseOutlined, RightOutlined } from '@ant-design/icons'
 
 import { Button, Flex, Form, Input } from 'antd'
 
@@ -26,8 +25,6 @@ type Props = {
 }
 
 export const ForumChat: FC<Props> = ({ isOpen, onClose }) => {
-  // @ts-ignore
-  const { CloseOutlined, RightOutlined } = icons
   const [messages, setMessages] = useState(CHAT_MOCK)
   const [message, setMessage] = useState('')
 
