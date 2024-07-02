@@ -14,6 +14,12 @@ import { Leaderboard } from 'pages/leaderboard'
 import { Profile } from 'pages/profile'
 import { SignIn } from 'pages/signIn'
 import { SignUp } from 'pages/signUp'
+import { AppDispatch, RootState } from 'app/redux/store'
+
+export type PageInitArgs = {
+  dispatch: AppDispatch
+  state: RootState
+}
 
 export const routes = [
   {
