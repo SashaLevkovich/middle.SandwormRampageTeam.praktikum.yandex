@@ -3,7 +3,7 @@ import fs from 'fs/promises'
 import { createServer as createViteServer, ViteDevServer } from 'vite'
 dotenv.config()
 
-import express from 'express'
+import express, { Request } from 'express'
 import path from 'path'
 
 const port = process.env.PORT || 80
@@ -33,7 +33,9 @@ async function createServer() {
 
     try {
       // Создаём переменные
-      let render: () => Promise<{ html: string; initialState: unknown }>
+      let render: (
+        req: Request
+      ) => Promise<{ html: string; initialState: unknown }>
       let template: string
       if (vite) {
         template = await fs.readFile(
@@ -67,7 +69,7 @@ async function createServer() {
         render = (await import(pathToServer)).render
       }
 
-      const { html: appHtml, initialState } = await render()
+      const { html: appHtml, initialState } = await render(req)
 
       // Заменяем комментарий на сгенерированную HTML-строку
       const html = template
@@ -87,8 +89,16 @@ async function createServer() {
     }
   })
 
+  app.get('/friends', (_, res) => {
+    res.json([
+      { name: 'Саша', secondName: 'Панов' },
+      { name: 'Лёша', secondName: 'Садовников' },
+      { name: 'Серёжа', secondName: 'Иванов' },
+    ])
+  })
+
   app.get('/user', (_, res) => {
-    res.json({ first_name: '</script>Степа', second_name: 'Степанов' })
+    res.json({ name: 'Степа', secondName: 'Степанов' })
   })
 
   app.listen(port, () => {
