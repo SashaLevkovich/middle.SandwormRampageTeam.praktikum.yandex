@@ -22,6 +22,7 @@ export const store = configureStore({
   reducer,
   preloadedState:
     typeof window === 'undefined' ? undefined : window.APP_INITIAL_STATE,
+  devTools: true,
 })
 
 export type AppDispatch = typeof store.dispatch

@@ -4,6 +4,7 @@ import {
   type PayloadAction,
 } from '@reduxjs/toolkit'
 import { RootState } from 'app/redux/store'
+import { SERVER_HOST } from '../../../../constants'
 
 interface UserState {
   value: User | null
@@ -14,8 +15,8 @@ const initialState: UserState = { value: null, isLoading: false }
 
 export const fetchUserThunk = createAsyncThunk(
   'user/fetchUserThunk',
-  async (_: void) => {
-    const url = `http://localhost:3001/user`
+  async () => {
+    const url = `${SERVER_HOST}/user`
     return fetch(url).then(res => res.json())
   }
 )
