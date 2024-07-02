@@ -73,7 +73,7 @@ async function createServer() {
       const html = template
         .replace(`<!--ssr-outlet-->`, appHtml)
         .replace(
-          `<!--ssr-initial-state-->`,
+          `<!--ssr-initial-state--> <div id="root"><!--ssr-outlet--></div>`,
           `<script>window.APP_INITIAL_STATE = ${JSON.stringify(
             initialState
           )}</script>`
