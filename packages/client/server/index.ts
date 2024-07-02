@@ -33,7 +33,7 @@ async function createServer() {
 
     try {
       // Создаём переменные
-      let render: () => Promise<string>
+      let render: () => Promise<{ html: string; initialState: unknown }>
       let template: string
       if (vite) {
         template = await fs.readFile(
@@ -67,10 +67,17 @@ async function createServer() {
         render = (await import(pathToServer)).render
       }
 
-      const appHtml = await render()
+      const { html: appHtml, initialState } = await render()
 
       // Заменяем комментарий на сгенерированную HTML-строку
-      const html = template.replace(`<!--ssr-outlet-->`, appHtml)
+      const html = template
+        .replace(`<!--ssr-outlet-->`, appHtml)
+        .replace(
+          `<!--ssr-initial-state-->`,
+          `<script>window.APP_INITIAL_STATE = ${JSON.stringify(
+            initialState
+          )}</script>`
+        )
 
       // Завершаем запрос и отдаём HTML-страницу
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
