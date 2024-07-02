@@ -88,7 +88,7 @@ async function createServer() {
   })
 
   app.get('/user', (_, res) => {
-    res.json({ name: '</script>Степа', secondName: 'Степанов' })
+    res.json({ first_name: '</script>Степа', second_name: 'Степанов' })
   })
 
   app.listen(port, () => {

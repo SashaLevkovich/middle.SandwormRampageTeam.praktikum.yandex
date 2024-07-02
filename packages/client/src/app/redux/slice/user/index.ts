@@ -43,6 +43,7 @@ export const userSlice = createSlice({
       .addCase(
         fetchUserThunk.fulfilled.type,
         (state, { payload }: PayloadAction<User>) => {
+          console.log('payload', payload)
           state.value = payload
           state.isLoading = false
         }

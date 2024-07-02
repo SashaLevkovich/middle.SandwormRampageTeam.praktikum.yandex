@@ -32,13 +32,13 @@ const theme: ThemeConfig = {
 function AppProviders() {
   const user = useSelector(selectUser)
   return (
-    // // <ErrorBoundary>
+    // <ErrorBoundary>
     // <Provider store={store}>
     //   <ConfigProvider theme={theme}>
     //     <RouterProvider router={appRouter()} />
     //   </ConfigProvider>
     // </Provider>
-    // // </ErrorBoundary>
+    // </ErrorBoundary>
     <div>
       {user ? (
         <div>
@@ -46,7 +46,7 @@ function AppProviders() {
           <p>{user.second_name}</p>
         </div>
       ) : (
-        <p>Пользователь не найден!</p>
+        <p>Пользователь djDKSHDASUSDASAI!</p>
       )}
     </div>
   )
