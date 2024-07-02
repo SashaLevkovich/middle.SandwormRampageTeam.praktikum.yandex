@@ -11,6 +11,7 @@ import { setLocalStorageUser } from 'shared/utils/userLocalStorage'
 import './index.scss'
 import { routes } from 'app/appRoutes'
 import { Provider } from 'react-redux'
+import AppProviders from 'app/appProviders'
 
 const router = createBrowserRouter(routes)
 
@@ -18,7 +19,7 @@ const rootElement = document.getElementById('root') as HTMLElement
 ReactDOM.hydrateRoot(
   rootElement,
   <Provider store={store}>
-    <RouterProvider router={router} />
+    <AppProviders />
   </Provider>
 )
 
