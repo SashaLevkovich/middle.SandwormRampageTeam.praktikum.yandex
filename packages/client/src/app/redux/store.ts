@@ -10,13 +10,20 @@ import userReducer from './slice/user/index'
 export const reducer = combineReducers({
   user: userReducer,
 })
+export type RootState = ReturnType<typeof reducer>
+
+declare global {
+  interface Window {
+    APP_INITIAL_STATE: RootState
+  }
+}
 
 export const store = configureStore({
   reducer,
-  devTools: process.env.NODE_ENV !== 'production',
+  preloadedState:
+    typeof window === 'undefined' ? undefined : window.APP_INITIAL_STATE,
 })
 
-export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 
 export const useDispatch: () => AppDispatch = useDispatchBase
