@@ -80,6 +80,10 @@ async function createServer() {
     }
   })
 
+  app.get('/user', (_, res) => {
+    res.json({ name: '</script>Степа', secondName: 'Степанов' })
+  })
+
   app.listen(port, () => {
     console.log(`Client is listening on port: ${port}`)
   })

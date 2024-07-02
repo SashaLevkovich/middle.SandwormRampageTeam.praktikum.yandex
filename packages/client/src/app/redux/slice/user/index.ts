@@ -3,6 +3,7 @@ import {
   createSlice,
   type PayloadAction,
 } from '@reduxjs/toolkit'
+import { RootState } from 'app/redux/store'
 
 interface UserState {
   value: User | null
@@ -50,5 +51,7 @@ export const userSlice = createSlice({
       })
   },
 })
+
+export const selectUser = (state: RootState) => state.user.value
 
 export default userSlice.reducer
