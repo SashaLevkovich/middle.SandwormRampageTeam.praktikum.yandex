@@ -1,20 +1,19 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import { userApi } from './api'
-import rootReducer from './rootReducer'
 import {
   useDispatch as useDispatchBase,
   useSelector as useSelectorBase,
   TypedUseSelectorHook,
   useStore as useStoreBase,
 } from 'react-redux'
+import userReducer from './slice/user/index'
 
-export const reducer = combineReducers({})
+export const reducer = combineReducers({
+  user: userReducer,
+})
 
 export const store = configureStore({
-  reducer: rootReducer,
+  reducer,
   devTools: process.env.NODE_ENV !== 'production',
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({}).concat(userApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>
