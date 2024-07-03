@@ -1,5 +1,5 @@
 import { ConfigProvider, ThemeConfig } from 'antd'
-import { Provider, useSelector } from 'react-redux'
+import { Provider } from 'react-redux'
 import { RouterProvider } from 'react-router-dom'
 import { appRouter } from './appRoutes'
 import { store as defaultStore } from './redux/store'
