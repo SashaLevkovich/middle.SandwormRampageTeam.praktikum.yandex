@@ -18,9 +18,14 @@ import { AppDispatch, RootState } from 'app/redux/store'
 import { initNotFoundPage } from 'pages/errors/NotFound'
 import { initSignInPage } from 'pages/signIn/SignIn'
 
+export type PageInitContext = {
+  clientToken?: string
+}
+
 export type PageInitArgs = {
   dispatch: AppDispatch
   state: RootState
+  ctx: PageInitContext
 }
 
 export const routes = [
