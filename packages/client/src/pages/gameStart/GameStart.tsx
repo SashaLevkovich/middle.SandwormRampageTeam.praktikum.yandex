@@ -7,6 +7,9 @@ import moonsImg from 'shared/assets/images/Moons.svg'
 import classes from './GameStart.module.scss'
 
 import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons'
+import { useSelector } from 'react-redux'
+import { fetchUserThunk, selectUser } from 'app/redux/slice/user'
+import { PageInitArgs } from 'app/appRoutes'
 
 export const GameStart: FC = () => {
   const [isFullScreen, setFullScreen] = useState(false)

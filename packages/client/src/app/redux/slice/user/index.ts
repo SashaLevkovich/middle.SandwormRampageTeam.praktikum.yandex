@@ -6,7 +6,7 @@ import {
 import { RootState } from 'app/redux/store'
 import { SERVER_HOST } from '../../../../constants'
 
-interface UserState {
+export interface UserState {
   value: User | null
   isLoading: boolean
 }
@@ -43,7 +43,6 @@ export const userSlice = createSlice({
       .addCase(
         fetchUserThunk.fulfilled.type,
         (state, { payload }: PayloadAction<User>) => {
-          console.log('payload', payload)
           state.value = payload
           state.isLoading = false
         }

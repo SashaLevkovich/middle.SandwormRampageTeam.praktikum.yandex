@@ -6,11 +6,9 @@ import {
   useStore as useStoreBase,
 } from 'react-redux'
 import userReducer from './slice/user/index'
-import friendsReducer from './slice/friends/index'
 
 export const reducer = combineReducers({
   user: userReducer,
-  friends: friendsReducer,
 })
 export type RootState = ReturnType<typeof reducer>
 

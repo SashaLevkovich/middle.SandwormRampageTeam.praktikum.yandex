@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom/server'
 import { configureStore } from '@reduxjs/toolkit'
 import { reducer } from 'app/redux/store'
-import { fetchUserThunk } from 'app/redux/slice/user'
 import { Provider } from 'react-redux'
 import { Request as ExpressRequest } from 'express'
 import {
@@ -11,9 +10,10 @@ import {
   StaticRouterProvider,
 } from 'react-router-dom/server'
 import { routes } from 'app/appRoutes'
-import { createFetchRequest } from './entry-server.utils'
+import { createFetchRequest, createUrl } from './entry-server.utils'
 import { theme } from 'app/appProviders'
 import { ConfigProvider } from 'antd'
+import { matchRoutes } from 'react-router-dom'
 
 export const render = async (req: ExpressRequest) => {
   const { query, dataRoutes } = createStaticHandler(routes)
@@ -24,12 +24,32 @@ export const render = async (req: ExpressRequest) => {
     throw context
   }
 
-  const router = createStaticRouter(dataRoutes, context)
   const store = configureStore({
     reducer,
   })
+  const url = createUrl(req)
+  const foundRoutes = matchRoutes(routes, url)
+  if (!foundRoutes) {
+    throw new Error('Страница не найдена!')
+  }
 
-  await store.dispatch(fetchUserThunk())
+  const [
+    {
+      route: { fetchData },
+    },
+  ] = foundRoutes
+  try {
+    if (fetchData) {
+      await fetchData({
+        dispatch: store.dispatch,
+        state: store.getState(),
+      })
+    }
+  } catch (e) {
+    console.log('Инициализация страницы произошла с ошибкой', e)
+  }
+
+  const router = createStaticRouter(dataRoutes, context)
 
   return {
     html: ReactDOM.renderToString(
