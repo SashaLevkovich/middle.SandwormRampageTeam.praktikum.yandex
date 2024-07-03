@@ -5,6 +5,7 @@ dotenv.config()
 
 import express, { Request as ExpressRequest } from 'express'
 import path from 'path'
+import cookieParser from 'cookie-parser'
 
 const port = process.env.PORT || 80
 const clientPath = path.join(__dirname, '..')
@@ -12,6 +13,7 @@ const isDev = process.env.NODE_ENV === 'development'
 
 async function createServer() {
   const app = express()
+  app.use(cookieParser)
 
   let vite: ViteDevServer | undefined
   if (isDev) {
