@@ -4,9 +4,10 @@ import { configureStore } from '@reduxjs/toolkit'
 import { reducer } from 'app/redux/store'
 import { fetchUserThunk } from 'app/redux/slice/user'
 import { Provider } from 'react-redux'
+import { Request as ExpressRequest } from 'express'
 import AppProviders from 'app/appProviders'
 
-export const render = async () => {
+export const render = async (req: ExpressRequest) => {
   const store = configureStore({
     reducer,
   })

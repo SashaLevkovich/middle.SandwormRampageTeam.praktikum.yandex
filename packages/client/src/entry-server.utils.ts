@@ -1,6 +1,6 @@
-import { Request } from 'express'
+import { Request as ExpressRequest } from 'express'
 
-export const createUrl = (req: Request) => {
+export const createUrl = (req: ExpressRequest) => {
   if (!req || !req.protocol || !req.get) {
     throw new Error(
       "Invalid request object: Missing 'protocol' or 'get' method."
@@ -12,8 +12,7 @@ export const createUrl = (req: Request) => {
   return new URL(req.originalUrl || req.url, origin)
 }
 
-export const createFetchRequest = (req: Request) => {
-  console.log(req)
+export const createFetchRequest = (req: ExpressRequest) => {
   if (!req || !req.on || !req.headers) {
     throw new Error("Invalid request object: Missing 'on' or 'headers' method.")
   }

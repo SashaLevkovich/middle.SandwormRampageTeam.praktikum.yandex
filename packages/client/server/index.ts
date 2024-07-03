@@ -3,7 +3,7 @@ import fs from 'fs/promises'
 import { createServer as createViteServer, ViteDevServer } from 'vite'
 dotenv.config()
 
-import express, { Request } from 'express'
+import express, { Request as ExpressRequest } from 'express'
 import path from 'path'
 
 const port = process.env.PORT || 80
@@ -34,7 +34,7 @@ async function createServer() {
     try {
       // Создаём переменные
       let render: (
-        req: Request
+        req: ExpressRequest
       ) => Promise<{ html: string; initialState: unknown }>
       let template: string
       if (vite) {
