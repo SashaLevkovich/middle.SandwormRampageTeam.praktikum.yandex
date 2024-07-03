@@ -4,7 +4,7 @@ import { RouterProvider } from 'react-router-dom'
 import { appRouter } from './appRoutes'
 import { store as defaultStore } from './redux/store'
 
-const theme: ThemeConfig = {
+export const theme: ThemeConfig = {
   token: {
     fontFamily: 'Kumbh Sans Regular',
   },
