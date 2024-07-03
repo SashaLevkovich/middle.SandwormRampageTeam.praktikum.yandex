@@ -6,9 +6,11 @@ import {
   useStore as useStoreBase,
 } from 'react-redux'
 import userReducer from './slice/user/index'
+import ssrReducer from './slice/ssr/index'
 
 export const reducer = combineReducers({
   user: userReducer,
+  ssr: ssrReducer,
 })
 export type RootState = ReturnType<typeof reducer>
 

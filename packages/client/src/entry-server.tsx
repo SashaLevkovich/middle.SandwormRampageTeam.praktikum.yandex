@@ -14,6 +14,7 @@ import { createFetchRequest, createUrl } from './entry-server.utils'
 import { theme } from 'app/appProviders'
 import { ConfigProvider } from 'antd'
 import { matchRoutes } from 'react-router-dom'
+import { setPageHasBeenInitializedOnServer } from 'app/redux/slice/ssr'
 
 export const render = async (req: ExpressRequest) => {
   const { query, dataRoutes } = createStaticHandler(routes)
@@ -38,6 +39,7 @@ export const render = async (req: ExpressRequest) => {
       route: { fetchData },
     },
   ] = foundRoutes
+  store.dispatch(setPageHasBeenInitializedOnServer(true))
   try {
     if (fetchData) {
       await fetchData({

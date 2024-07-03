@@ -1,7 +1,12 @@
 import { PageInitArgs, PageInitContext } from 'app/appRoutes'
-import { useDispatch, useStore } from 'react-redux'
+import { useDispatch, useSelector, useStore } from 'react-redux'
 import { useEffect } from 'react'
 import { UserState } from 'app/redux/slice/user'
+import {
+  selectPageHasBeenInitializedOnServer,
+  setPageHasBeenInitializedOnServer,
+  SsrState,
+} from 'app/redux/slice/ssr'
 
 type PageProps = {
   initPage: (data: PageInitArgs) => Promise<unknown>
@@ -25,12 +30,20 @@ const createContext = (): PageInitContext => ({
 
 export const usePage = ({ initPage }: PageProps) => {
   const dispatch = useDispatch()
+  const pageHasBeenInitializedOnServer = useSelector(
+    selectPageHasBeenInitializedOnServer
+  )
   const store = useStore()
 
   useEffect(() => {
+    if (pageHasBeenInitializedOnServer) {
+      dispatch(setPageHasBeenInitializedOnServer(false))
+      return
+    }
+
     initPage({
       dispatch,
-      state: store.getState() as { user: UserState },
+      state: store.getState() as { user: UserState; ssr: SsrState },
       ctx: createContext(),
     })
   }, [])
