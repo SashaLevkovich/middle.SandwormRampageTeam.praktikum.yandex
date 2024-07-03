@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { createContext } from 'react'
 import ReactDOM from 'react-dom/server'
 import { configureStore } from '@reduxjs/toolkit'
 import { reducer } from 'app/redux/store'
@@ -9,7 +9,7 @@ import {
   createStaticRouter,
   StaticRouterProvider,
 } from 'react-router-dom/server'
-import { routes } from 'app/appRoutes'
+import { PageInitContext, routes } from 'app/appRoutes'
 import { createFetchRequest, createUrl } from './entry-server.utils'
 import { theme } from 'app/appProviders'
 import { ConfigProvider } from 'antd'
@@ -43,6 +43,7 @@ export const render = async (req: ExpressRequest) => {
       await fetchData({
         dispatch: store.dispatch,
         state: store.getState(),
+        ctx: createContext(req) as PageInitContext,
       })
     }
   } catch (e) {
