@@ -14,11 +14,25 @@ import { Leaderboard } from 'pages/leaderboard'
 import { Profile } from 'pages/profile'
 import { SignIn } from 'pages/signIn'
 import { SignUp } from 'pages/signUp'
+import { AppDispatch, RootState } from 'app/redux/store'
+import { initNotFoundPage } from 'pages/errors/NotFound'
+import { initSignInPage } from 'pages/signIn/SignIn'
+
+export type PageInitContext = {
+  clientToken?: string
+}
+
+export type PageInitArgs = {
+  dispatch: AppDispatch
+  state: RootState
+  ctx: PageInitContext
+}
 
 export const routes = [
   {
     path: '/*',
-    element: <NotFound />,
+    Component: NotFound,
+    fetchData: initNotFoundPage,
   },
   {
     path: '/serverError',
@@ -26,7 +40,8 @@ export const routes = [
   },
   {
     path: '/login',
-    element: <SignIn />,
+    Component: SignIn,
+    fetchData: initSignInPage,
   },
   {
     path: '/signUp',

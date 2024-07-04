@@ -3,8 +3,9 @@ import fs from 'fs/promises'
 import { createServer as createViteServer, ViteDevServer } from 'vite'
 dotenv.config()
 
-import express from 'express'
+import express, { Request as ExpressRequest } from 'express'
 import path from 'path'
+import cookieParser from 'cookie-parser'
 
 const port = process.env.PORT || 80
 const clientPath = path.join(__dirname, '..')
@@ -12,6 +13,7 @@ const isDev = process.env.NODE_ENV === 'development'
 
 async function createServer() {
   const app = express()
+  app.use(cookieParser)
 
   let vite: ViteDevServer | undefined
   if (isDev) {
@@ -33,7 +35,9 @@ async function createServer() {
 
     try {
       // Создаём переменные
-      let render: () => Promise<string>
+      let render: (
+        req: ExpressRequest
+      ) => Promise<{ html: string; initialState: unknown }>
       let template: string
       if (vite) {
         template = await fs.readFile(
@@ -67,10 +71,17 @@ async function createServer() {
         render = (await import(pathToServer)).render
       }
 
-      const appHtml = await render()
+      const { html: appHtml, initialState } = await render(req)
 
       // Заменяем комментарий на сгенерированную HTML-строку
-      const html = template.replace(`<!--ssr-outlet-->`, appHtml)
+      const html = template
+        .replace(`<!--ssr-outlet-->`, appHtml)
+        .replace(
+          `<!--ssr-initial-state--> <div id="root"><!--ssr-outlet--></div>`,
+          `<script>window.APP_INITIAL_STATE = ${JSON.stringify(
+            initialState
+          )}</script>`
+        )
 
       // Завершаем запрос и отдаём HTML-страницу
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
@@ -78,6 +89,18 @@ async function createServer() {
       vite?.ssrFixStacktrace(e as Error)
       next(e)
     }
+  })
+
+  app.get('/friends', (_, res) => {
+    res.json([
+      { name: 'Саша', secondName: 'Панов' },
+      { name: 'Лёша', secondName: 'Садовников' },
+      { name: 'Серёжа', secondName: 'Иванов' },
+    ])
+  })
+
+  app.get('/user', (_, res) => {
+    res.json({ name: 'Степа', secondName: 'Степанов' })
   })
 
   app.listen(port, () => {
