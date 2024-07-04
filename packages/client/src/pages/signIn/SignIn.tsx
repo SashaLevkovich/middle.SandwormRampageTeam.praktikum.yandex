@@ -12,17 +12,19 @@ import { setLocalStorageUser } from 'shared/utils/userLocalStorage'
 import { authRequests } from 'app/api'
 
 import { userApi } from 'app/redux/api'
-import { userSlice } from 'app/redux/slice/user'
+import { fetchUserThunk, selectUser, userSlice } from 'app/redux/slice/user'
 import classes from 'pages/signUp/SignUp.module.scss'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { Link, useNavigate } from 'react-router-dom'
 import { isEmpty } from 'shared/helpers/isEmpty'
+import { PageInitArgs } from 'app/appRoutes'
 
 export const SignIn: FC = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
+  const userState = useSelector(selectUser)
   const user = userApi.useGetUserQuery(undefined, { skip: true })
   const [signIn] = userApi.useSignInMutation()
 
@@ -111,4 +113,10 @@ export const SignIn: FC = () => {
       </div>
     </div>
   )
+}
+
+export const initSignInPage = async ({ dispatch, state }: PageInitArgs) => {
+  if (!selectUser(state)) {
+    return dispatch(fetchUserThunk())
+  }
 }
