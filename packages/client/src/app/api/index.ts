@@ -6,4 +6,8 @@ export const rootApi = axios.create({
   withCredentials: true,
 })
 
+export const geolocationApi = axios.create({
+  baseURL: 'https://nominatim.openstreetmap.org/reverse?',
+})
+
 export const authRequests = new AuthRequests()

@@ -12,6 +12,39 @@
   padding-bottom: 30px;
 }
 
+.geolocation {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 30px;
+  color: $color-text-primary;
+  font-family: IBM Plex Mono Light;
+  font-size: 15px;
+  width: fit-content;
+  position: absolute;
+  bottom: 52px;
+  right: 63px;
+  z-index: 10;
+  background-color: $color-landing-page;
+  border-radius: 30px;
+
+  &Cross {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    cursor: pointer;
+  }
+
+  & > p {
+    margin: 0;
+  }
+
+  & > h3 {
+    margin-top: 0;
+    font-family: IBM Plex Mono Medium;
+  }
+}
+
 .greySandImage {
   position: absolute;
   bottom: -4px;
