@@ -13,7 +13,7 @@ const isDev = process.env.NODE_ENV === 'development'
 
 async function createServer() {
   const app = express()
-  app.use(cookieParser)
+  app.use(cookieParser())
 
   let vite: ViteDevServer | undefined
   if (isDev) {
