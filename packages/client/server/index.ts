@@ -6,6 +6,7 @@ dotenv.config()
 import express, { Request as ExpressRequest } from 'express'
 import path from 'path'
 import cookieParser from 'cookie-parser'
+import serialize from 'serialize-javascript'
 
 const port = process.env.PORT || 80
 const clientPath = path.join(__dirname, '..')
@@ -77,8 +78,8 @@ async function createServer() {
       const html = template
         .replace(`<!--ssr-outlet-->`, appHtml)
         .replace(
-          `<!--ssr-initial-state--> <div id="root"><!--ssr-outlet--></div>`,
-          `<script>window.APP_INITIAL_STATE = ${JSON.stringify(
+          `<!--ssr-initial-state-->`,
+          `<script>window.APP_INITIAL_STATE = ${serialize(
             initialState
           )}</script>`
         )
