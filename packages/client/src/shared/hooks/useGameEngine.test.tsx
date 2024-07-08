@@ -1,5 +1,5 @@
 import { render, renderHook } from '@testing-library/react'
-import { GameEngine } from 'features/GameEngine'
+import GameEngine from 'features/GameEngine'
 import { MutableRefObject } from 'react'
 import {
   CANVAS_SIZE,
