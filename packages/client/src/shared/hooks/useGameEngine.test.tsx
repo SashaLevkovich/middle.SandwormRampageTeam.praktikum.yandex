@@ -1,5 +1,4 @@
 import { render, renderHook } from '@testing-library/react'
-import useGameEngine from 'shared/hooks/useGameEngine'
 import { GameEngine } from 'features/GameEngine'
 import { MutableRefObject } from 'react'
 import {
@@ -9,6 +8,7 @@ import {
   INITIAL_SNAKE,
   MARGIN_IMAGE,
 } from 'shared/hooks/constants'
+import { useGameEngine } from 'shared/hooks/useGameEngine'
 
 describe('Testing useGameEngine', () => {
   it('useGameEngine returns correct values', () => {

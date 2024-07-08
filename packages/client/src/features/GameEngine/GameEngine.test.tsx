@@ -1,6 +1,8 @@
 import { render, screen } from '@testing-library/react'
-import { GameEngine } from 'features/GameEngine'
+
 import '@testing-library/jest-dom'
+
+import GameEngine from './GameEngine'
 
 describe('Testing GameEngine feature', () => {
   it('GameEngine component renders correctly', () => {
