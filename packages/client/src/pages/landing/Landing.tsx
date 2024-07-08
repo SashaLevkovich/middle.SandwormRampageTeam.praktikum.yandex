@@ -23,6 +23,7 @@ export const Landing: FC = () => {
       setIsTopOfAPage(window.scrollY <= window.innerHeight / 2)
     }
     document.addEventListener('scroll', scrollHandler)
+
     return () => {
       document.removeEventListener('scroll', scrollHandler)
     }

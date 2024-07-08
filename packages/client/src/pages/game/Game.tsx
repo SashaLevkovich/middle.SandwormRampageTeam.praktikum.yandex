@@ -1,15 +1,22 @@
-import { GameEngine } from 'features/GameEngine'
-import { FC, useEffect, useState } from 'react'
-import styles from './Game.module.scss'
-import sandGrey from 'shared/assets/images/SandGrey.svg'
-import sandYellow from 'shared/assets/images/SandYellow.svg'
-import sandOrange from 'shared/assets/images/SandOrange.svg'
+import { FC, Suspense, useEffect, useState } from 'react'
+
 import { geolocationApi } from 'app/api'
+
+import LazyGameEngine from 'features/GameEngine'
+
 import CrossImg from 'shared/assets/icons/cross.svg'
+import sandGrey from 'shared/assets/images/SandGrey.svg'
+import sandOrange from 'shared/assets/images/SandOrange.svg'
+import sandYellow from 'shared/assets/images/SandYellow.svg'
+
+import { LoadingOutlined } from '@ant-design/icons'
+import { Spin } from 'antd'
+import styles from './Game.module.scss'
 
 export const Game: FC = () => {
   const [geolocation, setGeolocation] = useState([''])
   const [isGeolocationOpened, setIsGeolocationOpened] = useState(true)
+
   const onSuccess = async (position: GeolocationPosition) => {
     const res = await geolocationApi({
       params: {
@@ -28,12 +35,15 @@ export const Game: FC = () => {
       `Postcode: ${postcode}`,
     ])
   }
+
   const onError = (error: unknown) => {
     console.error(error)
   }
+
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(onSuccess, onError)
   }, [isGeolocationOpened])
+
   return (
     <div className={styles.gameContainer}>
       {geolocation.length > 1 && isGeolocationOpened && (
@@ -50,7 +60,14 @@ export const Game: FC = () => {
           />
         </div>
       )}
-      <GameEngine />
+
+      <Suspense
+        fallback={
+          <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} />
+        }>
+        <LazyGameEngine />
+      </Suspense>
+
       <div className={styles.greySandImage}>
         <img src={sandGrey} alt="sandGrey" />
       </div>

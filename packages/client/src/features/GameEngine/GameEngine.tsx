@@ -1,11 +1,7 @@
-import { GameInfo } from 'components/GameInfo'
-import { useRef, useState } from 'react'
 import { Flex } from 'antd'
-import useGameEngine from 'shared/hooks/useGameEngine'
-import useKeyboardControls from 'shared/hooks/useKeyboardControls'
-import useLoadImages from 'shared/hooks/useLoadImages'
-import styles from './GameEngine.module.scss'
+import { GameInfo } from 'components/GameInfo'
 import { GameOver } from 'components/GameOver'
+import { useRef, useState } from 'react'
 import {
   CANVAS_SIZE,
   CELL_SIZE,
@@ -15,7 +11,12 @@ import {
   MARGIN_IMAGE,
 } from 'shared/hooks/constants'
 
-export const GameEngine = () => {
+import { useGameEngine } from 'shared/hooks/useGameEngine'
+import useKeyboardControls from 'shared/hooks/useKeyboardControls'
+import useLoadImages from 'shared/hooks/useLoadImages'
+import styles from './GameEngine.module.scss'
+
+const GameEngine = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [score, setScore] = useState(0)
 
@@ -60,3 +61,5 @@ export const GameEngine = () => {
     </>
   )
 }
+
+export default GameEngine
