@@ -16,4 +16,14 @@
 
 ### До оптимизации
 
+<img width="839" alt="before optimization performance" src="https://github.com/SashaLevkovich/middle.SandwormRampage.praktikum.yandex/assets/70802751/830d5def-75f5-43e2-b280-48086fa333b7">
+
+
+<img width="1512" alt="before optimization memory" src="https://github.com/SashaLevkovich/middle.SandwormRampage.praktikum.yandex/assets/70802751/e882476d-736d-42a7-84fb-14e025c01337">
+
 ### После оптимизации
+
+<img width="840" alt="after optimization performance" src="https://github.com/SashaLevkovich/middle.SandwormRampage.praktikum.yandex/assets/70802751/019e27ee-01e2-42e2-be52-97e547429299">
+
+
+<img width="1512" alt="after optimization memory" src="https://github.com/SashaLevkovich/middle.SandwormRampage.praktikum.yandex/assets/70802751/6509e9b0-d377-4c17-980d-0f88d159d60a">
