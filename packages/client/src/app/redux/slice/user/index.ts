@@ -1,6 +1,7 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import { getUserThunk } from 'app/redux/thunk/user/getUser'
 import { logoutUserThunk } from 'app/redux/thunk/user/logoutUser'
+import { signInThunk } from 'app/redux/thunk/user/signInUser'
 
 export interface UserState {
   userInfo: User | undefined
@@ -39,6 +40,16 @@ export const userSlice = createSlice({
         state.fetchUserStatus = 'succeeded'
       })
       .addCase(logoutUserThunk.rejected, state => {
+        state.fetchUserStatus = 'failed'
+      })
+      .addCase(signInThunk.pending, state => {
+        state.fetchUserStatus = 'pending'
+        state.userInfo = undefined
+      })
+      .addCase(signInThunk.fulfilled, state => {
+        state.fetchUserStatus = 'succeeded'
+      })
+      .addCase(signInThunk.rejected, state => {
         state.fetchUserStatus = 'failed'
       })
   },
