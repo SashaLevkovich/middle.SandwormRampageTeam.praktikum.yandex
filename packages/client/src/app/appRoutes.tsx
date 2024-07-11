@@ -1,10 +1,10 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, redirect } from 'react-router-dom'
 
 import { Navbar } from 'components/Navbar'
+import { PrivateRoute } from 'components/PrivateRoute/PrivateRoute'
 
 import { Layout } from 'features/Layout'
 
-import { PrivateRoute } from 'components/PrivateRoute/PrivateRoute'
 import { NotFound, UnexpectedCondition } from 'pages/errors'
 import { Forum } from 'pages/forum'
 import { Game } from 'pages/game'
@@ -14,9 +14,12 @@ import { Leaderboard } from 'pages/leaderboard'
 import { Profile } from 'pages/profile'
 import { SignIn } from 'pages/signIn'
 import { SignUp } from 'pages/signUp'
-import { AppDispatch, RootState } from 'app/redux/store'
-import { initNotFoundPage } from 'pages/errors/NotFound'
-import { initSignInPage } from 'pages/signIn/SignIn'
+
+import { setLocalStorageUser } from 'shared/helpers/userLocalStorage'
+import { AppDispatch } from 'shared/redux'
+
+import { RootState, store } from './redux/store'
+import { getUserThunk } from './redux/thunk/user/getUser'
 
 export type PageInitContext = {
   clientToken?: string
@@ -28,11 +31,15 @@ export type PageInitArgs = {
   ctx: PageInitContext
 }
 
-export const routes = [
+const loadStore = () =>
+  new Promise(resolve => {
+    setTimeout(() => resolve(store), 0)
+  })
+
+export const router = createBrowserRouter([
   {
     path: '/*',
     Component: NotFound,
-    fetchData: initNotFoundPage,
   },
   {
     path: '/serverError',
@@ -41,7 +48,18 @@ export const routes = [
   {
     path: '/login',
     Component: SignIn,
-    fetchData: initSignInPage,
+    loader: async () => {
+      await loadStore()
+      const response = await store.dispatch(getUserThunk())
+      const user = response.payload
+
+      if (user) {
+        setLocalStorageUser(user as User)
+        return redirect('/')
+      }
+
+      return { success: true }
+    },
   },
   {
     path: '/signUp',
@@ -90,6 +108,4 @@ export const routes = [
       },
     ],
   },
-]
-
-export const appRouter = () => createBrowserRouter(routes)
+])

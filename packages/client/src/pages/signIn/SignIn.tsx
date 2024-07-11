@@ -1,5 +1,5 @@
 import { Button, Flex, Form, Input, Typography } from 'antd'
-import { FC, useEffect } from 'react'
+import { FC } from 'react'
 
 import { SignInLoginParams } from 'app/api/requests/auth'
 import {
@@ -9,36 +9,23 @@ import {
 
 import classes from 'pages/signUp/SignUp.module.scss'
 
-import { PageInitArgs } from 'app/appRoutes'
-import { userSlice } from 'app/redux/slice/user'
+import { signInThunk } from 'app/redux/thunk/user/signInUser'
 import { Link } from 'react-router-dom'
-import { useAppSelector } from 'shared/redux'
+import { setLocalStorageUser } from 'shared/helpers/userLocalStorage'
+import { useAppDispatch } from 'shared/redux'
 
 export const SignIn: FC = () => {
-  const user = useAppSelector(state => userSlice.selectors.selectUser(state))
-
-  console.log(user)
-
-  useEffect(() => {
-    // if (user.data && !isEmpty(user.data)) {
-    //   setLocalStorageUser(user.data)
-    //   navigate('/')
-    // }
-  }, [])
+  const dispatch = useAppDispatch()
 
   const onFinish = async (values: SignInLoginParams) => {
-    // try {
-    //   const response = await signIn(values).unwrap()
-    //   dispatch(userSlice.actions.setUser(response))
-    //   setLocalStorageUser(response)
-    // } catch (e) {
-    //   const error = e as AxiosError
-    //   if (error.response?.status === 400) {
-    //     authRequests.getUser().then(resp => {
-    //       setLocalStorageUser(resp.data)
-    //     })
-    //   }
-    // }
+    try {
+      const response = await dispatch(signInThunk(values))
+      const user = (await response.payload) as User
+
+      setLocalStorageUser(user)
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   return (
@@ -103,10 +90,4 @@ export const SignIn: FC = () => {
       </div>
     </div>
   )
-}
-
-export const initSignInPage = async ({ dispatch, state }: PageInitArgs) => {
-  // if (!selectUser(state)) {
-  //   return dispatch(fetchUserThunk())
-  // }
 }

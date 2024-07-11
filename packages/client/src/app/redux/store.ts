@@ -1,5 +1,6 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { authRequests } from 'app/api'
+import { router } from 'app/appRoutes'
 import ssrReducer from './slice/ssr/index'
 import { userSlice } from './slice/user'
 
@@ -18,6 +19,7 @@ declare global {
 
 export const extraArgument = {
   authRequests,
+  router,
 }
 
 export const store = configureStore({

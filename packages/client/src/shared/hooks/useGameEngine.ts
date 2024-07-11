@@ -7,9 +7,10 @@ import {
   useRef,
   useState,
 } from 'react'
-import { drawGame } from 'shared/helpers/drawGame'
-import { resetGame } from 'shared/helpers/resetGames'
-import { updateGame } from 'shared/helpers/updateGame'
+
+import { drawGame } from 'shared/helpers/game/drawGame'
+import { resetGame } from 'shared/helpers/game/resetGames'
+import { updateGame } from 'shared/helpers/game/updateGame'
 
 import { Position } from 'shared/hooks/types'
 
