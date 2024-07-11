@@ -1,17 +1,13 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import {
-  useDispatch as useDispatchBase,
-  useSelector as useSelectorBase,
-  TypedUseSelectorHook,
-  useStore as useStoreBase,
-} from 'react-redux'
-import userReducer from './slice/user/index'
+import { authRequests } from 'app/api'
 import ssrReducer from './slice/ssr/index'
+import { userSlice } from './slice/user'
 
 export const reducer = combineReducers({
-  user: userReducer,
+  user: userSlice.reducer,
   ssr: ssrReducer,
 })
+
 export type RootState = ReturnType<typeof reducer>
 
 declare global {
@@ -20,15 +16,17 @@ declare global {
   }
 }
 
+export const extraArgument = {
+  authRequests,
+}
+
 export const store = configureStore({
   reducer,
   preloadedState:
     typeof window === 'undefined' ? undefined : window.APP_INITIAL_STATE,
   devTools: true,
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      thunk: { extraArgument },
+    }),
 })
-
-export type AppDispatch = typeof store.dispatch
-
-export const useDispatch: () => AppDispatch = useDispatchBase
-export const useSelector: TypedUseSelectorHook<RootState> = useSelectorBase
-export const useStore: () => typeof store = useStoreBase

@@ -1,5 +1,4 @@
 import { Button, Flex, Form, Input, Typography } from 'antd'
-import { AxiosError } from 'axios'
 import { FC, useEffect } from 'react'
 
 import { SignInLoginParams } from 'app/api/requests/auth'
@@ -7,48 +6,39 @@ import {
   SignInFieldType,
   SignInFieldValidationRules,
 } from 'shared/constants/validationRules'
-import { setLocalStorageUser } from 'shared/utils/userLocalStorage'
 
-import { authRequests } from 'app/api'
-
-import { userApi } from 'app/redux/api'
-import { fetchUserThunk, selectUser, userSlice } from 'app/redux/slice/user'
 import classes from 'pages/signUp/SignUp.module.scss'
-import { useDispatch, useSelector } from 'react-redux'
 
-import { Link, useNavigate } from 'react-router-dom'
-import { isEmpty } from 'shared/helpers/isEmpty'
 import { PageInitArgs } from 'app/appRoutes'
+import { userSlice } from 'app/redux/slice/user'
+import { Link } from 'react-router-dom'
+import { useAppSelector } from 'shared/redux'
 
 export const SignIn: FC = () => {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const user = useAppSelector(state => userSlice.selectors.selectUser(state))
 
-  const userState = useSelector(selectUser)
-  const user = userApi.useGetUserQuery(undefined, { skip: true })
-  const [signIn] = userApi.useSignInMutation()
+  console.log(user)
 
   useEffect(() => {
-    if (user.data && !isEmpty(user.data)) {
-      setLocalStorageUser(user.data)
-      navigate('/')
-    }
+    // if (user.data && !isEmpty(user.data)) {
+    //   setLocalStorageUser(user.data)
+    //   navigate('/')
+    // }
   }, [])
 
   const onFinish = async (values: SignInLoginParams) => {
-    try {
-      const response = await signIn(values).unwrap()
-
-      dispatch(userSlice.actions.setUser(response))
-      setLocalStorageUser(response)
-    } catch (e) {
-      const error = e as AxiosError
-      if (error.response?.status === 400) {
-        authRequests.getUser().then(resp => {
-          setLocalStorageUser(resp.data)
-        })
-      }
-    }
+    // try {
+    //   const response = await signIn(values).unwrap()
+    //   dispatch(userSlice.actions.setUser(response))
+    //   setLocalStorageUser(response)
+    // } catch (e) {
+    //   const error = e as AxiosError
+    //   if (error.response?.status === 400) {
+    //     authRequests.getUser().then(resp => {
+    //       setLocalStorageUser(resp.data)
+    //     })
+    //   }
+    // }
   }
 
   return (
@@ -116,7 +106,7 @@ export const SignIn: FC = () => {
 }
 
 export const initSignInPage = async ({ dispatch, state }: PageInitArgs) => {
-  if (!selectUser(state)) {
-    return dispatch(fetchUserThunk())
-  }
+  // if (!selectUser(state)) {
+  //   return dispatch(fetchUserThunk())
+  // }
 }
