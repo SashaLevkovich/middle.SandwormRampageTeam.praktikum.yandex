@@ -1,6 +1,6 @@
 import { Button, Flex, Form, Input, Typography } from 'antd'
 import { AxiosError } from 'axios'
-import { FC, useEffect } from 'react'
+import { FC, useEffect, useState } from 'react'
 
 import { SignInLoginParams } from 'app/api/requests/auth'
 import {
@@ -9,7 +9,7 @@ import {
 } from 'shared/constants/validationRules'
 import { setLocalStorageUser } from 'shared/utils/userLocalStorage'
 
-import { authRequests } from 'app/api'
+import { authRequests, oAuthRequests } from 'app/api'
 
 import { userApi } from 'app/redux/api'
 import { fetchUserThunk, selectUser, userSlice } from 'app/redux/slice/user'
@@ -17,7 +17,6 @@ import classes from 'pages/signUp/SignUp.module.scss'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Link, useNavigate } from 'react-router-dom'
-import { isEmpty } from 'shared/helpers/isEmpty'
 import { PageInitArgs } from 'app/appRoutes'
 
 export const SignIn: FC = () => {
@@ -25,15 +24,19 @@ export const SignIn: FC = () => {
   const dispatch = useDispatch()
 
   const userState = useSelector(selectUser)
-  const user = userApi.useGetUserQuery(undefined, { skip: true })
   const [signIn] = userApi.useSignInMutation()
+  const [serviceId, setServiceId] = useState('')
 
   useEffect(() => {
-    if (user.data && !isEmpty(user.data)) {
-      setLocalStorageUser(user.data)
+    if (userState) {
+      setLocalStorageUser(userState)
       navigate('/')
+    } else {
+      oAuthRequests.getServiceId().then(resp => {
+        setServiceId(resp.data.service_id)
+      })
     }
-  }, [])
+  }, [userState])
 
   const onFinish = async (values: SignInLoginParams) => {
     try {
@@ -108,6 +111,24 @@ export const SignIn: FC = () => {
           </Typography>
           <Button type="link" className={classes.backBtn}>
             <Link to="/signUp">Create</Link>
+          </Button>
+        </Flex>
+
+        <Flex justify="center" align="center">
+          <Button
+            type="default"
+            shape="round"
+            size="large"
+            style={{
+              background: '#555',
+              marginTop: 20,
+              padding: '4px 0',
+              boxSizing: 'content-box',
+              width: '100%',
+            }}>
+            <Link to={oAuthRequests.getOAuthUrl(serviceId)}>
+              Login through Yandex
+            </Link>
           </Button>
         </Flex>
       </div>
