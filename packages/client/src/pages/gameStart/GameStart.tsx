@@ -1,16 +1,16 @@
 import { FC, useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons'
 
-import { oAuthRequests } from 'app/api'
+import { authRequests, oAuthRequests } from 'app/api'
 
 import linesImg from 'shared/assets/images/Lines.svg'
 import moonsImg from 'shared/assets/images/Moons.svg'
 
 import classes from './GameStart.module.scss'
+import { setLocalStorageUser } from 'shared/utils/userLocalStorage'
 
 export const GameStart: FC = () => {
-  const navigate = useNavigate()
   const [isFullScreen, setFullScreen] = useState(false)
 
   useEffect(() => {
@@ -22,12 +22,24 @@ export const GameStart: FC = () => {
         data[name] = value
       })
 
-      oAuthRequests.oAuthSignIn(data['code']).then(resp => {
-        console.log(resp)
-        if (resp.status === 200) {
-          navigate('login')
-        }
-      })
+      const getUser = () => {
+        authRequests.getUser().then(resp => {
+          setLocalStorageUser(resp.data)
+        })
+      }
+
+      oAuthRequests
+        .oAuthSignIn(data['code'])
+        .then(resp => {
+          if (resp.status === 200) {
+            getUser()
+          }
+        })
+        .catch(error => {
+          if (error.response.status === 400) {
+            getUser()
+          }
+        })
     }
   }, [])
 
