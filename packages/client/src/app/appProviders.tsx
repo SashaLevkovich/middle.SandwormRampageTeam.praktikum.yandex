@@ -1,7 +1,7 @@
 import { ConfigProvider, ThemeConfig } from 'antd'
 import { Provider } from 'react-redux'
 import { RouterProvider } from 'react-router-dom'
-import { router } from './appRoutes'
+import { appRouter } from './appRoutes'
 import { store as defaultStore } from './redux/store'
 
 export const theme: ThemeConfig = {
@@ -37,7 +37,7 @@ function AppProviders({ store = defaultStore }) {
     // <ErrorBoundary>
     <Provider store={store}>
       <ConfigProvider theme={theme}>
-        <RouterProvider router={router} />
+        <RouterProvider router={appRouter()} />
       </ConfigProvider>
     </Provider>
     // </ErrorBoundary>

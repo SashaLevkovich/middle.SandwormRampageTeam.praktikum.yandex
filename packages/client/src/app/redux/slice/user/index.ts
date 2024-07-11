@@ -1,4 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
+import { RootState } from 'app/redux/store'
 import { getUserThunk } from 'app/redux/thunk/user/getUser'
 import { logoutUserThunk } from 'app/redux/thunk/user/logoutUser'
 import { signInThunk } from 'app/redux/thunk/user/signInUser'
@@ -58,3 +59,5 @@ export const userSlice = createSlice({
     selectFetchUserStatusSucceeded: state => state.fetchUserStatus,
   },
 })
+
+export const selectUser = (state: RootState) => state.user.userInfo

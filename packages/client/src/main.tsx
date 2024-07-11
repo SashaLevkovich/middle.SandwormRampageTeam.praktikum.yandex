@@ -7,7 +7,7 @@ import { registerServiceWorker } from 'shared/helpers/registerServiceWorker'
 
 import { ConfigProvider } from 'antd'
 import { theme } from 'app/appProviders'
-import { router } from 'app/appRoutes'
+import { appRouter } from 'app/appRoutes'
 import { Provider } from 'react-redux'
 import './index.scss'
 
@@ -16,7 +16,7 @@ ReactDOM.hydrateRoot(
   rootElement,
   <Provider store={store}>
     <ConfigProvider theme={theme}>
-      <RouterProvider router={router} />
+      <RouterProvider router={appRouter()} />
     </ConfigProvider>
   </Provider>
 )

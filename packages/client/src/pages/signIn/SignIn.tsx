@@ -9,6 +9,9 @@ import {
 
 import classes from 'pages/signUp/SignUp.module.scss'
 
+import { PageInitArgs } from 'app/appRoutes'
+import { selectUser } from 'app/redux/slice/user'
+import { getUserThunk } from 'app/redux/thunk/user/getUser'
 import { signInThunk } from 'app/redux/thunk/user/signInUser'
 import { Link } from 'react-router-dom'
 import { setLocalStorageUser } from 'shared/helpers/userLocalStorage'
@@ -20,7 +23,7 @@ export const SignIn: FC = () => {
   const onFinish = async (values: SignInLoginParams) => {
     try {
       const response = await dispatch(signInThunk(values))
-      const user = (await response.payload) as User
+      const user = response.payload as User
 
       setLocalStorageUser(user)
     } catch (e) {
@@ -90,4 +93,10 @@ export const SignIn: FC = () => {
       </div>
     </div>
   )
+}
+
+export const initSignInPage = async ({ dispatch, state }: PageInitArgs) => {
+  if (!selectUser(state)) {
+    return dispatch(getUserThunk())
+  }
 }
