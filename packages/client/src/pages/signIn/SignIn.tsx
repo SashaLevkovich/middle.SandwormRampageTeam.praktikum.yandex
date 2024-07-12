@@ -31,11 +31,11 @@ export const SignIn: FC = () => {
     if (userState) {
       setLocalStorageUser(userState)
       navigate('/')
-    } else {
-      oAuthRequests.getServiceId().then(resp => {
-        setServiceId(resp.data.service_id)
-      })
+      return
     }
+    oAuthRequests.getServiceId().then(resp => {
+      setServiceId(resp.data.service_id)
+    })
   }, [userState])
 
   const onFinish = async (values: SignInLoginParams) => {
@@ -127,7 +127,7 @@ export const SignIn: FC = () => {
               width: '100%',
             }}>
             <Link to={oAuthRequests.getOAuthUrl(serviceId)}>
-              Login through Yandex
+              Login with Yandex
             </Link>
           </Button>
         </Flex>

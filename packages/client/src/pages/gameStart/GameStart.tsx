@@ -3,43 +3,48 @@ import { Link } from 'react-router-dom'
 import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons'
 
 import { authRequests, oAuthRequests } from 'app/api'
-
+import { setLocalStorageUser } from 'shared/utils/userLocalStorage'
+import { getOAuthCodeFromUrl } from 'shared/helpers/getOAuthCodeFromUrl'
+import { HttpStatuses } from 'shared/constants/httpStatuses'
 import linesImg from 'shared/assets/images/Lines.svg'
 import moonsImg from 'shared/assets/images/Moons.svg'
 
 import classes from './GameStart.module.scss'
-import { setLocalStorageUser } from 'shared/utils/userLocalStorage'
+import { AxiosError } from 'axios'
 
 export const GameStart: FC = () => {
   const [isFullScreen, setFullScreen] = useState(false)
 
   useEffect(() => {
-    if (window && window.location.search.match('code') !== null) {
-      const data: { [index: string]: string } = {}
-      const oAuthParamsStringsArr = window.location.search.slice(1).split('&')
-      oAuthParamsStringsArr.forEach(item => {
-        const [name, value] = item.split('=')
-        data[name] = value
-      })
-
-      const getUser = () => {
-        authRequests.getUser().then(resp => {
-          setLocalStorageUser(resp.data)
-        })
+    if (window?.location.search.match('code')) {
+      const getUser = async () => {
+        try {
+          const { data } = await authRequests.getUser()
+          setLocalStorageUser(data)
+        } catch (ex) {
+          console.log(ex)
+        }
       }
 
-      oAuthRequests
-        .oAuthSignIn(data['code'])
-        .then(resp => {
-          if (resp.status === 200) {
+      const oAuthSignIn = async () => {
+        try {
+          const response = await oAuthRequests.oAuthSignIn(
+            getOAuthCodeFromUrl(window.location.search)
+          )
+          if (response.status === HttpStatuses.OK) {
             getUser()
           }
-        })
-        .catch(error => {
-          if (error.response.status === 400) {
+        } catch (ex) {
+          if (
+            ex instanceof AxiosError &&
+            ex?.response?.status === HttpStatuses.BAD_REQUEST
+          ) {
             getUser()
           }
-        })
+        }
+      }
+
+      oAuthSignIn()
     }
   }, [])
 

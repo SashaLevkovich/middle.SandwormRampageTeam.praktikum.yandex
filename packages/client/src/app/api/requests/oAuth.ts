@@ -4,7 +4,6 @@ const REDIRECT_URL =
   typeof window !== 'undefined'
     ? window.location.origin
     : 'http://localhost:3000'
-const oAuthUrlBase = 'https://oauth.yandex.ru/authorize'
 
 type GetServiceIdResponse = {
   service_id: string
@@ -27,7 +26,9 @@ class OAuthRequests {
   }
 
   public getOAuthUrl(serviceId: string) {
-    return `${oAuthUrlBase}/?response_type=code&client_id=${serviceId}&redirect_uri=${encodeURIComponent(
+    return `${
+      import.meta.env.VITE_OAUTH_URL
+    }/?response_type=code&client_id=${serviceId}&redirect_uri=${encodeURIComponent(
       REDIRECT_URL
     )}`
   }
