@@ -1,5 +1,6 @@
 import axios from 'axios'
 import AuthRequests from './requests/auth'
+import OAuthRequests from './requests/oAuth'
 
 export const rootApi = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -11,3 +12,4 @@ export const geolocationApi = axios.create({
 })
 
 export const authRequests = new AuthRequests()
+export const oAuthRequests = new OAuthRequests()
