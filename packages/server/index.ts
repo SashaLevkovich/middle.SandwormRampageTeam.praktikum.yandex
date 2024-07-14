@@ -1,3 +1,4 @@
+import bodyParser from 'body-parser'
 import cors from 'cors'
 import dotenv from 'dotenv'
 
@@ -14,6 +15,7 @@ const port = Number(process.env.SERVER_PORT) || 3001
 
 dbConnect()
 
+app.use(bodyParser.json())
 app.use('/api', routes)
 
 app.listen(port, () => {
