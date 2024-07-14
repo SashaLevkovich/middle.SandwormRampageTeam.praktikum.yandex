@@ -1,3 +1,4 @@
+import { authMiddleware } from './middlewares/authMiddleware'
 import {
   createTopic,
   deleteTopic,
@@ -20,19 +21,19 @@ import express from 'express'
 
 const router = express.Router()
 
-router.get('/topics', getTopics)
-router.post('/topics', createTopic)
-router.delete('/topics/:id', deleteTopic)
-router.put('/topics/:id', updateTopic)
+router.get('/topics', authMiddleware, getTopics)
+router.post('/topics', authMiddleware, createTopic)
+router.delete('/topics/:id', authMiddleware, deleteTopic)
+router.put('/topics/:id', authMiddleware, updateTopic)
 
-router.get('/topics/:topicId/comments', getComments)
-router.post('/topics/:topicId/comments', createComment)
-router.delete('/comments/:id', deleteComment)
-router.put('/comments/:id', updateComment)
+router.get('/topics/:topicId/comments', authMiddleware, getComments)
+router.post('/topics/:topicId/comments', authMiddleware, createComment)
+router.delete('/comments/:id', authMiddleware, deleteComment)
+router.put('/comments/:id', authMiddleware, updateComment)
 
-router.get('/comments/:commentId/replies', getReplies)
-router.post('/comments/:commentId/replies', createReply)
-router.delete('/replies/:id', deleteReply)
-router.put('/replies/:id', updateReply)
+router.get('/comments/:commentId/replies', authMiddleware, getReplies)
+router.post('/comments/:commentId/replies', authMiddleware, createReply)
+router.delete('/replies/:id', authMiddleware, deleteReply)
+router.put('/replies/:id', authMiddleware, updateReply)
 
 export default router
