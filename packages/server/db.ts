@@ -30,7 +30,7 @@ Reply.belongsTo(Comment, { foreignKey: 'commentId' })
 export async function dbConnect() {
   try {
     await sequelize.authenticate()
-    await sequelize.sync({ force: true })
+    await sequelize.sync()
     console.log('Connection has been established successfully.')
   } catch (error) {
     console.error('Unable to connect to the database:', error)

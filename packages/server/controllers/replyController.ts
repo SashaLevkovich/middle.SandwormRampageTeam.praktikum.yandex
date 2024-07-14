@@ -26,3 +26,41 @@ export const createReply = async (req: Request, res: Response) => {
     }
   }
 }
+
+export const deleteReply = async (req: Request, res: Response) => {
+  const { id } = req.params
+  try {
+    const reply = await Reply.findByPk(id)
+    if (reply) {
+      await reply.destroy()
+      res.status(204).send()
+    } else {
+      res.status(404).json({ error: 'Reply not found' })
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json({ error: error.message })
+    } else {
+      console.error('Unexpected error:', error)
+    }
+  }
+}
+
+export const updateReply = async (req: Request, res: Response) => {
+  const { id } = req.params
+  try {
+    const reply = await Reply.findByPk(id)
+    if (reply) {
+      await reply.update(req.body)
+      res.json(reply)
+    } else {
+      res.status(404).json({ error: 'Reply not found' })
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json({ error: error.message })
+    } else {
+      console.error('Unexpected error:', error)
+    }
+  }
+}

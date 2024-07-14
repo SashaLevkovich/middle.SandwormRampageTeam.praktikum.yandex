@@ -26,3 +26,42 @@ export const createTopic = async (req: Request, res: Response) => {
     }
   }
 }
+
+export const deleteTopic = async (req: Request, res: Response) => {
+  const { id } = req.params
+  try {
+    const topic = await Topic.findByPk(id)
+    console.log(topic, id)
+    if (topic) {
+      await topic.destroy()
+      res.status(204).send()
+    } else {
+      res.status(404).json({ error: 'Topic not found' })
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json({ error: error.message })
+    } else {
+      console.error('Unexpected error:', error)
+    }
+  }
+}
+
+export const updateTopic = async (req: Request, res: Response) => {
+  const { id } = req.params
+  try {
+    const topic = await Topic.findByPk(id)
+    if (topic) {
+      await topic.update(req.body)
+      res.json(topic)
+    } else {
+      res.status(404).json({ error: 'Topic not found' })
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json({ error: error.message })
+    } else {
+      console.error('Unexpected error:', error)
+    }
+  }
+}
