@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-export default {
+module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
 }
