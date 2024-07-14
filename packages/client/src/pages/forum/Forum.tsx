@@ -21,10 +21,15 @@ export const Forum: FC = () => {
   useEffect(() => {
     const container = document.getElementById(MODAL_CONTAINER_ID)
 
-    if (container) {
-      setPortalContainer(container)
-    } else {
+    if (!container) {
       console.error(`Container ${MODAL_CONTAINER_ID} not found!`)
+      return
+    }
+
+    setPortalContainer(container)
+
+    return () => {
+      setPortalContainer(null)
     }
   }, [])
 

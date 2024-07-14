@@ -1,10 +1,10 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, redirect } from 'react-router-dom'
 
 import { Navbar } from 'components/Navbar'
+import { PrivateRoute } from 'components/PrivateRoute/PrivateRoute'
 
 import { Layout } from 'features/Layout'
 
-import { PrivateRoute } from 'components/PrivateRoute/PrivateRoute'
 import { NotFound, UnexpectedCondition } from 'pages/errors'
 import { Forum } from 'pages/forum'
 import { Game } from 'pages/game'
@@ -15,65 +15,105 @@ import { Profile } from 'pages/profile'
 import { SignIn } from 'pages/signIn'
 import { SignUp } from 'pages/signUp'
 
-export const appRouter = () =>
-  createBrowserRouter([
-    {
-      path: '/*',
-      element: <NotFound />,
+import { setLocalStorageUser } from 'shared/helpers/userLocalStorage'
+import { AppDispatch } from 'shared/redux'
+
+import { initNotFoundPage } from 'pages/errors/NotFound'
+import { initSignInPage } from 'pages/signIn/SignIn'
+import { RootState, store } from './redux/store'
+import { getUserThunk } from './redux/thunk/user/getUser'
+
+export type PageInitContext = {
+  clientToken?: string
+}
+
+export type PageInitArgs = {
+  dispatch: AppDispatch
+  state: RootState
+  ctx: PageInitContext
+}
+
+const loadStore = () =>
+  new Promise(resolve => {
+    setTimeout(() => resolve(store), 0)
+  })
+
+export const routes = [
+  {
+    path: '/*',
+    Component: NotFound,
+    fetchData: initNotFoundPage,
+  },
+  {
+    path: '/serverError',
+    element: <UnexpectedCondition />,
+  },
+  {
+    path: '/login',
+    Component: SignIn,
+    loader: async () => {
+      await loadStore()
+      const response = await store.dispatch(getUserThunk())
+      const user = response.payload
+
+      if (user) {
+        setLocalStorageUser(user as User)
+        console.log(1)
+
+        return redirect('/')
+      }
+
+      return { success: true }
     },
-    {
-      path: '/serverError',
-      element: <UnexpectedCondition />,
-    },
-    {
-      path: '/login',
-      element: <SignIn />,
-    },
-    {
-      path: '/signUp',
-      element: <SignUp />,
-    },
-    {
-      element: <Layout bottomSlot={<Navbar />} />,
-      path: '/',
-      children: [
-        { index: true, element: <GameStart /> },
-        {
-          path: '/landing',
-          element: <Landing />,
-        },
-        {
-          path: '/profile',
-          element: (
-            <PrivateRoute>
-              <Profile />
-            </PrivateRoute>
-          ),
-        },
-        {
-          path: '/game',
-          element: (
-            <PrivateRoute>
-              <Game />
-            </PrivateRoute>
-          ),
-        },
-        {
-          path: '/leaderboard',
-          element: (
-            <PrivateRoute>
-              <Leaderboard />
-            </PrivateRoute>
-          ),
-        },
-        {
-          path: '/forum',
-          element: (
-            <PrivateRoute>
-              <Forum />
-            </PrivateRoute>
-          ),
-        },
-      ],
-    },
-  ])
+    fetchData: initSignInPage,
+  },
+  {
+    path: '/signUp',
+    element: <SignUp />,
+  },
+  {
+    element: <Layout bottomSlot={<Navbar />} />,
+    path: '/',
+    children: [
+      { index: true, element: <GameStart /> },
+      {
+        path: '/landing',
+        element: <Landing />,
+      },
+      {
+        path: '/profile',
+        element: (
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/game',
+        element: (
+          <PrivateRoute>
+            <Game />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/leaderboard',
+        element: (
+          <PrivateRoute>
+            <Leaderboard />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/forum',
+        element: (
+          <PrivateRoute>
+            <Forum />
+          </PrivateRoute>
+        ),
+      },
+    ],
+  },
+]
+
+export const appRouter = () => createBrowserRouter(routes)

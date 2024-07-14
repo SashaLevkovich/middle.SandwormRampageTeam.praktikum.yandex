@@ -1,15 +1,53 @@
-import { FC, useState } from 'react'
+import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons'
+import { FC, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+
+import { authRequests, oAuthRequests } from 'app/api'
 
 import linesImg from 'shared/assets/images/Lines.svg'
 import moonsImg from 'shared/assets/images/Moons.svg'
+import { HttpStatuses } from 'shared/constants/httpStatuses'
+import { getOAuthCodeFromUrl } from 'shared/helpers/getOAuthCodeFromUrl'
 
+import { AxiosError } from 'axios'
+import { setLocalStorageUser } from 'shared/helpers/userLocalStorage'
 import classes from './GameStart.module.scss'
-
-import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons'
 
 export const GameStart: FC = () => {
   const [isFullScreen, setFullScreen] = useState(false)
+
+  useEffect(() => {
+    if (window?.location.search.match('code')) {
+      const getUser = async () => {
+        try {
+          const { data } = await authRequests.getUser()
+          setLocalStorageUser(data)
+        } catch (ex) {
+          console.log(ex)
+        }
+      }
+
+      const oAuthSignIn = async () => {
+        try {
+          const response = await oAuthRequests.oAuthSignIn(
+            getOAuthCodeFromUrl(window.location.search)
+          )
+          if (response.status === HttpStatuses.OK) {
+            getUser()
+          }
+        } catch (ex) {
+          if (
+            ex instanceof AxiosError &&
+            ex?.response?.status === HttpStatuses.BAD_REQUEST
+          ) {
+            getUser()
+          }
+        }
+      }
+
+      oAuthSignIn()
+    }
+  }, [])
 
   const onFullScreen = async () => {
     if (!document.fullscreenElement) {

@@ -1,51 +1,33 @@
 import { Button, Flex, Form, Input, Typography } from 'antd'
-import { AxiosError } from 'axios'
-import { FC, useEffect } from 'react'
+import { FC } from 'react'
 
 import { SignInLoginParams } from 'app/api/requests/auth'
 import {
   SignInFieldType,
   SignInFieldValidationRules,
 } from 'shared/constants/validationRules'
-import { setLocalStorageUser } from 'shared/utils/userLocalStorage'
 
-import { authRequests } from 'app/api'
-
-import { userApi } from 'app/redux/api'
-import { userSlice } from 'app/redux/slice/user'
 import classes from 'pages/signUp/SignUp.module.scss'
-import { useDispatch } from 'react-redux'
 
-import { Link, useNavigate } from 'react-router-dom'
-import { isEmpty } from 'shared/helpers/isEmpty'
+import { PageInitArgs } from 'app/appRoutes'
+import { selectUser } from 'app/redux/slice/user'
+import { getUserThunk } from 'app/redux/thunk/user/getUser'
+import { signInThunk } from 'app/redux/thunk/user/signInUser'
+import { Link } from 'react-router-dom'
+import { setLocalStorageUser } from 'shared/helpers/userLocalStorage'
+import { useAppDispatch } from 'shared/redux'
 
 export const SignIn: FC = () => {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-
-  const user = userApi.useGetUserQuery(undefined, { skip: true })
-  const [signIn] = userApi.useSignInMutation()
-
-  useEffect(() => {
-    if (user.data && !isEmpty(user.data)) {
-      setLocalStorageUser(user.data)
-      navigate('/')
-    }
-  }, [])
+  const dispatch = useAppDispatch()
 
   const onFinish = async (values: SignInLoginParams) => {
     try {
-      const response = await signIn(values).unwrap()
+      const response = await dispatch(signInThunk(values))
+      const user = response.payload as User
 
-      dispatch(userSlice.actions.setUser(response))
-      setLocalStorageUser(response)
+      setLocalStorageUser(user)
     } catch (e) {
-      const error = e as AxiosError
-      if (error.response?.status === 400) {
-        authRequests.getUser().then(resp => {
-          setLocalStorageUser(resp.data)
-        })
-      }
+      console.log(e)
     }
   }
 
@@ -111,4 +93,10 @@ export const SignIn: FC = () => {
       </div>
     </div>
   )
+}
+
+export const initSignInPage = async ({ dispatch, state }: PageInitArgs) => {
+  if (!selectUser(state)) {
+    return dispatch(getUserThunk())
+  }
 }

@@ -1,13 +1,33 @@
-import { configureStore } from '@reduxjs/toolkit'
-import { userApi } from './api'
-import rootReducer from './rootReducer'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import { authRequests } from 'app/api'
 
-export const store = configureStore({
-  reducer: rootReducer,
-  devTools: process.env.NODE_ENV !== 'production',
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({}).concat(userApi.middleware),
+import ssrReducer from './slice/ssr/index'
+import { userSlice } from './slice/user'
+
+export const reducer = combineReducers({
+  user: userSlice.reducer,
+  ssr: ssrReducer,
 })
 
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
+export type RootState = ReturnType<typeof reducer>
+
+declare global {
+  interface Window {
+    APP_INITIAL_STATE: RootState
+  }
+}
+
+export const extraArgument = {
+  authRequests,
+}
+
+export const store = configureStore({
+  reducer,
+  preloadedState:
+    typeof window === 'undefined' ? undefined : window.APP_INITIAL_STATE,
+  devTools: true,
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      thunk: { extraArgument },
+    }),
+})

@@ -4,6 +4,8 @@ import { Link, useLocation } from 'react-router-dom'
 
 import { NAVIGATION_LINKS } from './constants'
 
+import { logoutUserThunk } from 'app/redux/thunk/user/logoutUser'
+import { useAppDispatch } from 'shared/redux'
 import classes from './Navbar.module.scss'
 
 /**
@@ -14,11 +16,16 @@ import classes from './Navbar.module.scss'
 
 export const Navbar: FC<{ isAuth?: boolean }> = ({ isAuth = true }) => {
   const { pathname } = useLocation()
+  const dispatch = useAppDispatch()
 
   const [currentTab, setCurrentTab] = useState(pathname.slice(1) || 'game')
 
-  function onClick(tab: string) {
+  const onClick = (tab: string) => {
     setCurrentTab(tab)
+  }
+
+  const onLogout = () => {
+    dispatch(logoutUserThunk())
   }
 
   return (
@@ -39,7 +46,7 @@ export const Navbar: FC<{ isAuth?: boolean }> = ({ isAuth = true }) => {
       </ul>
 
       {isAuth ? (
-        <Link className={classes.exit} to="/">
+        <Link className={classes.exit} onClick={onLogout} to={'/login'}>
           Exit
         </Link>
       ) : (

@@ -1,35 +1,27 @@
-import { userSlice } from 'app/redux/slice/user'
 import { store } from 'app/redux/store'
 
 import ReactDOM from 'react-dom/client'
+import { RouterProvider } from 'react-router-dom'
 
-import { userApi } from 'app/redux/api'
-import { registerServiceWorker } from 'shared/utils/registerServiceWorker'
+import { registerServiceWorker } from 'shared/helpers/registerServiceWorker'
 
-import { setLocalStorageUser } from 'shared/utils/userLocalStorage'
-import AppProviders from './app/appProviders'
+import { ConfigProvider } from 'antd'
+import { theme } from 'app/appProviders'
+import { appRouter } from 'app/appRoutes'
+import { Provider } from 'react-redux'
 import './index.scss'
 
-const rootElement = document.getElementById('root')!
-const root = ReactDOM.createRoot(rootElement)
+const rootElement = document.getElementById('root') as HTMLElement
+ReactDOM.hydrateRoot(
+  rootElement,
+  <Provider store={store}>
+    <ConfigProvider theme={theme}>
+      <RouterProvider router={appRouter()} />
+    </ConfigProvider>
+  </Provider>
+)
 
-const init = async () => {
-  try {
-    const result = await store
-      .dispatch(userApi.endpoints.getUser.initiate())
-      .unwrap()
-
-    if (result) {
-      store.dispatch(userSlice.actions.setUser(result))
-
-      setLocalStorageUser(result)
-    }
-  } catch (e) {
-    console.log(e)
-  }
-
-  root.render(<AppProviders />)
-
+const init = () => {
   if (process.env.NODE_ENV === 'production') {
     registerServiceWorker()
   }

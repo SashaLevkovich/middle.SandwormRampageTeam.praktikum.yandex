@@ -1,14 +1,20 @@
 import {
-  useState,
-  useEffect,
+  Dispatch,
   MutableRefObject,
   SetStateAction,
-  Dispatch,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
 } from 'react'
+
+import { drawGame } from 'shared/helpers/game/drawGame'
+import { resetGame } from 'shared/helpers/game/resetGames'
+import { updateGame } from 'shared/helpers/game/updateGame'
 
 import { Position } from 'shared/hooks/types'
 
-const useGameEngine = (
+export const useGameEngine = (
   initialSnake: Position[],
   initialFood: Position,
   cellSize: number,
@@ -25,188 +31,74 @@ const useGameEngine = (
   const [isGameOver, setIsGameOver] = useState(false)
   const [isPaused, setIsPaused] = useState(false)
 
-  useEffect(() => {
-    const updateGame = () => {
-      const newSnake = [...snake]
-      const head = {
-        x: newSnake[0].x + direction.x,
-        y: newSnake[0].y + direction.y,
-      }
+  const gameInterval = useRef<number>()
 
-      // Проверка на столкновение с границами
-      if (head.x < 0) {
-        head.x = canvasSize / cellSize - 1
-      } else if (head.x >= canvasSize / cellSize) {
-        head.x = 0
-      }
+  const handleGameUpdate = useCallback(() => {
+    if (!isGameOver && isImagesLoaded && !isPaused) {
+      updateGame(
+        snake,
+        direction,
+        setIsGameOver,
+        setScore,
+        setFood,
+        setSnake,
+        canvasSize,
+        cellSize,
+        food
+      )
 
-      if (head.y < 0) {
-        head.y = canvasSize / cellSize - 1
-      } else if (head.y >= canvasSize / cellSize) {
-        head.y = 0
-      }
-
-      // Проверка на столкновение с собой
-      for (const segment of newSnake) {
-        if (head.x === segment.x && head.y === segment.y) {
-          setIsGameOver(true)
-          return
-        }
-      }
-
-      newSnake.unshift(head)
-
-      // Проверка на съедание еды
-      if (head.x === food.x && head.y === food.y) {
-        setScore(prev => prev + 1)
-        setFood(generateFoodPosition(newSnake))
-      } else {
-        newSnake.pop()
-      }
-
-      setSnake(newSnake)
-    }
-
-    const drawGame = (context: CanvasRenderingContext2D) => {
-      context.clearRect(0, 0, canvasSize, canvasSize)
-
-      // Рисуем еду
-      if (imagesRef.current.foodImage) {
-        context.drawImage(
-          imagesRef.current.foodImage,
-          food.x * cellSize,
-          food.y * cellSize,
+      const canvas = canvasRef.current
+      const context = canvas?.getContext('2d')
+      if (context) {
+        drawGame(
+          context,
+          imagesRef,
+          food,
           cellSize,
-          cellSize
+          marginImage,
+          snake,
+          canvasSize
         )
       }
-
-      // Рисуем змейку
-      if (
-        imagesRef.current.headImage &&
-        imagesRef.current.bodyImage &&
-        imagesRef.current.tailImage
-      ) {
-        for (let i = 0; i < snake.length; i++) {
-          const segment = snake[i]
-          const nextSegment = i === 0 ? snake[i + 1] : snake[i - 1]
-          const prevSegment =
-            i === snake.length - 1 ? snake[i - 1] : snake[i + 1]
-
-          context.save()
-          context.translate(
-            segment.x * cellSize + cellSize / 2,
-            segment.y * cellSize + cellSize / 2
-          )
-
-          if (i === 0) {
-            const angle = getAngle(segment, nextSegment)
-            context.rotate(angle)
-            context.drawImage(
-              imagesRef.current.headImage,
-              -cellSize / 2 - marginImage,
-              -cellSize / 2,
-              cellSize,
-              cellSize
-            )
-          } else if (i === snake.length - 1) {
-            const angle = getAngle(prevSegment, segment)
-            context.rotate(angle)
-            context.drawImage(
-              imagesRef.current.tailImage,
-              -cellSize / 2 + marginImage * 2,
-              -cellSize / 2,
-              cellSize,
-              cellSize
-            )
-          } else {
-            const angle = getAngle(nextSegment, prevSegment)
-            context.rotate(angle)
-            context.fillStyle = '#b0703a'
-            context.fillRect(
-              -cellSize / 2,
-              -cellSize / 4,
-              cellSize,
-              cellSize / 3
-            )
-            context.drawImage(
-              imagesRef.current.bodyImage,
-              -cellSize / 2,
-              -cellSize / 2,
-              cellSize,
-              cellSize
-            )
-          }
-
-          context.restore()
-        }
-      }
     }
+  }, [
+    snake,
+    food,
+    direction,
+    isGameOver,
+    isImagesLoaded,
+    isPaused,
+    imagesRef,
+    canvasRef,
+    setScore,
+  ])
 
-    const interval = setInterval(() => {
-      if (!isGameOver && isImagesLoaded && !isPaused) {
-        updateGame()
-        const canvas = canvasRef.current
-        const context = canvas?.getContext('2d')
-        if (context) {
-          drawGame(context)
-        }
-      }
-    }, 100)
+  useEffect(() => {
+    gameInterval.current = window.setInterval(handleGameUpdate, 100)
+    return () => clearInterval(gameInterval.current)
+  }, [handleGameUpdate])
 
-    return () => clearInterval(interval)
-  }, [snake, food, direction, isGameOver, isImagesLoaded, isPaused])
-
-  const generateFoodPosition = (snake: Position[]): Position => {
-    let newFoodPosition: Position
-    let collision: boolean
-
-    do {
-      collision = false
-      newFoodPosition = {
-        x: Math.floor(Math.random() * (canvasSize / cellSize)),
-        y: Math.floor(Math.random() * (canvasSize / cellSize)),
-      }
-
-      for (const segment of snake) {
-        if (
-          newFoodPosition.x === segment.x &&
-          newFoodPosition.y === segment.y
-        ) {
-          collision = true
-          break
-        }
-      }
-    } while (collision)
-
-    return newFoodPosition
-  }
-
-  const getAngle = (segment1: Position, segment2: Position) => {
-    const dx = segment1.x - segment2.x
-    const dy = segment1.y - segment2.y
-    if (Math.abs(dx) > 2) {
-      return dx > 0 ? Math.PI : 0
-    }
-    if (Math.abs(dy) > 2) {
-      return dy > 0 ? -Math.PI / 2 : Math.PI / 2
-    }
-
-    if (segment1.x < segment2.x) return Math.PI
-    if (segment1.x > segment2.x) return 0
-    if (segment1.y < segment2.y) return -Math.PI / 2
-    if (segment1.y > segment2.y) return Math.PI / 2
-    return 0
-  }
-
-  const resetGame = () => {
-    setSnake(initialSnake)
-    setFood(initialFood)
-    setDirection({ x: 1, y: 0 })
-    setIsGameOver(false)
-    setIsPaused(false)
-    setScore(0)
-  }
+  const resetGameCallback = useCallback(() => {
+    resetGame(
+      initialSnake,
+      initialFood,
+      setDirection,
+      setIsGameOver,
+      setIsPaused,
+      setScore,
+      setSnake,
+      setFood
+    )
+  }, [
+    initialSnake,
+    initialFood,
+    setDirection,
+    setIsGameOver,
+    setIsPaused,
+    setScore,
+    setSnake,
+    setFood,
+  ])
 
   return {
     snake,
@@ -216,8 +108,6 @@ const useGameEngine = (
     isPaused,
     setDirection,
     setIsPaused,
-    resetGame,
+    resetGame: resetGameCallback,
   }
 }
-
-export default useGameEngine
