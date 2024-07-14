@@ -1,20 +1,20 @@
-import React, { createContext } from 'react'
-import ReactDOM from 'react-dom/server'
 import { configureStore } from '@reduxjs/toolkit'
+import { ConfigProvider } from 'antd'
+import { theme } from 'app/appProviders'
+import { PageInitContext, routes } from 'app/appRoutes'
+import { setPageHasBeenInitializedOnServer } from 'app/redux/slice/ssr'
 import { reducer } from 'app/redux/store'
-import { Provider } from 'react-redux'
 import { Request as ExpressRequest } from 'express'
+import { createContext } from 'react'
+import ReactDOM from 'react-dom/server'
+import { Provider } from 'react-redux'
+import { matchRoutes } from 'react-router-dom'
 import {
   createStaticHandler,
   createStaticRouter,
   StaticRouterProvider,
 } from 'react-router-dom/server'
-import { PageInitContext, routes } from 'app/appRoutes'
 import { createFetchRequest, createUrl } from './entry-server.utils'
-import { theme } from 'app/appProviders'
-import { ConfigProvider } from 'antd'
-import { matchRoutes } from 'react-router-dom'
-import { setPageHasBeenInitializedOnServer } from 'app/redux/slice/ssr'
 
 export const render = async (req: ExpressRequest) => {
   const { query, dataRoutes } = createStaticHandler(routes)

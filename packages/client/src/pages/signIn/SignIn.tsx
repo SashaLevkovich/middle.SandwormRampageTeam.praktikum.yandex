@@ -1,56 +1,33 @@
 import { Button, Flex, Form, Input, Typography } from 'antd'
-import { AxiosError } from 'axios'
-import { FC, useEffect, useState } from 'react'
+import { FC } from 'react'
 
 import { SignInLoginParams } from 'app/api/requests/auth'
 import {
   SignInFieldType,
   SignInFieldValidationRules,
 } from 'shared/constants/validationRules'
-import { setLocalStorageUser } from 'shared/utils/userLocalStorage'
 
-import { authRequests, oAuthRequests } from 'app/api'
-
-import { userApi } from 'app/redux/api'
-import { fetchUserThunk, selectUser, userSlice } from 'app/redux/slice/user'
 import classes from 'pages/signUp/SignUp.module.scss'
-import { useDispatch, useSelector } from 'react-redux'
 
-import { Link, useNavigate } from 'react-router-dom'
 import { PageInitArgs } from 'app/appRoutes'
+import { selectUser } from 'app/redux/slice/user'
+import { getUserThunk } from 'app/redux/thunk/user/getUser'
+import { signInThunk } from 'app/redux/thunk/user/signInUser'
+import { Link } from 'react-router-dom'
+import { setLocalStorageUser } from 'shared/helpers/userLocalStorage'
+import { useAppDispatch } from 'shared/redux'
 
 export const SignIn: FC = () => {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-
-  const userState = useSelector(selectUser)
-  const [signIn] = userApi.useSignInMutation()
-  const [serviceId, setServiceId] = useState('')
-
-  useEffect(() => {
-    if (userState) {
-      setLocalStorageUser(userState)
-      navigate('/')
-      return
-    }
-    oAuthRequests.getServiceId().then(resp => {
-      setServiceId(resp.data.service_id)
-    })
-  }, [userState])
+  const dispatch = useAppDispatch()
 
   const onFinish = async (values: SignInLoginParams) => {
     try {
-      const response = await signIn(values).unwrap()
+      const response = await dispatch(signInThunk(values))
+      const user = response.payload as User
 
-      dispatch(userSlice.actions.setUser(response))
-      setLocalStorageUser(response)
+      setLocalStorageUser(user)
     } catch (e) {
-      const error = e as AxiosError
-      if (error.response?.status === 400) {
-        authRequests.getUser().then(resp => {
-          setLocalStorageUser(resp.data)
-        })
-      }
+      console.log(e)
     }
   }
 
@@ -113,24 +90,6 @@ export const SignIn: FC = () => {
             <Link to="/signUp">Create</Link>
           </Button>
         </Flex>
-
-        <Flex justify="center" align="center">
-          <Button
-            type="default"
-            shape="round"
-            size="large"
-            style={{
-              background: '#555',
-              marginTop: 20,
-              padding: '4px 0',
-              boxSizing: 'content-box',
-              width: '100%',
-            }}>
-            <Link to={oAuthRequests.getOAuthUrl(serviceId)}>
-              Login with Yandex
-            </Link>
-          </Button>
-        </Flex>
       </div>
     </div>
   )
@@ -138,6 +97,6 @@ export const SignIn: FC = () => {
 
 export const initSignInPage = async ({ dispatch, state }: PageInitArgs) => {
   if (!selectUser(state)) {
-    return dispatch(fetchUserThunk())
+    return dispatch(getUserThunk())
   }
 }
