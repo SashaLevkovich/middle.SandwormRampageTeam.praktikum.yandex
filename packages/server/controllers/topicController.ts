@@ -9,7 +9,7 @@ export const getTopics = async (_req: Request, res: Response) => {
     if (error instanceof Error) {
       res.status(500).json({ error: error.message })
     } else {
-      console.error('Unexpected error:', error)
+      res.status(500).json({ error: 'Server error' })
     }
   }
 }
@@ -22,7 +22,7 @@ export const createTopic = async (req: Request, res: Response) => {
     if (error instanceof Error) {
       res.status(500).json({ error: error.message })
     } else {
-      console.error('Unexpected error:', error)
+      res.status(500).json({ error: 'Server error' })
     }
   }
 }
@@ -42,7 +42,7 @@ export const deleteTopic = async (req: Request, res: Response) => {
     if (error instanceof Error) {
       res.status(500).json({ error: error.message })
     } else {
-      console.error('Unexpected error:', error)
+      res.status(500).json({ error: 'Server error' })
     }
   }
 }
@@ -61,7 +61,7 @@ export const updateTopic = async (req: Request, res: Response) => {
     if (error instanceof Error) {
       res.status(500).json({ error: error.message })
     } else {
-      console.error('Unexpected error:', error)
+      res.status(500).json({ error: 'Server error' })
     }
   }
 }

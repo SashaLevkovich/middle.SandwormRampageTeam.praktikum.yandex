@@ -9,7 +9,7 @@ export const getReplies = async (_req: Request, res: Response) => {
     if (error instanceof Error) {
       res.status(500).json({ error: error.message })
     } else {
-      console.error('Unexpected error:', error)
+      res.status(500).json({ error: 'Server error' })
     }
   }
 }
@@ -22,7 +22,7 @@ export const createReply = async (req: Request, res: Response) => {
     if (error instanceof Error) {
       res.status(500).json({ error: error.message })
     } else {
-      console.error('Unexpected error:', error)
+      res.status(500).json({ error: 'Server error' })
     }
   }
 }
@@ -41,7 +41,7 @@ export const deleteReply = async (req: Request, res: Response) => {
     if (error instanceof Error) {
       res.status(500).json({ error: error.message })
     } else {
-      console.error('Unexpected error:', error)
+      res.status(500).json({ error: 'Server error' })
     }
   }
 }
@@ -60,7 +60,7 @@ export const updateReply = async (req: Request, res: Response) => {
     if (error instanceof Error) {
       res.status(500).json({ error: error.message })
     } else {
-      console.error('Unexpected error:', error)
+      res.status(500).json({ error: 'Server error' })
     }
   }
 }
