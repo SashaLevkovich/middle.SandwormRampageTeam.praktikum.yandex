@@ -8,13 +8,11 @@ export interface ITopic {
 
 class TopicsRequests {
   private static baseUrl: string
-  private static token: string
+  private readonly token: string
 
   constructor() {
     TopicsRequests.baseUrl = '/topics'
-    TopicsRequests.token = jwt.sign({ id: 1 }, 'jsonwebtoken', {
-      expiresIn: '240h',
-    })
+    this.token = jwt.sign({ id: 887 }, 'myjwtsecretkey', { expiresIn: '240h' })
   }
 
   getTopics() {
@@ -40,7 +38,7 @@ class TopicsRequests {
   private getHeaders() {
     return {
       headers: {
-        Authorization: `Bearer ${TopicsRequests.token}`,
+        Authorization: `Bearer ${this.token}`,
       },
     }
   }
