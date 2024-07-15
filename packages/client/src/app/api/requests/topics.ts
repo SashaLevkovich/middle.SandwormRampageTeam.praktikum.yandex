@@ -10,9 +10,9 @@ class TopicsRequests {
   private static baseUrl: string
   private static token: string
 
-  constructor(userId: number, secretKey: string) {
+  constructor() {
     TopicsRequests.baseUrl = '/topics'
-    TopicsRequests.token = jwt.sign({ id: userId }, secretKey, {
+    TopicsRequests.token = jwt.sign({ id: 1 }, 'jsonwebtoken', {
       expiresIn: '240h',
     })
   }
