@@ -9,20 +9,23 @@ export const getTopics = async (_req: Request, res: Response) => {
     if (error instanceof Error) {
       res.status(500).json({ error: error.message })
     } else {
-      res.status(500).json({ error: 'Server error' })
+      res.status(500).json({ error: 'Server unknown error' })
     }
   }
 }
 
 export const createTopic = async (req: Request, res: Response) => {
   try {
-    const topic = await Topic.create(req.body)
+    const { title, content } = req.body
+    const userId = req.user?.id
+
+    const topic = await Topic.create({ title, content, userId })
     res.status(201).json(topic)
   } catch (error) {
     if (error instanceof Error) {
       res.status(500).json({ error: error.message })
     } else {
-      res.status(500).json({ error: 'Server error' })
+      res.status(500).json({ error: 'Server unknown error' })
     }
   }
 }
@@ -31,7 +34,6 @@ export const deleteTopic = async (req: Request, res: Response) => {
   const { id } = req.params
   try {
     const topic = await Topic.findByPk(id)
-    console.log(topic, id)
     if (topic) {
       await topic.destroy()
       res.status(204).send()
@@ -42,7 +44,7 @@ export const deleteTopic = async (req: Request, res: Response) => {
     if (error instanceof Error) {
       res.status(500).json({ error: error.message })
     } else {
-      res.status(500).json({ error: 'Server error' })
+      res.status(500).json({ error: 'Server unknown error' })
     }
   }
 }
@@ -61,7 +63,7 @@ export const updateTopic = async (req: Request, res: Response) => {
     if (error instanceof Error) {
       res.status(500).json({ error: error.message })
     } else {
-      res.status(500).json({ error: 'Server error' })
+      res.status(500).json({ error: 'Server unknown error' })
     }
   }
 }

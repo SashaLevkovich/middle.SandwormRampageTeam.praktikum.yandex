@@ -9,20 +9,23 @@ export const getComments = async (_req: Request, res: Response) => {
     if (error instanceof Error) {
       res.status(500).json({ error: error.message })
     } else {
-      res.status(500).json({ error: 'Server error' })
+      res.status(500).json({ error: 'Server unknown error' })
     }
   }
 }
 
 export const createComment = async (req: Request, res: Response) => {
   try {
-    const comment = await Comment.create(req.body)
+    const { content } = req.body
+    const userId = req.user?.id
+    const { topicId } = req.params
+    const comment = await Comment.create({ content, userId, topicId })
     res.status(201).json(comment)
   } catch (error) {
     if (error instanceof Error) {
       res.status(500).json({ error: error.message })
     } else {
-      res.status(500).json({ error: 'Server error' })
+      res.status(500).json({ error: 'Server unknown error' })
     }
   }
 }
@@ -41,7 +44,7 @@ export const deleteComment = async (req: Request, res: Response) => {
     if (error instanceof Error) {
       res.status(500).json({ error: error.message })
     } else {
-      res.status(500).json({ error: 'Server error' })
+      res.status(500).json({ error: 'Server unknown error' })
     }
   }
 }
@@ -60,7 +63,7 @@ export const updateComment = async (req: Request, res: Response) => {
     if (error instanceof Error) {
       res.status(500).json({ error: error.message })
     } else {
-      res.status(500).json({ error: 'Server error' })
+      res.status(500).json({ error: 'Server unknown error' })
     }
   }
 }

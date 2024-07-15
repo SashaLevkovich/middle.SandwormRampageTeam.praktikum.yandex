@@ -1,10 +1,10 @@
-import { Comment } from '../db'
 import { DataType, Model } from 'sequelize-typescript'
 import { ModelAttributes } from 'sequelize/types'
 
 export interface IReply {
   commentId: number
   content: string
+  userId: number
 }
 
 export const replyModel: ModelAttributes<Model, IReply> = {
@@ -15,9 +15,9 @@ export const replyModel: ModelAttributes<Model, IReply> = {
   commentId: {
     type: DataType.INTEGER,
     allowNull: false,
-    references: {
-      model: Comment,
-      key: 'id',
-    },
+  },
+  userId: {
+    type: DataType.INTEGER,
+    allowNull: true,
   },
 }

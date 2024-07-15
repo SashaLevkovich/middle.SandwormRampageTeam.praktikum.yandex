@@ -4,6 +4,7 @@ import { ModelAttributes } from 'sequelize/types'
 export interface ITopic {
   title: string
   content: string
+  userId: number
 }
 
 export const topicModel: ModelAttributes<Model, ITopic> = {
@@ -14,5 +15,9 @@ export const topicModel: ModelAttributes<Model, ITopic> = {
   content: {
     type: DataType.TEXT,
     allowNull: false,
+  },
+  userId: {
+    type: DataType.INTEGER,
+    allowNull: true,
   },
 }
