@@ -14,15 +14,18 @@ type Props = {
 }
 
 export const ForumCreateChat: FC<Props> = ({ isOpen, onClose }) => {
-  const [topic, setTopic] = useState<ITopic>({ content: '', title: '' })
+  const [topic, setTopic] = useState<ITopic>({ content: '', title: '', id: 0 })
 
   const handleTopicInput = (event: ChangeEvent<HTMLInputElement>) =>
-    setTopic({ title: event.target.value, content: '' })
+    setTopic({ title: event.target.value, content: '', id: 0 })
 
   const createTopic = useCallback(() => {
     const postTopic = async () => {
       try {
-        const { data } = await topicsRequests.createTopic(topic)
+        const { data } = await topicsRequests.createTopic({
+          title: topic.title,
+          content: '',
+        })
         setTopic(data)
       } catch (e) {
         console.log(e)

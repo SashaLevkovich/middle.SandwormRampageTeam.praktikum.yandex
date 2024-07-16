@@ -2,6 +2,7 @@ import { rootApi } from 'app/api'
 import jwt from 'jsonwebtoken'
 
 export interface ITopic {
+  id: number
   title: string
   content: string
 }
@@ -20,7 +21,7 @@ class TopicsRequests {
     return rootApi.get<ITopic[]>(`${TopicsRequests.baseUrl}`, this.getHeaders())
   }
 
-  createTopic(data: ITopic) {
+  createTopic(data: Partial<ITopic>) {
     return rootApi.post(`${TopicsRequests.baseUrl}`, data, this.getHeaders())
   }
 

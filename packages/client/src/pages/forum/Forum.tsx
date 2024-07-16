@@ -9,9 +9,9 @@ import { ForumButton } from 'components/ForumButton'
 
 import { FORUM_CREATE_CHAT_ID, MODAL_CONTAINER_ID } from './constants'
 import classes from './Forum.module.scss'
-import { topicsRequests } from 'app/api'
+import { commentsRequests, topicsRequests } from 'app/api'
 import { ITopic } from 'app/api/requests/topics'
-import { PlusOutlined } from '@ant-design/icons'
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 import { ForumCreateChat } from 'features/ForumCreateChat'
 
 export const Forum: FC = () => {
@@ -59,8 +59,10 @@ export const Forum: FC = () => {
     getTopics()
   }, [])
 
-  const handleButtonClick = useCallback((topic: string) => {
-    setActiveTopic(topic)
+  const handleButtonClick = useCallback(async (id: number) => {
+    const { data } = await commentsRequests.getComments(id)
+    console.log(data)
+    // setActiveTopic(topic)
     setIsChatOpen(true)
   }, [])
 
@@ -76,6 +78,15 @@ export const Forum: FC = () => {
 
   const createTopic = () => {
     setIsChatOpenNew(true)
+  }
+
+  const removeTopic = async (id: number) => {
+    try {
+      await topicsRequests.deleteTopic(id)
+      getTopics()
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   const getTopics = async () => {
@@ -99,13 +110,23 @@ export const Forum: FC = () => {
             <PlusOutlined />
           </Button>
           <Flex vertical gap={30} className={classes.buttonBlock}>
-            {topics.map(({ title }) => (
-              <ForumButton
-                type="default"
-                onClick={() => handleButtonClick(title)}
-                key={title}>
-                {title}
-              </ForumButton>
+            {topics.map(({ title, id }) => (
+              <div className={classes.topicRow}>
+                <ForumButton
+                  type="default"
+                  onClick={() => handleButtonClick(id)}
+                  key={id}>
+                  {title}
+                </ForumButton>
+                <Button
+                  type="default"
+                  shape="round"
+                  size="large"
+                  className={classes.button}
+                  onClick={() => removeTopic(id)}>
+                  <DeleteOutlined />
+                </Button>
+              </div>
             ))}
           </Flex>
 
