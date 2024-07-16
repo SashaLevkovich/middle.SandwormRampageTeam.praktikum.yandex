@@ -3,12 +3,11 @@ import { replyModel } from './models/reply'
 import { topicModel } from './models/topic'
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
 
-const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
-  process.env
+const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB } = process.env
 
 const sequelizeOptions: SequelizeOptions = {
   host: 'localhost',
-  port: Number(POSTGRES_PORT),
+  port: 5060,
   username: POSTGRES_USER,
   password: POSTGRES_PASSWORD,
   database: POSTGRES_DB,

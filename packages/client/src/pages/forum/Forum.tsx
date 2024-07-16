@@ -10,6 +10,7 @@ import { ForumButton } from 'components/ForumButton'
 import { MODAL_CONTAINER_ID } from './constants'
 import classes from './Forum.module.scss'
 import { TOPICS_MOCK } from './topics-mock'
+import { topicsRequests } from 'app/api'
 
 export const Forum: FC = () => {
   const [activeTopic, setActiveTopic] = useState('')
@@ -31,6 +32,19 @@ export const Forum: FC = () => {
     return () => {
       setPortalContainer(null)
     }
+  }, [])
+
+  useEffect(() => {
+    const getTopics = async () => {
+      try {
+        const { data } = await topicsRequests.getTopics()
+        console.log(data)
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    getTopics()
   }, [])
 
   const handleButtonClick = useCallback((topic: string) => {
