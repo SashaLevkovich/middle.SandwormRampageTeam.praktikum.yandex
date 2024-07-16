@@ -11,7 +11,8 @@ class TopicsRequests {
   private readonly token: string
 
   constructor() {
-    TopicsRequests.baseUrl = '/topics'
+    // TODO: remove /api when the environment is set up
+    TopicsRequests.baseUrl = '/api/topics'
     this.token = jwt.sign({ id: 887 }, 'myjwtsecretkey', { expiresIn: '240h' })
   }
 
@@ -39,6 +40,7 @@ class TopicsRequests {
     return {
       headers: {
         Authorization: `Bearer ${this.token}`,
+        'Content-Type': 'application/json',
       },
     }
   }

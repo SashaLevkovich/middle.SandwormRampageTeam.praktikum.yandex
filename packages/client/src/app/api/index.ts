@@ -7,7 +7,8 @@ import RepliesRequests from 'app/api/requests/replies'
 
 export const rootApi = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
-  withCredentials: true,
+  // TODO: replace false on true when the environment is set up
+  withCredentials: false,
 })
 
 export const geolocationApi = axios.create({
