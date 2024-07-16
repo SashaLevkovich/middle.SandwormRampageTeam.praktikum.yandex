@@ -1,23 +1,29 @@
 import { FC, useCallback, useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 
-import { Flex, Typography } from 'antd'
+import { Button, Flex, Typography } from 'antd'
 
 import { ForumChat } from 'features/ForumChat'
 
 import { ForumButton } from 'components/ForumButton'
 
-import { MODAL_CONTAINER_ID } from './constants'
+import { FORUM_CREATE_CHAT_ID, MODAL_CONTAINER_ID } from './constants'
 import classes from './Forum.module.scss'
-import { TOPICS_MOCK } from './topics-mock'
 import { topicsRequests } from 'app/api'
+import { ITopic } from 'app/api/requests/topics'
+import { PlusOutlined } from '@ant-design/icons'
+import { ForumCreateChat } from 'features/ForumCreateChat'
 
 export const Forum: FC = () => {
+  const [topics, setTopics] = useState<ITopic[]>([])
   const [activeTopic, setActiveTopic] = useState('')
   const [isChatOpen, setIsChatOpen] = useState(false)
+  const [isChatOpenNew, setIsChatOpenNew] = useState(false)
   const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(
     null
   )
+  const [portalContainerNew, setPortalContainerNew] =
+    useState<HTMLElement | null>(null)
 
   useEffect(() => {
     const container = document.getElementById(MODAL_CONTAINER_ID)
@@ -35,15 +41,21 @@ export const Forum: FC = () => {
   }, [])
 
   useEffect(() => {
-    const getTopics = async () => {
-      try {
-        const { data } = await topicsRequests.getTopics()
-        console.log(data)
-      } catch (e) {
-        console.log(e)
-      }
+    const container = document.getElementById(FORUM_CREATE_CHAT_ID)
+
+    if (!container) {
+      console.error(`Container ${FORUM_CREATE_CHAT_ID} not found!`)
+      return
     }
 
+    setPortalContainerNew(container)
+
+    return () => {
+      setPortalContainerNew(null)
+    }
+  }, [])
+
+  useEffect(() => {
     getTopics()
   }, [])
 
@@ -57,17 +69,42 @@ export const Forum: FC = () => {
     setIsChatOpen(false)
   }
 
+  const closeChatNew = () => {
+    setIsChatOpenNew(false)
+    getTopics()
+  }
+
+  const createTopic = () => {
+    setIsChatOpenNew(true)
+  }
+
+  const getTopics = async () => {
+    try {
+      const { data } = await topicsRequests.getTopics()
+      setTopics(data)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   return (
     <>
       <Flex className={classes.wrapper}>
         <Flex justify="space-between" className={classes.container}>
+          <Button
+            type="default"
+            shape="round"
+            size="large"
+            onClick={createTopic}>
+            <PlusOutlined />
+          </Button>
           <Flex vertical gap={30} className={classes.buttonBlock}>
-            {TOPICS_MOCK.map(({ name }) => (
+            {topics.map(({ title }) => (
               <ForumButton
                 type="default"
-                onClick={() => handleButtonClick(name)}
-                key={name}>
-                {name}
+                onClick={() => handleButtonClick(title)}
+                key={title}>
+                {title}
               </ForumButton>
             ))}
           </Flex>
@@ -89,6 +126,14 @@ export const Forum: FC = () => {
           createPortal(
             <ForumChat isOpen={isChatOpen} onClose={closeChat} />,
             portalContainer
+          )}
+      </div>
+
+      <div id={FORUM_CREATE_CHAT_ID}>
+        {portalContainerNew &&
+          createPortal(
+            <ForumCreateChat isOpen={isChatOpenNew} onClose={closeChatNew} />,
+            portalContainerNew
           )}
       </div>
     </>

@@ -17,7 +17,7 @@ class TopicsRequests {
   }
 
   getTopics() {
-    return rootApi.get<ITopic>(`${TopicsRequests.baseUrl}`, this.getHeaders())
+    return rootApi.get<ITopic[]>(`${TopicsRequests.baseUrl}`, this.getHeaders())
   }
 
   createTopic(data: ITopic) {
