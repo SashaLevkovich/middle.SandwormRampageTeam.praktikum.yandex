@@ -21,15 +21,16 @@ export const ForumCreateChat: FC<Props> = ({ isOpen, onClose }) => {
 
   const createTopic = useCallback(() => {
     postTopic()
-    onClose()
   }, [topic])
 
   const postTopic = async () => {
     try {
-      await topicsRequests.createTopic({
-        title: topic.title,
-        content: '',
-      })
+      await topicsRequests
+        .createTopic({
+          title: topic.title,
+          content: '',
+        })
+        .then(data => (data.data ? onClose() : null))
       setTopic({ title: '', content: '', id: 0 })
     } catch (e) {
       console.log(e)
