@@ -94,11 +94,13 @@ export const ForumChat: FC<Props> = ({ isOpen, onClose, topic }) => {
         <div className={classes.messagesList}>
           {comments.map(({ userId, content, createdAt, id }) => (
             <Message
+              id={id}
               message={content}
               author={userId!}
               isYou={isYou(userId!)}
               time={createdAt!}
               key={id}
+              onAction={getComments}
             />
           ))}
           <div ref={messagesEndRef} />

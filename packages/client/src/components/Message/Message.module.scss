@@ -30,3 +30,15 @@
     }
   }
 }
+
+.actionButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 45px;
+  height: 45px;
+  border: none;
+  font-size: 20px;
+  color: $color-orange-primary;
+  background-color: transparent;
+}

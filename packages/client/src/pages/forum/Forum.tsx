@@ -9,7 +9,7 @@ import { ForumButton } from 'components/ForumButton'
 
 import { FORUM_CREATE_CHAT_ID, MODAL_CONTAINER_ID } from './constants'
 import classes from './Forum.module.scss'
-import { commentsRequests, topicsRequests } from 'app/api'
+import { topicsRequests } from 'app/api'
 import { ITopic } from 'app/api/requests/topics'
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons'
 import { ForumCreateChat } from 'features/ForumCreateChat'
