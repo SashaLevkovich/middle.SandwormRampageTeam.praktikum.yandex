@@ -43,10 +43,12 @@ export const ForumChat: FC<Props> = ({ isOpen, onClose, topic }) => {
 
   const setComment = async () => {
     try {
-      await commentsRequests.createComment(topic.id, {
-        content: message,
-        topicId: topic.id,
-      })
+      await commentsRequests
+        .createComment(topic.id, {
+          content: message,
+          topicId: topic.id,
+        })
+        .then(data => (data.data ? getComments() : null))
     } catch (e) {
       console.log(e)
     }
@@ -56,7 +58,6 @@ export const ForumChat: FC<Props> = ({ isOpen, onClose, topic }) => {
     if (!message) return
 
     setComment()
-    getComments()
 
     setMessage('')
   }, [message])
