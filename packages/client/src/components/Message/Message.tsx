@@ -26,7 +26,7 @@ export const Message: FC<Props> = ({ author, isYou, message, time }) => {
             <h3 className={classes.author}>{author}</h3>
             <p className={classes.text}>{message}</p>
             <Flex justify="flex-end" className={classes.sendTime}>
-              {time}
+              {new Date(time).toLocaleDateString()}
             </Flex>
           </Flex>
         </div>
