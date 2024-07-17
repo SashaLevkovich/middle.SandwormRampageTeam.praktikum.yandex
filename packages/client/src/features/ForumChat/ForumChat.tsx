@@ -78,6 +78,13 @@ export const ForumChat: FC<Props> = ({ isOpen, onClose, topic }) => {
 
   if (!isOpen) return null
 
+  const isYou = (userId: number) => {
+    if (localStorage.getItem('user')) {
+      return userId == JSON.parse(localStorage.getItem('user')!).id
+    }
+    return false
+  }
+
   return (
     <div className={classes.forumChatContainer}>
       <Flex vertical justify="space-between" className={classes.forumChatModal}>
@@ -88,7 +95,7 @@ export const ForumChat: FC<Props> = ({ isOpen, onClose, topic }) => {
             <Message
               message={content}
               author={userId!}
-              isYou={true}
+              isYou={isYou(userId!)}
               time={createdAt!}
               key={id}
             />
