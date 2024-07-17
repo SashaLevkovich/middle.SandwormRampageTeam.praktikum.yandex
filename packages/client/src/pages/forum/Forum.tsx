@@ -108,6 +108,7 @@ export const Forum: FC = () => {
             type="default"
             shape="round"
             size="large"
+            className={classes.addButton}
             onClick={createTopic}>
             <PlusOutlined />
           </Button>
@@ -124,7 +125,7 @@ export const Forum: FC = () => {
                   type="default"
                   shape="round"
                   size="large"
-                  className={classes.button}
+                  className={classes.removeButton}
                   onClick={() => removeTopic(topic.id)}>
                   <DeleteOutlined />
                 </Button>
