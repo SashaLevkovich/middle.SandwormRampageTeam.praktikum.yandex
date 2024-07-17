@@ -16,7 +16,11 @@ import { ForumCreateChat } from 'features/ForumCreateChat'
 
 export const Forum: FC = () => {
   const [topics, setTopics] = useState<ITopic[]>([])
-  const [activeTopic, setActiveTopic] = useState('')
+  const [activeTopic, setActiveTopic] = useState<ITopic>({
+    content: '',
+    id: 0,
+    title: '',
+  })
   const [isChatOpen, setIsChatOpen] = useState(false)
   const [isChatOpenNew, setIsChatOpenNew] = useState(false)
   const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(
@@ -59,15 +63,13 @@ export const Forum: FC = () => {
     getTopics()
   }, [])
 
-  const handleButtonClick = useCallback(async (id: number) => {
-    const { data } = await commentsRequests.getComments(id)
-    console.log(data)
-    // setActiveTopic(topic)
+  const handleButtonClick = useCallback(async (topic: ITopic) => {
+    setActiveTopic(topic)
     setIsChatOpen(true)
   }, [])
 
   const closeChat = () => {
-    setActiveTopic('')
+    setActiveTopic({ content: '', id: 0, title: '' })
     setIsChatOpen(false)
   }
 
@@ -110,20 +112,20 @@ export const Forum: FC = () => {
             <PlusOutlined />
           </Button>
           <Flex vertical gap={30} className={classes.buttonBlock}>
-            {topics.map(({ title, id }) => (
+            {topics.map(topic => (
               <div className={classes.topicRow}>
                 <ForumButton
                   type="default"
-                  onClick={() => handleButtonClick(id)}
-                  key={id}>
-                  {title}
+                  onClick={() => handleButtonClick(topic)}
+                  key={topic.id}>
+                  {topic.title}
                 </ForumButton>
                 <Button
                   type="default"
                   shape="round"
                   size="large"
                   className={classes.button}
-                  onClick={() => removeTopic(id)}>
+                  onClick={() => removeTopic(topic.id)}>
                   <DeleteOutlined />
                 </Button>
               </div>
@@ -134,10 +136,6 @@ export const Forum: FC = () => {
             <Typography.Title level={2} className={classes.title}>
               FORUM
             </Typography.Title>
-
-            <Typography.Text className={classes.topicTitle}>
-              {activeTopic}
-            </Typography.Text>
           </Typography>
         </Flex>
       </Flex>
@@ -145,7 +143,11 @@ export const Forum: FC = () => {
       <div id={MODAL_CONTAINER_ID}>
         {portalContainer &&
           createPortal(
-            <ForumChat isOpen={isChatOpen} onClose={closeChat} />,
+            <ForumChat
+              isOpen={isChatOpen}
+              onClose={closeChat}
+              topic={activeTopic}
+            />,
             portalContainer
           )}
       </div>

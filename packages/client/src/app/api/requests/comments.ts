@@ -4,6 +4,9 @@ import jwt from 'jsonwebtoken'
 export interface IComment {
   topicId: number
   content: string
+  id: number
+  userId?: number
+  createdAt?: string
 }
 
 class CommentsRequests {
@@ -17,16 +20,16 @@ class CommentsRequests {
     this.token = jwt.sign({ id: 887 }, 'myjwtsecretkey', { expiresIn: '240h' })
   }
 
-  getComments(commentId: number) {
-    return rootApi.get<IComment>(
-      `${CommentsRequests.baseUrlTopics}/${commentId}/comments`,
+  getComments(topicId: number) {
+    return rootApi.get<IComment[]>(
+      `${CommentsRequests.baseUrlTopics}/${topicId}/comments`,
       this.getHeaders()
     )
   }
 
-  createComment(commentId: number, data: IComment) {
+  createComment(topicId: number, data: Partial<IComment>) {
     return rootApi.post(
-      `${CommentsRequests.baseUrl}/${commentId}/comment`,
+      `${CommentsRequests.baseUrlTopics}/${topicId}/comments`,
       data,
       this.getHeaders()
     )

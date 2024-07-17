@@ -6,7 +6,7 @@ import classes from './Message.module.scss'
 
 type Props = {
   isYou: boolean
-  author: string
+  author: number
   message: string
   time: string
 }
