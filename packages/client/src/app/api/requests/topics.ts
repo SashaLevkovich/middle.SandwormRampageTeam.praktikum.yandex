@@ -14,7 +14,11 @@ class TopicsRequests {
   constructor() {
     // TODO: remove /api when the environment is set up
     TopicsRequests.baseUrl = '/api/topics'
-    this.token = jwt.sign({ id: 887 }, 'myjwtsecretkey', { expiresIn: '240h' })
+    let id = 0
+    if (typeof localStorage !== 'undefined') {
+      id = JSON.parse(localStorage.getItem('user')!).id
+    }
+    this.token = jwt.sign({ id }, 'myjwtsecretkey', { expiresIn: '240h' })
   }
 
   getTopics() {

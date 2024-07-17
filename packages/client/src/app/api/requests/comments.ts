@@ -17,7 +17,11 @@ class CommentsRequests {
   constructor() {
     CommentsRequests.baseUrl = '/api/comments'
     CommentsRequests.baseUrlTopics = '/api/topics'
-    this.token = jwt.sign({ id: 887 }, 'myjwtsecretkey', { expiresIn: '240h' })
+    let id = 0
+    if (typeof localStorage !== 'undefined') {
+      id = JSON.parse(localStorage.getItem('user')!).id
+    }
+    this.token = jwt.sign({ id }, 'myjwtsecretkey', { expiresIn: '240h' })
   }
 
   getComments(topicId: number) {
