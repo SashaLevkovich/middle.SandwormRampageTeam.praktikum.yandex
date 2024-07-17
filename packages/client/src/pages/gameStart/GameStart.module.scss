@@ -1,10 +1,9 @@
-@import 'shared/styles/colors.scss';
 @import 'shared/styles/sizes.scss';
 
 .startPageWrapper {
   position: relative;
   overflow: hidden;
-  background-color: $color-start-page-background;
+  background-color: var(--color-start-page-background);
   display: flex;
   flex-direction: column;
   justify-content: end;
@@ -16,18 +15,18 @@
     font-size: 225px;
     height: 294px;
     margin: 0;
-    color: $color-start-page-button;
+    color: var(--color-start-page-button);
     align-self: center;
     z-index: 2;
     user-select: none;
     text-decoration: none;
     cursor: pointer;
-    border-bottom: 0 solid $color-start-page-button;
+    border-bottom: 0 solid var(--color-start-page-button);
     transition: border-bottom ease-out 0.1s;
   }
 
   &Title:hover {
-    border-bottom: 10px solid $color-start-page-button;
+    border-bottom: 10px solid var(--color-start-page-button);
     transition: border-bottom ease-in 0.1s;
   }
 }
@@ -57,7 +56,7 @@
   width: 1441px;
   z-index: 1;
   border-radius: 100%;
-  border: 117px solid $color-orange-primary;
+  border: 117px solid var(--color-orange-primary);
   bottom: -970px;
   left: 8%;
 }
@@ -69,7 +68,7 @@
   width: 1740px;
   z-index: 1;
   border-radius: 100%;
-  border: 1px solid $color-orange-stroke;
+  border: 1px solid var(--color-orange-stroke);
   bottom: -1117px;
   left: -0.5%;
 }
@@ -99,7 +98,7 @@
   top: 20px;
   right: 10px;
   font-size: 24px;
-  color: $color-text-primary;
+  color: var(--color-text-primary);
   cursor: pointer;
   z-index: 9999;
 }

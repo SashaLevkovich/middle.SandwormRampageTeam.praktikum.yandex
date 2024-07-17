@@ -1,7 +1,5 @@
-@import 'shared/styles/colors.scss';
-
 .canvas {
-  border: 1px solid $color-start-page-background;
+  border: 1px solid var(--color-start-page-background);
   background-image: url("/assets/sand.svg");
   z-index: 100;
   cursor: none;

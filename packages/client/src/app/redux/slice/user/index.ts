@@ -3,13 +3,19 @@ import { RootState } from 'app/redux/store'
 import { getUserThunk } from 'app/redux/thunk/user/getUser'
 import { logoutUserThunk } from 'app/redux/thunk/user/logoutUser'
 import { signInThunk } from 'app/redux/thunk/user/signInUser'
+import { Theme } from 'shared/constants/theme'
 
 export interface UserState {
   userInfo: User | undefined
   fetchUserStatus: 'idle' | 'pending' | 'succeeded' | 'failed'
+  theme: Theme
 }
 
-const initialState: UserState = { userInfo: undefined, fetchUserStatus: 'idle' }
+const initialState: UserState = {
+  userInfo: undefined,
+  fetchUserStatus: 'idle',
+  theme: 'light',
+}
 
 export const name = 'user'
 
@@ -19,6 +25,9 @@ export const userSlice = createSlice({
   reducers: {
     setUser(state, action: PayloadAction<User>) {
       state.userInfo = action.payload
+    },
+    setTheme(state, action: PayloadAction<Theme>) {
+      state.theme = action.payload
     },
   },
   extraReducers: builder => {
@@ -57,7 +66,11 @@ export const userSlice = createSlice({
   selectors: {
     selectUser: state => state.userInfo,
     selectFetchUserStatusSucceeded: state => state.fetchUserStatus,
+    getTheme: state => state.theme,
   },
 })
 
 export const selectUser = (state: RootState) => state.user.userInfo
+export const getTheme = (state: RootState) => state.user.theme
+
+export const userActions = userSlice.actions
