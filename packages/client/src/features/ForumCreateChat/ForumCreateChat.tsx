@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useCallback, useState } from 'react'
+import { ChangeEvent, FC, useCallback, useEffect, useState } from 'react'
 
 import { CloseOutlined, RightOutlined } from '@ant-design/icons'
 
@@ -11,16 +11,25 @@ import { topicsRequests } from 'app/api'
 type Props = {
   isOpen: boolean
   onClose: () => void
+  editingTopic: ITopic
 }
 
-export const ForumCreateChat: FC<Props> = ({ isOpen, onClose }) => {
+export const ForumCreateChat: FC<Props> = ({
+  isOpen,
+  onClose,
+  editingTopic,
+}) => {
   const [topic, setTopic] = useState<ITopic>({ content: '', title: '', id: 0 })
 
   const handleTopicInput = (event: ChangeEvent<HTMLInputElement>) =>
     setTopic({ title: event.target.value, content: '', id: 0 })
 
   const createTopic = useCallback(() => {
-    postTopic()
+    if (editingTopic.id) {
+      updateTopic()
+    } else {
+      postTopic()
+    }
   }, [topic])
 
   const postTopic = async () => {
@@ -36,6 +45,23 @@ export const ForumCreateChat: FC<Props> = ({ isOpen, onClose }) => {
       console.log(e)
     }
   }
+
+  const updateTopic = async () => {
+    try {
+      await topicsRequests
+        .updateTopic(editingTopic.id, {
+          title: topic.title,
+          content: topic.content,
+        })
+        .then(data => (data.data ? onClose() : null))
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  useEffect(() => {
+    setTopic(editingTopic)
+  }, [editingTopic])
 
   if (!isOpen) return null
 

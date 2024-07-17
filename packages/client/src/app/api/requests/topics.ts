@@ -29,7 +29,7 @@ class TopicsRequests {
     return rootApi.post(`${TopicsRequests.baseUrl}`, data, this.getHeaders())
   }
 
-  updateTopic(id: number, data: ITopic) {
+  updateTopic(id: number, data: Partial<ITopic>) {
     return rootApi.put(
       `${TopicsRequests.baseUrl}/${id}`,
       data,

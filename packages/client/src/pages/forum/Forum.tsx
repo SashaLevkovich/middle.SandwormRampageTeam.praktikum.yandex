@@ -11,7 +11,7 @@ import { FORUM_CREATE_CHAT_ID, MODAL_CONTAINER_ID } from './constants'
 import classes from './Forum.module.scss'
 import { commentsRequests, topicsRequests } from 'app/api'
 import { ITopic } from 'app/api/requests/topics'
-import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
+import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons'
 import { ForumCreateChat } from 'features/ForumCreateChat'
 
 export const Forum: FC = () => {
@@ -75,6 +75,7 @@ export const Forum: FC = () => {
 
   const closeChatNew = () => {
     setIsChatOpenNew(false)
+    setActiveTopic({ content: '', id: 0, title: '' })
     getTopics()
   }
 
@@ -89,6 +90,11 @@ export const Forum: FC = () => {
     } catch (e) {
       console.log(e)
     }
+  }
+
+  const editTopic = (topic: ITopic) => {
+    setIsChatOpenNew(true)
+    setActiveTopic(topic)
   }
 
   const getTopics = async () => {
@@ -124,7 +130,15 @@ export const Forum: FC = () => {
                 <Button
                   type="default"
                   shape="round"
-                  size="large"
+                  size="small"
+                  className={classes.removeButton}
+                  onClick={() => editTopic(topic)}>
+                  <EditOutlined />
+                </Button>
+                <Button
+                  type="default"
+                  shape="round"
+                  size="small"
                   className={classes.removeButton}
                   onClick={() => removeTopic(topic.id)}>
                   <DeleteOutlined />
@@ -156,7 +170,11 @@ export const Forum: FC = () => {
       <div id={FORUM_CREATE_CHAT_ID}>
         {portalContainerNew &&
           createPortal(
-            <ForumCreateChat isOpen={isChatOpenNew} onClose={closeChatNew} />,
+            <ForumCreateChat
+              isOpen={isChatOpenNew}
+              onClose={closeChatNew}
+              editingTopic={activeTopic}
+            />,
             portalContainerNew
           )}
       </div>
