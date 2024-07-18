@@ -1,9 +1,8 @@
 @import 'shared/styles/sizes.scss';
-@import 'shared/styles/colors.scss';
 
 .landingPage {
   height: 100%;
-  background: $color-background-header;
+  background: var(--color-background-header);
 
   &ScrollerUp,
   &ScrollerDown {
@@ -35,7 +34,7 @@
     &Title,
     &Link {
       font-size: 172px;
-      color: $color-text-primary;
+      color: var(--color-text-primary);
       font-family: Koulen, serif;
       font-weight: 400;
       margin: 0;
@@ -47,13 +46,13 @@
       margin: 0;
       font-family: Kulim Park ExtraLight;
       font-size: 29px;
-      color: $color-text-primary;
+      color: var(--color-text-primary);
       max-width: 715px;
     }
 
     &Link {
-      color: $color-landing-page;
-      border-bottom: 0px solid $color-landing-page;
+      color: var(--color-landing-page);
+      border-bottom: 0px solid var(--color-landing-page);
       transition: border-bottom ease-out 0.1s;
 
       &:hover {
@@ -62,7 +61,7 @@
       }
 
       &Small {
-        color: $color-link-primary;
+        color: var(--color-link-primary);
       }
     }
 
@@ -74,14 +73,14 @@
     }
 
     &2 {
-      background: $color-landing-page url('/assets/about-game.svg') no-repeat;
+      background: var(--color-landing-page) url('/assets/about-game.svg') no-repeat;
       background-position: 50% 85%;
       background-attachment: fixed;
       background-size: contain;
     }
 
     &3 {
-      background: $color-landing-page url('/assets/leaderboard.svg') no-repeat;
+      background: var(--color-landing-page) url('/assets/leaderboard.svg') no-repeat;
       background-position: 50% 86%;
       background-attachment: fixed;
       background-size: contain;
@@ -92,7 +91,7 @@
     }
 
     &4 {
-      background: $color-landing-page url('/assets/forum.svg') no-repeat;
+      background: var(--color-landing-page) url('/assets/forum.svg') no-repeat;
       background-position: 50% 86%;
       background-attachment: fixed;
       background-size: contain;
@@ -100,12 +99,12 @@
 
     &5 {
       padding-bottom: 133px;
-      background: $color-background-header
+      background: var(--color-background-header)
         url('/assets/background-without-text-upside-down.svg') no-repeat;
       background-size: cover;
 
       & > p {
-        color: $color-landing-page;
+        color: var(--color-landing-page);
       }
     }
   }
