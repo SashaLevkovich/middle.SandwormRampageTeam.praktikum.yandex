@@ -2,6 +2,7 @@ import { FC } from 'react'
 
 import { Avatar, Flex } from 'antd'
 
+import { Reaction } from 'components/Reaction'
 import classes from './Message.module.scss'
 
 type Props = {
@@ -25,8 +26,12 @@ export const Message: FC<Props> = ({ author, isYou, message, time }) => {
           <Flex vertical>
             <h3 className={classes.author}>{author}</h3>
             <p className={classes.text}>{message}</p>
-            <Flex justify="flex-end" className={classes.sendTime}>
-              {time}
+            <Flex justify="space-between" align="center">
+              <Reaction />
+
+              <Flex justify="flex-end" className={classes.sendTime}>
+                {time}
+              </Flex>
             </Flex>
           </Flex>
         </div>
