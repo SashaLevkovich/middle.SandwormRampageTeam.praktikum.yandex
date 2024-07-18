@@ -1,11 +1,10 @@
 @import 'shared/styles/sizes.scss';
-@import 'shared/styles/colors.scss';
 @import 'shared/styles/shadowsAndGradients.scss';
 
 .wrapper {
   position: relative;
   height: $page-height;
-  background: $forum-background;
+  background: var(--color-forum-background);
   z-index: 2;
 
   &::after {
