@@ -7,9 +7,9 @@ WORKDIR /app
 
 FROM base as builder
 
-COPY packages/client/package.json yarn.lock ./
-COPY packages/client/dist/ ./dist
-COPY packages/client/server ./server
+COPY packages/client/package.json yarn.lock /app/
+COPY packages/client/dist/ /app/dist
+COPY packages/client/server /app/server
 
 RUN yarn install --frozen-lockfile
 
