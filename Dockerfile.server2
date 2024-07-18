@@ -1,0 +1,27 @@
+ARG SERVER_PORT=3001
+
+FROM ubuntu:20.04
+
+RUN apt update && apt-get -y install curl && apt install -y netcat
+RUN curl -sL https://deb.nodesource.com/setup_18.x  | bash -
+RUN apt-get -y install nodejs
+RUN npm install -g yarn
+
+WORKDIR /app
+
+COPY package.json yarn.lock ./
+# RUN yarn install --frozen-lockfile
+
+COPY . .
+
+# RUN yarn lerna bootstrap
+RUN rm -rf /app/packages/server/dist/ && yarn build --scope=server
+
+COPY utils/wait-for.sh wait-for.sh
+RUN chmod +x wait-for.sh
+
+RUN yarn install --production=true
+
+EXPOSE $SERVER_PORT
+
+# CMD ["node", "/app/packages/server/dist/index.js"]
