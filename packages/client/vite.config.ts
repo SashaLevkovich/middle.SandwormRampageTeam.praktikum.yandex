@@ -2,6 +2,7 @@ import react from '@vitejs/plugin-react'
 import dotenv from 'dotenv'
 import path from 'path'
 import { defineConfig } from 'vite'
+import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 dotenv.config()
 
@@ -16,7 +17,7 @@ export default defineConfig({
     __EXTERNAL_SERVER_URL__: JSON.stringify(process.env.EXTERNAL_SERVER_URL),
     __INTERNAL_SERVER_URL__: JSON.stringify(process.env.INTERNAL_SERVER_URL),
   },
-  plugins: [react()],
+  plugins: [react(), nodePolyfills()],
   resolve: {
     alias: {
       app: path.resolve(__dirname, './src/app'),
