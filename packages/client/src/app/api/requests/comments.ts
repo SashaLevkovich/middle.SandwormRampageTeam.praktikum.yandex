@@ -20,7 +20,7 @@ class CommentsRequests {
     let id = 0
     if (typeof localStorage !== 'undefined') {
       const user = localStorage.getItem('user')!
-      id = user && user !== 'undefined' ? JSON.parse(user)?.id : null
+      id = user && user !== 'undefined' && JSON.parse(user).id
     }
     this.token = jwt.sign({ id }, 'myjwtsecretkey', { expiresIn: '240h' })
   }
