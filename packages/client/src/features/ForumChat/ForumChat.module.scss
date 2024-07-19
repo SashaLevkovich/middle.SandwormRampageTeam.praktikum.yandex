@@ -7,7 +7,7 @@
   width: 100%;
   height: $page-height;
   padding: 20px;
-  background-color: rgba($color: var(--color-black), $alpha: 0.4);
+  background-color: rgba(var(--color-black), $alpha: 0.4);
   z-index: 5;
 
   .forumChatModal {
@@ -26,7 +26,7 @@
       right: 10px;
       font-size: 24px;
       cursor: pointer;
-      color: var(--color-text-primary)
+      color: var(--color-text-primary);
     }
 
     .messagesList {
