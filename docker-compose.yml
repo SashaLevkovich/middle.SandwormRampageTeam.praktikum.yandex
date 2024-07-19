@@ -51,7 +51,7 @@ services:
     volumes:
       - ./tmp/pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -d sandworm -U maksim']
+      test: ['CMD-SHELL', 'pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}']
       interval: 5s
       timeout: 5s
       retries: 5
