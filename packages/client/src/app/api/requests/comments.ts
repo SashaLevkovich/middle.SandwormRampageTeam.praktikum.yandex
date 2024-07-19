@@ -19,7 +19,8 @@ class CommentsRequests {
     CommentsRequests.baseUrlTopics = '/topics'
     let id = 0
     if (typeof localStorage !== 'undefined') {
-      id = JSON.parse(localStorage.getItem('user')!).id
+      const user = localStorage.getItem('user')!
+      id = user && user !== 'undefined' ? JSON.parse(user)?.id : null
     }
     this.token = jwt.sign({ id }, 'myjwtsecretkey', { expiresIn: '240h' })
   }
