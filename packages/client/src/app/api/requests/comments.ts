@@ -15,8 +15,8 @@ class CommentsRequests {
   private readonly token: string
 
   constructor() {
-    CommentsRequests.baseUrl = '/api/comments'
-    CommentsRequests.baseUrlTopics = '/api/topics'
+    CommentsRequests.baseUrl = '/comments'
+    CommentsRequests.baseUrlTopics = '/topics'
     let id = 0
     if (typeof localStorage !== 'undefined') {
       id = JSON.parse(localStorage.getItem('user')!).id

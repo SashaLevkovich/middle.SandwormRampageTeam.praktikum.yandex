@@ -6,8 +6,7 @@ import CommentsRequests from 'app/api/requests/comments'
 
 export const rootApi = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
-  // TODO: replace false on true when the environment is set up
-  withCredentials: false,
+  withCredentials: true,
 })
 
 export const geolocationApi = axios.create({

@@ -12,8 +12,7 @@ class TopicsRequests {
   private readonly token: string
 
   constructor() {
-    // TODO: remove /api when the environment is set up
-    TopicsRequests.baseUrl = '/api/topics'
+    TopicsRequests.baseUrl = '/topics'
     let id = 0
     if (typeof localStorage !== 'undefined') {
       id = JSON.parse(localStorage.getItem('user')!).id
