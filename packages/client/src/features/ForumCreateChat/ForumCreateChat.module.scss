@@ -1,5 +1,5 @@
 @import 'shared/styles/sizes.scss';
-@import 'shared/styles/colors.scss';
+// @import 'shared/styles/colors.scss';
 
 .forumChatContainer {
   position: fixed;
@@ -8,7 +8,7 @@
   width: 100%;
   height: $page-height;
   padding: 20px;
-  background-color: rgba($color: $color-black, $alpha: 0.4);
+  background-color: rgba(var(--color-black), $alpha: 0.4);
   z-index: 5;
 
   .forumChatModal {
@@ -17,8 +17,8 @@
     min-width: 700px;
     min-height: $page-height;
     padding: 30px 45px;
-    box-shadow: -10px 10px 0 0 rgba($color-black, 0.25);
-    background: $color-text-primary;
+    box-shadow: -10px 10px 0 0 rgba(var(--color-black), 0.25);
+    background: var(--color-text-primary);
     border-radius: 30px;
 
     .closeChat {
@@ -49,9 +49,9 @@
         align-items: center;
         padding: 5px 10px;
         width: 100%;
-        border: 1px solid $color-gray-message;
+        border: 1px solid var(--color-gray-message);
         border-radius: 30px;
-        box-shadow: -7px 7px 0 0 rgba($color-black, 0.25);
+        box-shadow: -7px 7px 0 0 rgba(var(--color-black), 0.25);
 
         .messageInput {
           margin: 0;
@@ -70,12 +70,12 @@
           height: 55px;
           border-radius: 50%;
           font-size: 30px;
-          background-color: $color-red-button;
+          background-color: var(--color-red-button);
 
           &:hover {
             background-color: rgb(206, 29, 37);
-            color: $color-text-primary;
-            border: 1px solid $color-red-button;
+            color: var(--color-text-primary);
+            border: 1px solid var(--color-red-button);
           }
         }
       }
