@@ -30,7 +30,6 @@ export const Game: FC = () => {
     } = res.data
     setGeolocation([
       `Country: ${country}`,
-      `City: ${city}`,
       `Address: ${road}, ${house_number}`,
       `Postcode: ${postcode}`,
     ])

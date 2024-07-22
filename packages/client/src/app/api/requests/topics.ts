@@ -1,4 +1,4 @@
-import { rootApi } from 'app/api'
+import { rootApiLocalhost } from 'app/api'
 import jwt from 'jsonwebtoken'
 
 export interface ITopic {
@@ -22,31 +22,33 @@ class TopicsRequests {
   }
 
   getTopics() {
-    return rootApi.get<ITopic[]>(`${TopicsRequests.baseUrl}`, this.getHeaders())
+    return rootApiLocalhost.get<ITopic[]>(`${TopicsRequests.baseUrl}`, {
+      headers: this.getHeaders(),
+    })
   }
 
   createTopic(data: Partial<ITopic>) {
-    return rootApi.post(`${TopicsRequests.baseUrl}`, data, this.getHeaders())
+    return rootApiLocalhost.post(`${TopicsRequests.baseUrl}`, data, {
+      headers: this.getHeaders(),
+    })
   }
 
   updateTopic(id: number, data: Partial<ITopic>) {
-    return rootApi.put(
-      `${TopicsRequests.baseUrl}/${id}`,
-      data,
-      this.getHeaders()
-    )
+    return rootApiLocalhost.put(`${TopicsRequests.baseUrl}/${id}`, data, {
+      headers: this.getHeaders(),
+    })
   }
 
   deleteTopic(id: number) {
-    return rootApi.delete(`${TopicsRequests.baseUrl}/${id}`, this.getHeaders())
+    return rootApiLocalhost.delete(`${TopicsRequests.baseUrl}/${id}`, {
+      headers: this.getHeaders(),
+    })
   }
 
   private getHeaders() {
     return {
-      headers: {
-        Authorization: `Bearer ${this.token}`,
-        'Content-Type': 'application/json',
-      },
+      Authorization: `Bearer ${this.token}`,
+      'Content-Type': 'application/json',
     }
   }
 }

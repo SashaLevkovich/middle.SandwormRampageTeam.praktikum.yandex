@@ -29,18 +29,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = __importDefault(require("dotenv"));
 const promises_1 = __importDefault(require("fs/promises"));
 const vite_1 = require("vite");
-dotenv_1.default.config();
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
-const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const serialize_javascript_1 = __importDefault(require("serialize-javascript"));
-const cors_1 = __importDefault(require("cors"));
+dotenv_1.default.config();
 const port = process.env.PORT || 80;
 const clientPath = path_1.default.join(__dirname, '..');
 const isDev = process.env.NODE_ENV === 'development';
 async function createServer() {
     const app = (0, express_1.default)();
-    app.use((0, cors_1.default)());
     app.use((0, cookie_parser_1.default)());
     let vite;
     if (isDev) {

@@ -11,11 +11,11 @@ import { CloseOutlined, RightOutlined } from '@ant-design/icons'
 
 import { Button, Flex, Form, Input } from 'antd'
 
-import classes from './ForumChat.module.scss'
-import { ITopic } from 'app/api/requests/topics'
 import { commentsRequests } from 'app/api'
 import { IComment } from 'app/api/requests/comments'
+import { ITopic } from 'app/api/requests/topics'
 import { Message } from 'components/Message'
+import classes from './ForumChat.module.scss'
 
 type Props = {
   isOpen: boolean
@@ -81,7 +81,7 @@ export const ForumChat: FC<Props> = ({ isOpen, onClose, topic }) => {
 
   const isYou = (userId: number) => {
     if (localStorage.getItem('user')) {
-      return userId == JSON.parse(localStorage.getItem('user')!).id
+      return userId === JSON.parse(localStorage.getItem('user')!).id
     }
     return false
   }
@@ -92,17 +92,18 @@ export const ForumChat: FC<Props> = ({ isOpen, onClose, topic }) => {
         <CloseOutlined onClick={onClose} className={classes.closeChat} />
 
         <div className={classes.messagesList}>
-          {comments.map(({ userId, content, createdAt, id }) => (
-            <Message
-              id={id}
-              message={content}
-              author={userId!}
-              isYou={isYou(userId!)}
-              time={createdAt!}
-              key={id}
-              onAction={getComments}
-            />
-          ))}
+          {comments &&
+            comments.map(({ userId, content, createdAt, id }) => (
+              <Message
+                id={id}
+                message={content}
+                author={userId!}
+                isYou={isYou(userId!)}
+                time={createdAt!}
+                key={id}
+                onAction={getComments}
+              />
+            ))}
           <div ref={messagesEndRef} />
         </div>
 

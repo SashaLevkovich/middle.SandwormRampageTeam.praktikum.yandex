@@ -1,21 +1,15 @@
-import { FC, useEffect, useState } from 'react'
-import { Switch } from 'antd'
 import { MoonFilled, SunFilled } from '@ant-design/icons'
+import { Switch } from 'antd'
+import { FC, useEffect, useState } from 'react'
 
 import { Link, useLocation } from 'react-router-dom'
 
 import { NAVIGATION_LINKS } from './constants'
 
 import { logoutUserThunk } from 'app/redux/thunk/user/logoutUser'
+import { THEME } from 'shared/constants/theme'
 import { useAppDispatch } from 'shared/redux'
 import classes from './Navbar.module.scss'
-import { THEME } from 'shared/constants/theme'
-
-/**
- *
- * isAuth will be refactor in future
- *
- */
 
 export const Navbar: FC<{ isAuth?: boolean }> = ({ isAuth = true }) => {
   const { pathname } = useLocation()

@@ -4,9 +4,9 @@ import { CloseOutlined, RightOutlined } from '@ant-design/icons'
 
 import { Button, Flex, Form, Input } from 'antd'
 
-import classes from './ForumCreateChat.module.scss'
-import { ITopic } from 'app/api/requests/topics'
 import { topicsRequests } from 'app/api'
+import { ITopic } from 'app/api/requests/topics'
+import classes from './ForumCreateChat.module.scss'
 
 type Props = {
   isOpen: boolean

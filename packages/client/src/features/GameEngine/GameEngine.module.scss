@@ -1,8 +1,10 @@
 .canvas {
+  position: relative;
   border: 1px solid var(--color-start-page-background);
-  background-image: url("/assets/sand.svg");
+  background-image: url('/assets/sand.svg');
   z-index: 100;
   cursor: none;
+  right: 40px;
 }
 
 .gameInfoContainer {

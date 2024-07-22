@@ -1,24 +1,24 @@
-import { ownershipMiddleware } from './middlewares/ownershipMiddleware'
-import { authMiddleware } from './middlewares/authMiddleware'
+import express from 'express'
+import {
+  createComment,
+  deleteComment,
+  getComments,
+  updateComment,
+} from './controllers/commentController'
+import {
+  createReply,
+  deleteReply,
+  getReplies,
+  updateReply,
+} from './controllers/replyController'
 import {
   createTopic,
   deleteTopic,
   getTopics,
   updateTopic,
 } from './controllers/topicController'
-import {
-  getComments,
-  createComment,
-  deleteComment,
-  updateComment,
-} from './controllers/commentController'
-import {
-  getReplies,
-  createReply,
-  deleteReply,
-  updateReply,
-} from './controllers/replyController'
-import express from 'express'
+import { authMiddleware } from './middlewares/authMiddleware'
+import { ownershipMiddleware } from './middlewares/ownershipMiddleware'
 
 const router = express.Router()
 

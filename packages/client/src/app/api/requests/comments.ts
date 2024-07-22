@@ -1,4 +1,4 @@
-import { rootApi } from 'app/api'
+import { rootApiLocalhost } from 'app/api'
 import jwt from 'jsonwebtoken'
 
 export interface IComment {
@@ -26,14 +26,14 @@ class CommentsRequests {
   }
 
   getComments(topicId: number) {
-    return rootApi.get<IComment[]>(
+    return rootApiLocalhost.get<IComment[]>(
       `${CommentsRequests.baseUrlTopics}/${topicId}/comments`,
       this.getHeaders()
     )
   }
 
   createComment(topicId: number, data: Partial<IComment>) {
-    return rootApi.post(
+    return rootApiLocalhost.post(
       `${CommentsRequests.baseUrlTopics}/${topicId}/comments`,
       data,
       this.getHeaders()
@@ -41,7 +41,7 @@ class CommentsRequests {
   }
 
   updateComment(id: number, data: IComment) {
-    return rootApi.put(
+    return rootApiLocalhost.put(
       `${CommentsRequests.baseUrl}/${id}`,
       data,
       this.getHeaders()
@@ -49,7 +49,7 @@ class CommentsRequests {
   }
 
   deleteComment(id: number) {
-    return rootApi.delete(
+    return rootApiLocalhost.delete(
       `${CommentsRequests.baseUrl}/${id}`,
       this.getHeaders()
     )
