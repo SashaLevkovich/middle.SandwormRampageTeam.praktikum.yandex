@@ -4,7 +4,11 @@
 - [Логика игры](gameLogic.md) - Логика 
 
 ## Презентация игры
+5-6 спринт
 https://disk.yandex.ru/i/nm5HF5RSSPLlnw
+
+7-8 спринт
+https://www.loom.com/share/ecd368fb012147daa8cd6db4e386083f?sid=2e504eae-d789-418b-b12e-9501f2e70a56
 
 ### Как запускать?
 
