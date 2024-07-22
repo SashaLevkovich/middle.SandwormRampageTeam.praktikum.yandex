@@ -1,10 +1,11 @@
 import { FC } from 'react'
 
+import { DeleteOutlined } from '@ant-design/icons'
 import { Avatar, Button, Flex } from 'antd'
+import { commentsRequests } from 'app/api'
+import { Reaction } from 'components/Reaction'
 
 import classes from './Message.module.scss'
-import { DeleteOutlined } from '@ant-design/icons'
-import { commentsRequests } from 'app/api'
 
 type Props = {
   id: number
@@ -54,6 +55,10 @@ export const Message: FC<Props> = ({
           <Flex vertical>
             <h3 className={classes.author}>{author}</h3>
             <p className={classes.text}>{message}</p>
+            <Flex justify="space-between" align="center">
+              <Reaction />
+            </Flex>
+
             <Flex justify="flex-end" className={classes.sendTime}>
               {new Date(time).toLocaleDateString()}
             </Flex>
