@@ -34,11 +34,13 @@ const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const serialize_javascript_1 = __importDefault(require("serialize-javascript"));
+const cors_1 = __importDefault(require("cors"));
 const port = process.env.PORT || 80;
 const clientPath = path_1.default.join(__dirname, '..');
 const isDev = process.env.NODE_ENV === 'development';
 async function createServer() {
     const app = (0, express_1.default)();
+    app.use((0, cors_1.default)());
     app.use((0, cookie_parser_1.default)());
     let vite;
     if (isDev) {

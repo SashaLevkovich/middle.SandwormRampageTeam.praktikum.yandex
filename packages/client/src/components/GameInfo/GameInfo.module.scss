@@ -1,16 +1,14 @@
-@import 'shared/styles/colors.scss';
-
 .container {
   display: flex;
   justify-content: space-between;
-  color: $color-start-page-button;
+  color: var(--color-start-page-button);
 }
 
 .score {
   margin-right: 80px;
   font-size: 40px;
   font-weight: 200;
-  color: $color-background-header;
+  color: var(--color-background-header);
 }
 
 .title {
@@ -25,7 +23,7 @@
   justify-content: center;
   width: 80px;
   height: 80px;
-  background-color: $color-grey-btn-background;
+  background-color: var(--color-grey-btn-background);
   border-radius: 50%;
   position: relative;
   cursor: pointer;
@@ -37,7 +35,7 @@
   display: block;
   width: 6%;
   height: 60%;
-  background-color: $color-orange-dust;
+  background-color: var(--color-orange-dust);
   position: absolute;
 }
 
@@ -55,7 +53,7 @@
   justify-content: center;
   width: 80px;
   height: 80px;
-  background-color: $color-grey-btn-background;
+  background-color: var(--color-grey-btn-background);
   border-radius: 50%;
   position: relative;
   cursor: pointer;
@@ -68,7 +66,7 @@
   height: 0;
   border-style: solid;
   border-width: 15px 0 15px 30px;
-  border-color: transparent transparent transparent $color-orange-dust;
+  border-color: transparent transparent transparent var(--color-orange-dust);
   position: absolute;
   left: 38%;
 }
