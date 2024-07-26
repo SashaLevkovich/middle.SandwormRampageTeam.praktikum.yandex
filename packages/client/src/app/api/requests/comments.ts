@@ -1,5 +1,4 @@
 import { rootApiLocalhost } from 'app/api'
-import jwt from 'jsonwebtoken'
 
 export interface IComment {
   topicId: number
@@ -22,7 +21,7 @@ class CommentsRequests {
       const user = localStorage.getItem('user')!
       id = user && user !== 'undefined' && JSON.parse(user).id
     }
-    this.token = jwt.sign({ id }, 'myjwtsecretkey', { expiresIn: '240h' })
+    this.token = String(id)
   }
 
   getComments(topicId: number) {

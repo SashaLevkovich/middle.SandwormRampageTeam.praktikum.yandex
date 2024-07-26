@@ -1,5 +1,4 @@
 import { rootApiLocalhost } from 'app/api'
-import jwt from 'jsonwebtoken'
 
 export interface ITopic {
   id: number
@@ -18,7 +17,7 @@ class TopicsRequests {
       const user = localStorage.getItem('user')!
       id = user && user !== 'undefined' && JSON.parse(user).id
     }
-    this.token = jwt.sign({ id }, 'myjwtsecretkey', { expiresIn: '240h' })
+    this.token = String(id)
   }
 
   getTopics() {
