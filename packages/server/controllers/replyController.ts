@@ -17,7 +17,7 @@ export const getReplies = async (_req: Request, res: Response) => {
 export const createReply = async (req: Request, res: Response) => {
   try {
     const { content } = req.body
-    const userId = req.user?.id
+    const userId = req.user
     const { commentId } = req.params
 
     const reply = await Reply.create({ content, userId, commentId })

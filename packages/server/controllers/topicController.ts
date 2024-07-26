@@ -17,7 +17,7 @@ export const getTopics = async (_req: Request, res: Response) => {
 export const createTopic = async (req: Request, res: Response) => {
   try {
     const { title, content } = req.body
-    const userId = req.user?.id
+    const userId = req.user
 
     const topic = await Topic.create({ title, content, userId })
     res.status(201).json(topic)
