@@ -53,6 +53,7 @@ async function createServer() {
         app.use(express_1.default.static(path_1.default.join(clientPath, 'dist/client'), { index: false }));
     }
     app.get('*', async (req, res, next) => {
+        var _a;
         const url = req.originalUrl;
         try {
             // Создаём переменные
@@ -71,7 +72,7 @@ async function createServer() {
                 // Получаем путь до сбилдженого модуля клиента, чтобы не тащить средства сборки клиента на сервер
                 const pathToServer = path_1.default.join(clientPath, 'dist/server/entry-server.js');
                 // Импортируем этот модуль и вызываем с инишл стейтом
-                render = (await Promise.resolve().then(() => __importStar(require(pathToServer)))).render;
+                render = (await (_a = pathToServer, Promise.resolve().then(() => __importStar(require(_a))))).render;
             }
             const { html: appHtml, initialState } = await render(req);
             // Заменяем комментарий на сгенерированную HTML-строку
