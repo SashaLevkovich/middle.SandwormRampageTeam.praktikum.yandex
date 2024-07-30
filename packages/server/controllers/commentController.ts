@@ -17,7 +17,7 @@ export const getComments = async (_req: Request, res: Response) => {
 export const createComment = async (req: Request, res: Response) => {
   try {
     const { content } = req.body
-    const userId = req.user?.id
+    const userId = req.user
     const { topicId } = req.params
     const comment = await Comment.create({ content, userId, topicId })
     res.status(201).json(comment)
