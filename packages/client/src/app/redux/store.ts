@@ -20,7 +20,7 @@ declare global {
 
 export const extraArgument = {
   authRequests,
-  appRouter,
+  // appRouter,
 }
 
 export const store = configureStore({
