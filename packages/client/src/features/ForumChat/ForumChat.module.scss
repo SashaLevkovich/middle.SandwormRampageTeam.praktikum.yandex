@@ -56,6 +56,11 @@
         .messageInput {
           margin: 0;
           border: none;
+          background: var(--color-background);
+
+          &::placeholder {
+            color: rgba(var(--color-text-primary), 0.7);
+          }
 
           &:focus {
             box-shadow: none;

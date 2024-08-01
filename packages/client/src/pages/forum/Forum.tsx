@@ -7,12 +7,12 @@ import { ForumChat } from 'features/ForumChat'
 
 import { ForumButton } from 'components/ForumButton'
 
-import { FORUM_CREATE_CHAT_ID, MODAL_CONTAINER_ID } from './constants'
-import classes from './Forum.module.scss'
+import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons'
 import { topicsRequests } from 'app/api'
 import { ITopic } from 'app/api/requests/topics'
-import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons'
 import { ForumCreateChat } from 'features/ForumCreateChat'
+import { FORUM_CREATE_CHAT_ID, MODAL_CONTAINER_ID } from './constants'
+import classes from './Forum.module.scss'
 
 export const Forum: FC = () => {
   const [topics, setTopics] = useState<ITopic[]>([])
@@ -119,32 +119,33 @@ export const Forum: FC = () => {
             <PlusOutlined />
           </Button>
           <Flex vertical gap={30} className={classes.buttonBlock}>
-            {topics.map(topic => (
-              <div className={classes.topicRow}>
-                <ForumButton
-                  type="default"
-                  onClick={() => handleButtonClick(topic)}
-                  key={topic.id}>
-                  {topic.title}
-                </ForumButton>
-                <Button
-                  type="default"
-                  shape="round"
-                  size="small"
-                  className={classes.removeButton}
-                  onClick={() => editTopic(topic)}>
-                  <EditOutlined />
-                </Button>
-                <Button
-                  type="default"
-                  shape="round"
-                  size="small"
-                  className={classes.removeButton}
-                  onClick={() => removeTopic(topic.id)}>
-                  <DeleteOutlined />
-                </Button>
-              </div>
-            ))}
+            {topics &&
+              topics.map(topic => (
+                <div className={classes.topicRow} key={topic.id}>
+                  <ForumButton
+                    type="default"
+                    onClick={() => handleButtonClick(topic)}
+                    key={topic.id}>
+                    {topic.title}
+                  </ForumButton>
+                  <Button
+                    type="default"
+                    shape="round"
+                    size="small"
+                    className={classes.removeButton}
+                    onClick={() => editTopic(topic)}>
+                    <EditOutlined />
+                  </Button>
+                  <Button
+                    type="default"
+                    shape="round"
+                    size="small"
+                    className={classes.removeButton}
+                    onClick={() => removeTopic(topic.id)}>
+                    <DeleteOutlined />
+                  </Button>
+                </div>
+              ))}
           </Flex>
 
           <Typography>

@@ -10,11 +10,11 @@ export const ownershipMiddleware = async (
   const { id } = req.params
   const resourceType = req.originalUrl.split('/')[2]
 
-  if (!req.user || !req.user.id) {
+  if (!req.user) {
     return res.status(403).json({ error: 'Forbidden: User not authenticated' })
   }
 
-  const userId = req.user.id
+  const userId = req.user
   try {
     let resource: Model | null = null
     switch (resourceType) {

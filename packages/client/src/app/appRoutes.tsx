@@ -58,7 +58,6 @@ export const routes = [
 
       if (user) {
         setLocalStorageUser(user as User)
-        console.log(1)
 
         return redirect('/')
       }
@@ -111,6 +110,17 @@ export const routes = [
             <Forum />
           </PrivateRoute>
         ),
+        loader: async () => {
+          await loadStore()
+          const response = await store.dispatch(getUserThunk())
+          const user = response.payload
+
+          if (!user) {
+            return redirect('/login')
+          }
+
+          return { success: true }
+        },
       },
     ],
   },

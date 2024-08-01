@@ -1,5 +1,4 @@
-import { rootApi } from 'app/api'
-import jwt from 'jsonwebtoken'
+import { rootApiLocalhost } from 'app/api'
 
 export interface IComment {
   topicId: number
@@ -22,18 +21,18 @@ class CommentsRequests {
       const user = localStorage.getItem('user')!
       id = user && user !== 'undefined' && JSON.parse(user).id
     }
-    this.token = jwt.sign({ id }, 'myjwtsecretkey', { expiresIn: '240h' })
+    this.token = String(id)
   }
 
   getComments(topicId: number) {
-    return rootApi.get<IComment[]>(
+    return rootApiLocalhost.get<IComment[]>(
       `${CommentsRequests.baseUrlTopics}/${topicId}/comments`,
       this.getHeaders()
     )
   }
 
   createComment(topicId: number, data: Partial<IComment>) {
-    return rootApi.post(
+    return rootApiLocalhost.post(
       `${CommentsRequests.baseUrlTopics}/${topicId}/comments`,
       data,
       this.getHeaders()
@@ -41,7 +40,7 @@ class CommentsRequests {
   }
 
   updateComment(id: number, data: IComment) {
-    return rootApi.put(
+    return rootApiLocalhost.put(
       `${CommentsRequests.baseUrl}/${id}`,
       data,
       this.getHeaders()
@@ -49,7 +48,7 @@ class CommentsRequests {
   }
 
   deleteComment(id: number) {
-    return rootApi.delete(
+    return rootApiLocalhost.delete(
       `${CommentsRequests.baseUrl}/${id}`,
       this.getHeaders()
     )

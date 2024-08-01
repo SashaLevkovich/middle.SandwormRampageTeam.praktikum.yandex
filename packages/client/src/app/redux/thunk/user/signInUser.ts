@@ -9,6 +9,7 @@ export const signInThunk = createAppAsyncThunk(
     try {
       await thunkApi.extra.authRequests.signIn({ params: data })
       await thunkApi.dispatch(getUserThunk())
+      await thunkApi.extra.appRouter().navigate('/landing')
     } catch (error) {
       if (axios.isAxiosError(error)) {
         return thunkApi.rejectWithValue(error.response?.data || error.message)

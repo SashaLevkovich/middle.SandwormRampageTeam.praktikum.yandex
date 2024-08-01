@@ -1,12 +1,13 @@
 import dotenv from 'dotenv'
 import fs from 'fs/promises'
 import { createServer as createViteServer, ViteDevServer } from 'vite'
-dotenv.config()
 
+import cookieParser from 'cookie-parser'
 import express, { Request as ExpressRequest } from 'express'
 import path from 'path'
-import cookieParser from 'cookie-parser'
 import serialize from 'serialize-javascript'
+
+dotenv.config()
 
 const port = process.env.PORT || 80
 const clientPath = path.join(__dirname, '..')
