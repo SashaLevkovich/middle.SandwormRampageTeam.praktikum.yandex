@@ -34,7 +34,7 @@ const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
 const serialize_javascript_1 = __importDefault(require("serialize-javascript"));
 dotenv_1.default.config();
-const port = process.env.PORT || 80;
+const port = process.env.PORT || 3000;
 const clientPath = path_1.default.join(__dirname, '..');
 const isDev = process.env.NODE_ENV === 'development';
 async function createServer() {
@@ -86,16 +86,6 @@ async function createServer() {
             vite === null || vite === void 0 ? void 0 : vite.ssrFixStacktrace(e);
             next(e);
         }
-    });
-    app.get('/friends', (_, res) => {
-        res.json([
-            { name: 'Саша', secondName: 'Панов' },
-            { name: 'Лёша', secondName: 'Садовников' },
-            { name: 'Серёжа', secondName: 'Иванов' },
-        ]);
-    });
-    app.get('/user', (_, res) => {
-        res.json({ name: 'Степа', secondName: 'Степанов' });
     });
     app.listen(port, () => {
         console.log(`Client is listening on port: ${port}`);

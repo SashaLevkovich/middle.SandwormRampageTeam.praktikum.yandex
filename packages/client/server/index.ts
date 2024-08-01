@@ -9,7 +9,7 @@ import serialize from 'serialize-javascript'
 
 dotenv.config()
 
-const port = process.env.PORT || 80
+const port = process.env.PORT || 3000
 const clientPath = path.join(__dirname, '..')
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -91,18 +91,6 @@ async function createServer() {
       vite?.ssrFixStacktrace(e as Error)
       next(e)
     }
-  })
-
-  app.get('/friends', (_, res) => {
-    res.json([
-      { name: 'Саша', secondName: 'Панов' },
-      { name: 'Лёша', secondName: 'Садовников' },
-      { name: 'Серёжа', secondName: 'Иванов' },
-    ])
-  })
-
-  app.get('/user', (_, res) => {
-    res.json({ name: 'Степа', secondName: 'Степанов' })
   })
 
   app.listen(port, () => {

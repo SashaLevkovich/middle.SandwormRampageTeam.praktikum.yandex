@@ -1,24 +1,32 @@
+import { FC, useEffect, useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Button, Flex, Form, Input, Typography } from 'antd'
-import { FC } from 'react'
 
 import { SignInLoginParams } from 'app/api/requests/auth'
 import {
   SignInFieldType,
   SignInFieldValidationRules,
 } from 'shared/constants/validationRules'
-
-import classes from 'pages/signUp/SignUp.module.scss'
-
 import { PageInitArgs } from 'app/appRoutes'
+import { oAuthRequests } from 'app/api'
 import { selectUser } from 'app/redux/slice/user'
 import { getUserThunk } from 'app/redux/thunk/user/getUser'
 import { signInThunk } from 'app/redux/thunk/user/signInUser'
-import { Link } from 'react-router-dom'
 import { setLocalStorageUser } from 'shared/helpers/userLocalStorage'
 import { useAppDispatch } from 'shared/redux'
 
+import classes from 'pages/signUp/SignUp.module.scss'
+
 export const SignIn: FC = () => {
   const dispatch = useAppDispatch()
+  const [serviceId, setServiceId] = useState('')
+
+  const oAuthURL = useMemo(() => {
+    if (serviceId) {
+      return oAuthRequests.getOAuthUrl(serviceId)
+    }
+    return ''
+  }, [serviceId])
 
   const onFinish = async (values: SignInLoginParams) => {
     try {
@@ -30,6 +38,12 @@ export const SignIn: FC = () => {
       console.log(e)
     }
   }
+
+  useEffect(() => {
+    oAuthRequests.getServiceId().then(resp => {
+      setServiceId(resp.data.service_id)
+    })
+  }, [])
 
   return (
     <div className={classes.root}>
@@ -88,6 +102,24 @@ export const SignIn: FC = () => {
           </Typography>
           <Button type="link" className={classes.backBtn}>
             <Link to="/signUp">Create</Link>
+          </Button>
+        </Flex>
+
+        <Flex justify="center" align="center">
+          <Button
+            type="default"
+            shape="round"
+            size="large"
+            style={{
+              background: '#555',
+              marginTop: 20,
+              padding: '4px 0',
+              boxSizing: 'content-box',
+              width: '100%',
+            }}>
+            <Link className={classes.link} to={oAuthURL}>
+              Login with Yandex
+            </Link>
           </Button>
         </Flex>
       </div>

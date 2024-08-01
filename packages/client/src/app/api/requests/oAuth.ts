@@ -28,7 +28,7 @@ class OAuthRequests {
   public getOAuthUrl(serviceId: string) {
     return `${
       import.meta.env.VITE_OAUTH_URL
-    }/?response_type=code&client_id=${serviceId}&redirect_uri=${encodeURIComponent(
+    }?response_type=code&client_id=${serviceId}&redirect_uri=${encodeURIComponent(
       REDIRECT_URL
     )}`
   }
