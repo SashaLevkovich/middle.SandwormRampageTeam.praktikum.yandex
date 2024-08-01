@@ -93,18 +93,6 @@ async function createServer() {
     }
   })
 
-  app.get('/friends', (_, res) => {
-    res.json([
-      { name: 'Саша', secondName: 'Панов' },
-      { name: 'Лёша', secondName: 'Садовников' },
-      { name: 'Серёжа', secondName: 'Иванов' },
-    ])
-  })
-
-  app.get('/user', (_, res) => {
-    res.json({ name: 'Степа', secondName: 'Степанов' })
-  })
-
   app.listen(port, () => {
     console.log(`Client is listening on port: ${port}`)
   })

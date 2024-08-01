@@ -18,8 +18,6 @@ import { SignUp } from 'pages/signUp'
 import { setLocalStorageUser } from 'shared/helpers/userLocalStorage'
 import { AppDispatch } from 'shared/redux'
 
-import { initNotFoundPage } from 'pages/errors/NotFound'
-import { initSignInPage } from 'pages/signIn/SignIn'
 import { RootState, store } from './redux/store'
 import { getUserThunk } from './redux/thunk/user/getUser'
 
@@ -42,7 +40,6 @@ export const routes = [
   {
     path: '/*',
     Component: NotFound,
-    fetchData: initNotFoundPage,
   },
   {
     path: '/serverError',
@@ -64,7 +61,6 @@ export const routes = [
 
       return { success: true }
     },
-    fetchData: initSignInPage,
   },
   {
     path: '/signUp',
