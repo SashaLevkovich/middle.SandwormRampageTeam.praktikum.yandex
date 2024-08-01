@@ -15,6 +15,14 @@ COPY . .
 RUN yarn lerna bootstrap
 RUN rm -rf /app/packages/client/dist/ && yarn build --scope=client
 
+
+FROM node:$NODE_VERSION-buster-slim as production
+WORKDIR /app
+
+COPY --from=builder /app/packages/client/dist/ /app/dist
+COPY --from=builder /app/packages/client/server/ /app/server
+COPY --from=builder /app/node_modules/ /app/node_modules
+
 EXPOSE $CLIENT_PORT
 
-CMD [ "node", "./packages/client/server/index.js" ]
+CMD [ "node", "./server/index.js" ]
