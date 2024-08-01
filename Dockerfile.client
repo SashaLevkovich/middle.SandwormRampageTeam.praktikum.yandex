@@ -1,5 +1,5 @@
 ARG NODE_VERSION=18
-ARG CLIENT_PORT=3001
+ARG CLIENT_PORT=3000
 
 FROM node:$NODE_VERSION-buster as base
 
@@ -7,10 +7,14 @@ WORKDIR /app
 
 FROM base as builder
 
-COPY packages/client/package.json yarn.lock /app/
-COPY packages/client/dist/ /app/dist
-COPY packages/client/server /app/server
-
+COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 
-CMD [ "node", "./server/index.js" ]
+COPY . .
+
+RUN yarn lerna bootstrap
+RUN rm -rf /app/packages/client/dist/ && yarn build --scope=client
+
+EXPOSE $CLIENT_PORT
+
+CMD [ "node", "./packages/client/server/index.js" ]
