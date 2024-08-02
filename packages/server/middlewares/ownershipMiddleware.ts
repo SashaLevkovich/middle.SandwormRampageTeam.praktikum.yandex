@@ -34,7 +34,7 @@ export const ownershipMiddleware = async (
     if (!resource) {
       return res.status(404).json({ error: 'Resource not found' })
     }
-    if ((resource as any).userId === userId) {
+    if ((resource as any).userId === Number(userId)) {
       next()
     } else {
       return res
