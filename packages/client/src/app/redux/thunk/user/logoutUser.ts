@@ -6,7 +6,6 @@ export const logoutUserThunk = createAppAsyncThunk(
   async (_, thunkApi) => {
     await thunkApi.extra.authRequests.logout()
     deleteLocalStorageUser()
-    await thunkApi.extra.appRouter().navigate('/login')
 
     return
   }
