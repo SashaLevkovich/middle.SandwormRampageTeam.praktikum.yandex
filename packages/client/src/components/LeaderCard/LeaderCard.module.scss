@@ -1,4 +1,3 @@
-@import 'shared/styles/colors.scss';
 @import 'shared/styles/shadowsAndGradients.scss';
 
 .background {
@@ -17,13 +16,13 @@
 .avatar {
   width: 200px;
   height: 200px;
-  background-color: $color-text-primary;
+  background-color: var(--color-text-primary);
   border-radius: 50%;
 
   label {
     font-family: Koulen, sans-serif;
     font-size: 100px;
-    color: $color-text-primary;
+    color: var(--color-text-primary);
     text-shadow: $text-shadow;
 
     line-height: 100px;

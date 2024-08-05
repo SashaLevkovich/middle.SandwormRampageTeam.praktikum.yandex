@@ -1,10 +1,9 @@
-@import 'shared/styles/colors.scss';
 @import 'shared/styles/sizes.scss';
 
 .gameContainer {
   position: relative;
   overflow: hidden;
-  background-color: $color-start-page-background;
+  background-color: var(--color-start-page-background);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -17,7 +16,7 @@
   flex-direction: column;
   gap: 6px;
   padding: 30px;
-  color: $color-text-primary;
+  color: var(--color-text-primary);
   font-family: IBM Plex Mono Light;
   font-size: 15px;
   width: fit-content;
@@ -25,7 +24,7 @@
   bottom: 52px;
   right: 63px;
   z-index: 10;
-  background-color: $color-landing-page;
+  background-color: var(--color-landing-page);
   border-radius: 30px;
 
   &Cross {

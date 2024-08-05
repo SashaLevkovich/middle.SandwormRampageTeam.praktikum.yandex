@@ -57,7 +57,7 @@ export const SignUpFieldValidationRules: ValidatorSchema<
     },
   ],
   phone: [
-    { required: true, message: 'Please input your login!' },
+    { required: true, message: 'Please input your phone number!' },
     {
       type: 'string',
       min: 3,
@@ -65,8 +65,8 @@ export const SignUpFieldValidationRules: ValidatorSchema<
       message: 'Login must contain from 3 to 20 characters!',
     },
     {
-      pattern: /^(?=.*[a-z])[a-z0-9_-]*$/i,
-      message: 'Wrong login format',
+      pattern: /^[0-9]+$/i,
+      message: 'Wrong phone format',
     },
   ],
   email: [

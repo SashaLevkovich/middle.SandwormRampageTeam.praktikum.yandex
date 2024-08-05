@@ -1,27 +1,43 @@
-import { FC, useState } from 'react'
+import { MoonFilled, SunFilled } from '@ant-design/icons'
+import { Switch } from 'antd'
+import { FC, useEffect, useState } from 'react'
 
 import { Link, useLocation } from 'react-router-dom'
 
 import { NAVIGATION_LINKS } from './constants'
 
 import { logoutUserThunk } from 'app/redux/thunk/user/logoutUser'
+import { THEME } from 'shared/constants/theme'
 import { useAppDispatch } from 'shared/redux'
 import classes from './Navbar.module.scss'
-
-/**
- *
- * isAuth will be refactor in future
- *
- */
 
 export const Navbar: FC<{ isAuth?: boolean }> = ({ isAuth = true }) => {
   const { pathname } = useLocation()
   const dispatch = useAppDispatch()
 
   const [currentTab, setCurrentTab] = useState(pathname.slice(1) || 'game')
+  const [theme, setTheme] = useState('light')
 
   const onClick = (tab: string) => {
     setCurrentTab(tab)
+  }
+
+  useEffect(() => {
+    const lsTheme = localStorage.getItem('theme')
+    if (lsTheme !== null) {
+      setTheme(lsTheme)
+    } else {
+      localStorage.setItem('theme', theme)
+    }
+  }, [])
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+    localStorage.setItem('theme', theme)
+  }, [theme])
+
+  const onChangeTheme = (value: boolean) => {
+    setTheme(value ? THEME.DARK : THEME.LIGHT)
   }
 
   const onLogout = () => {
@@ -44,6 +60,13 @@ export const Navbar: FC<{ isAuth?: boolean }> = ({ isAuth = true }) => {
           </li>
         ))}
       </ul>
+
+      <Switch
+        onChange={onChangeTheme}
+        checkedChildren={<MoonFilled />}
+        unCheckedChildren={<SunFilled />}
+        checked={theme === THEME.DARK}
+      />
 
       {isAuth ? (
         <Link className={classes.exit} onClick={onLogout} to={'/login'}>

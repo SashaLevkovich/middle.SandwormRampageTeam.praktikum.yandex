@@ -15,6 +15,7 @@ module.exports = {
   },
   plugins: ['@typescript-eslint'],
   rules: {
+    "@typescript-eslint/no-var-requires": "off",
     '@typescript-eslint/ban-ts-comment': 1,
   },
 }

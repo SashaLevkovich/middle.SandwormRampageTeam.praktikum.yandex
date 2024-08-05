@@ -1,9 +1,6 @@
-@import './colors';
-
 $block-shadow: -10px 10px 0 rgba(0, 0, 0, 0.35);
-$forum-background: linear-gradient(to bottom, #374744, #86ada6);
-$text-shadow: 2px 0 $color-start-page-background,
-  -2px 0 $color-start-page-background, 0 2px $color-start-page-background,
-  0 -2px $color-start-page-background, 1px 1px $color-start-page-background,
-  -1px -1px $color-start-page-background, 1px -1px $color-start-page-background,
-  -1px 1px $color-start-page-background;
+$text-shadow: 2px 0 var(--color-start-page-background),
+  -2px 0 var(--color-start-page-background), 0 2px var(--color-start-page-background),
+  0 -2px var(--color-start-page-background), 1px 1px var(--color-start-page-background),
+  -1px -1px var(--color-start-page-background), 1px -1px var(--color-start-page-background),
+  -1px 1px var(--color-start-page-background);

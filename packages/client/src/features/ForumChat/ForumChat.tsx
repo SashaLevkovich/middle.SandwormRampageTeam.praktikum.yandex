@@ -11,22 +11,21 @@ import { CloseOutlined, RightOutlined } from '@ant-design/icons'
 
 import { Button, Flex, Form, Input } from 'antd'
 
+import { commentsRequests } from 'app/api'
+import { IComment } from 'app/api/requests/comments'
+import { ITopic } from 'app/api/requests/topics'
 import { Message } from 'components/Message'
-
-import { getCurrentTime } from 'shared/helpers/formatDate'
-
-import { CHAT_MOCK } from './chat-mock'
-
 import classes from './ForumChat.module.scss'
 
 type Props = {
   isOpen: boolean
   onClose: () => void
+  topic: ITopic
 }
 
-export const ForumChat: FC<Props> = ({ isOpen, onClose }) => {
-  const [messages, setMessages] = useState(CHAT_MOCK)
+export const ForumChat: FC<Props> = ({ isOpen, onClose, topic }) => {
   const [message, setMessage] = useState('')
+  const [comments, setComments] = useState<IComment[]>([])
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
@@ -36,23 +35,56 @@ export const ForumChat: FC<Props> = ({ isOpen, onClose }) => {
     }
   }
 
-  useEffect(() => scrollToBottom(), [messages])
+  useEffect(() => scrollToBottom(), [comments])
 
-  const handleMessageInput = (event: ChangeEvent<HTMLInputElement>) =>
+  const handleMessageInput = (event: ChangeEvent<HTMLInputElement>) => {
     setMessage(event.target.value)
+  }
+
+  const setComment = async () => {
+    try {
+      await commentsRequests
+        .createComment(topic.id, {
+          content: message,
+          topicId: topic.id,
+        })
+        .then(data => (data.data ? getComments() : null))
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
   const handleSendMessage = useCallback(() => {
     if (!message) return
 
-    setMessages(prevState => [
-      ...prevState,
-      { author: 'You', message, time: getCurrentTime(), isYou: true },
-    ])
+    setComment()
 
     setMessage('')
   }, [message])
 
+  useEffect(() => {
+    if (topic.id) {
+      getComments()
+    }
+  }, [topic])
+
+  const getComments = async () => {
+    try {
+      const { data } = await commentsRequests.getComments(topic.id)
+      setComments(data)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   if (!isOpen) return null
+
+  const isYou = (userId: number) => {
+    if (localStorage.getItem('user')) {
+      return userId === JSON.parse(localStorage.getItem('user')!).id
+    }
+    return false
+  }
 
   return (
     <div className={classes.forumChatContainer}>
@@ -60,15 +92,18 @@ export const ForumChat: FC<Props> = ({ isOpen, onClose }) => {
         <CloseOutlined onClick={onClose} className={classes.closeChat} />
 
         <div className={classes.messagesList}>
-          {messages.map(({ author, isYou, message, time }) => (
-            <Message
-              message={message}
-              author={author}
-              isYou={isYou}
-              time={time}
-              key={time}
-            />
-          ))}
+          {comments &&
+            comments.map(({ userId, content, createdAt, id }) => (
+              <Message
+                id={id}
+                message={content}
+                author={userId!}
+                isYou={isYou(userId!)}
+                time={createdAt!}
+                key={id}
+                onAction={getComments}
+              />
+            ))}
           <div ref={messagesEndRef} />
         </div>
 

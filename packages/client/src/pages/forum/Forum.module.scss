@@ -1,11 +1,10 @@
 @import 'shared/styles/sizes.scss';
-@import 'shared/styles/colors.scss';
 @import 'shared/styles/shadowsAndGradients.scss';
 
 .wrapper {
   position: relative;
   height: $page-height;
-  background: $forum-background;
+  background: var(--color-forum-background);
   z-index: 2;
 
   &::after {
@@ -47,5 +46,32 @@
     width: 100%;
     text-align: right;
     font-size: 22px;
+  }
+
+  .topicRow {
+    display: flex;
+  }
+
+  .addButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 55px;
+    height: 55px;
+    border: 1px solid white;
+    font-size: 30px;
+    background-color: transparent;
+  }
+
+  .removeButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 55px;
+    height: 55px;
+    border: none;
+    font-size: 30px;
+    background-color: transparent;
+    margin-left: 10px;
   }
 }
