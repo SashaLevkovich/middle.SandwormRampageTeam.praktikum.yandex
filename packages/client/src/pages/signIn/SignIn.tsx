@@ -11,21 +11,13 @@ import classes from 'pages/signUp/SignUp.module.scss'
 
 import { signInThunk } from 'app/redux/thunk/user/signInUser'
 import { Link } from 'react-router-dom'
-import { setLocalStorageUser } from 'shared/helpers/userLocalStorage'
 import { useAppDispatch } from 'shared/redux'
 
 export const SignIn: FC = () => {
   const dispatch = useAppDispatch()
 
   const onFinish = async (values: SignInLoginParams) => {
-    try {
-      const response = await dispatch(signInThunk(values))
-      const user = response.payload as User
-
-      setLocalStorageUser(user)
-    } catch (e) {
-      console.log(e)
-    }
+    await dispatch(signInThunk(values))
   }
 
   return (

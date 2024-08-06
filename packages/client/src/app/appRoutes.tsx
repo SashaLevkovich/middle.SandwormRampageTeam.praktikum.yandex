@@ -15,7 +15,6 @@ import { Profile } from 'pages/profile'
 import { SignIn } from 'pages/signIn'
 import { SignUp } from 'pages/signUp'
 
-import { setLocalStorageUser } from 'shared/helpers/userLocalStorage'
 import { AppDispatch } from 'shared/redux'
 
 import { RootState, store } from './redux/store'
@@ -48,19 +47,6 @@ export const routes = [
   {
     path: '/login',
     Component: SignIn,
-    loader: async () => {
-      await loadStore()
-      const response = await store.dispatch(getUserThunk())
-      const user = response.payload
-
-      if (user) {
-        setLocalStorageUser(user as User)
-
-        return redirect('/')
-      }
-
-      return { success: true }
-    },
   },
   {
     path: '/signUp',
