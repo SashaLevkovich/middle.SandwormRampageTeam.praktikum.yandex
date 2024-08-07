@@ -30,7 +30,7 @@ jobs:
           context: .
           file: Dockerfile.client
           push: true
-          tags: ghcr.io/${{ env.OWNER_LC }}/"middle.SandwormRampage.praktikum.yandex"/client:${{ github.sha }}
+          tags: ghcr.io/${{ env.OWNER_LC }}/middle.sandwormrampage.praktikum.yandex/client:${{ github.sha }}
 
       - name: Build and push server image
         uses: docker/build-push-action@v2
