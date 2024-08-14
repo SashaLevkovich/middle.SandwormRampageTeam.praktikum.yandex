@@ -64,42 +64,42 @@ export const routes = [
       {
         path: '/profile',
         element: (
-          <PrivateRoute>
-            <Profile />
-          </PrivateRoute>
+          // <PrivateRoute>
+          <Profile />
+          // </PrivateRoute>
         ),
       },
       {
         path: '/game',
         element: (
-          <PrivateRoute>
-            <Game />
-          </PrivateRoute>
+          // <PrivateRoute>
+          <Game />
+          // </PrivateRoute>
         ),
       },
       {
         path: '/leaderboard',
         element: (
-          <PrivateRoute>
-            <Leaderboard />
-          </PrivateRoute>
+          // <PrivateRoute>
+          <Leaderboard />
+          // </PrivateRoute>
         ),
       },
       {
         path: '/forum',
         element: (
-          <PrivateRoute>
-            <Forum />
-          </PrivateRoute>
+          // <PrivateRoute>
+          <Forum />
+          // </PrivateRoute>
         ),
         loader: async () => {
           await loadStore()
-          const response = await store.dispatch(getUserThunk())
-          const user = response.payload
+          // const response = await store.dispatch(getUserThunk())
+          // const user = response.payload
 
-          if (!user) {
-            return redirect('/login')
-          }
+          // if (!user) {
+          //   return redirect('/login')
+          // }
 
           return { success: true }
         },
